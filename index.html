@@ -7,72 +7,110 @@
 <meta name="description" content="מדריך עברי מפורט לעבודה עם Claude Desktop - כל נושא עם סרטון דמו - ועבודה נכונה עם Fabric skills בעולם Power BI">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
- --bg:#030304; --surface:#0F1115; --surface2:#161a21; --text:#fff; --muted:#94A3B8;
- --orange:#F7931A; --burnt:#EA580C; --gold:#FFD600;
- --border:rgba(255,255,255,.10);
- --grad:linear-gradient(90deg,var(--orange),var(--gold));
+ --bg:#050507; --surface:rgba(16,18,24,.72); --surface2:#14171f; --text:#fff; --muted:#9AA6B8;
+ --orange:#F7931A; --burnt:#EA580C; --gold:#FFD600; --violet:#8B5CF6;
+ --border:rgba(255,255,255,.09);
+ --grad:linear-gradient(92deg,var(--orange),var(--gold));
+ --grad2:linear-gradient(92deg,var(--gold),var(--orange) 55%,var(--violet));
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Heebo','Inter',sans-serif;line-height:1.75;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Heebo','Inter',sans-serif;line-height:1.75;overflow-x:hidden;
+ background-image:radial-gradient(1100px 500px at 85% -5%,rgba(247,147,26,.10),transparent 60%),radial-gradient(900px 480px at 5% 12%,rgba(139,92,246,.09),transparent 60%),radial-gradient(1000px 600px at 50% 110%,rgba(234,88,12,.08),transparent 60%)}
+::selection{background:rgba(247,147,26,.85);color:#050507}
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
-code,kbd{font-family:'JetBrains Mono',monospace;background:rgba(247,147,26,.12);border:1px solid rgba(247,147,26,.25);border-radius:6px;padding:1px 7px;font-size:.88em;color:#FFDF80;direction:ltr;display:inline-block}
-kbd{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);color:#fff}
-.orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
-#o1{width:560px;height:560px;background:var(--orange);opacity:.13;top:-220px;right:-160px}
-#o2{width:520px;height:520px;background:var(--burnt);opacity:.10;bottom:-200px;left:-140px}
-#grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:54px 54px;pointer-events:none;z-index:0}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
+code,kbd{font-family:'JetBrains Mono',monospace;background:rgba(247,147,26,.12);border:1px solid rgba(247,147,26,.28);border-radius:6px;padding:1px 7px;font-size:.88em;color:#FFDF80;direction:ltr;display:inline-block}
+kbd{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.20);color:#fff;box-shadow:0 2px 0 rgba(255,255,255,.10)}
+/* ambient layers */
+.orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+#o1{width:640px;height:640px;background:var(--orange);opacity:.16;top:-260px;right:-200px;animation:drift1 26s ease-in-out infinite alternate}
+#o2{width:560px;height:560px;background:var(--violet);opacity:.13;bottom:-220px;left:-180px;animation:drift2 32s ease-in-out infinite alternate}
+#o3{width:420px;height:420px;background:var(--gold);opacity:.08;top:38%;right:12%;animation:drift1 40s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(-70px,50px) scale(1.12)}}
+@keyframes drift2{to{transform:translate(90px,-60px) scale(1.08)}}
+#grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;z-index:0;
+ -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
+#grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
-/* header */
-header.hero{padding:88px 0 46px;text-align:center}
-.pill{display:inline-block;font-family:'JetBrains Mono';font-size:12.5px;letter-spacing:.14em;color:var(--orange);border:1px solid rgba(247,147,26,.45);border-radius:999px;padding:7px 18px;background:rgba(247,147,26,.08);margin-bottom:26px}
-h1{font-size:clamp(30px,6.4vw,54px);font-weight:800;line-height:1.25;margin-bottom:18px}
-.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p.sub{color:var(--muted);font-size:clamp(16px,2.6vw,20px);max-width:760px;margin:0 auto 30px}
+/* hero */
+header.hero{padding:110px 0 60px;text-align:center;position:relative}
+.pill{display:inline-block;font-family:'JetBrains Mono';font-size:12.5px;letter-spacing:.16em;color:var(--gold);border:1px solid rgba(247,147,26,.55);border-radius:999px;padding:8px 20px;background:rgba(247,147,26,.10);margin-bottom:30px;box-shadow:0 0 24px rgba(247,147,26,.22),inset 0 0 12px rgba(247,147,26,.10)}
+h1{font-size:clamp(38px,9vw,86px);font-weight:900;line-height:1.08;letter-spacing:-.01em;margin-bottom:24px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(247,147,26,.35))}
+h1 .l2{display:block;font-size:.42em;font-weight:800;color:#E8EDF5;-webkit-text-fill-color:#E8EDF5;letter-spacing:0;margin-top:14px;filter:none;background:none}
+.hero p.sub{color:var(--muted);font-size:clamp(16px,2.8vw,21px);max-width:780px;margin:0 auto 36px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:34px}
+.hero-stats .stat{border:1px solid var(--border);border-radius:20px;padding:16px 26px;background:var(--surface);backdrop-filter:blur(14px);min-width:140px;box-shadow:0 18px 44px rgba(0,0,0,.4)}
+.hero-stats .stat b{display:block;font-family:'Space Grotesk',monospace;font-size:34px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.15}
+.hero-stats .stat span{font-size:13px;color:var(--muted)}
 .hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.hero-badges span{font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 15px;background:rgba(15,17,21,.6)}
-/* nav */
-nav.toc{position:sticky;top:0;z-index:50;background:rgba(3,3,4,.82);backdrop-filter:blur(14px);border-block:1px solid var(--border);padding:12px 0;margin-bottom:44px}
+.hero-badges span{font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:7px 16px;background:rgba(15,17,21,.65);transition:.25s}
+.hero-badges span:hover{color:var(--gold);border-color:rgba(255,214,0,.45)}
+.scroll-hint{margin:44px auto 0;width:26px;height:44px;border:2px solid rgba(255,255,255,.25);border-radius:14px;position:relative}
+.scroll-hint::after{content:"";position:absolute;top:7px;left:50%;width:4px;height:9px;margin-left:-2px;border-radius:3px;background:var(--grad);animation:hint 1.8s ease-in-out infinite}
+@keyframes hint{0%{transform:translateY(0);opacity:1}70%{transform:translateY(14px);opacity:0}100%{opacity:0}}
+/* toc */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(5,5,7,.80);backdrop-filter:blur(16px);border-block:1px solid var(--border);padding:12px 0;margin-bottom:48px}
 nav.toc .wrap{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
-nav.toc a{flex:none;font-size:13.5px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 14px;background:rgba(15,17,21,.7)}
-nav.toc a:hover{color:var(--gold);border-color:rgba(255,214,0,.4);text-decoration:none}
-/* sections */
-section.part{margin:60px 0 20px;text-align:center}
-section.part h2{font-size:clamp(24px,4.6vw,36px);font-weight:800}
-section.part p{color:var(--muted);max-width:720px;margin:10px auto 0}
-article.chapter{background:rgba(15,17,21,.66);border:1px solid var(--border);border-radius:24px;padding:34px 30px;margin:34px 0;backdrop-filter:blur(12px);box-shadow:0 24px 60px rgba(0,0,0,.45)}
-article.chapter:hover{border-color:rgba(247,147,26,.35);box-shadow:0 0 60px rgba(247,147,26,.07),0 24px 60px rgba(0,0,0,.45)}
-.ch-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px}
-.ch-num{flex:none;font-family:'JetBrains Mono';font-size:13px;font-weight:600;color:var(--orange);border:1px solid rgba(247,147,26,.45);background:rgba(247,147,26,.08);border-radius:12px;padding:8px 12px;margin-top:4px}
-.ch-head h3{font-size:clamp(21px,3.4vw,27px);font-weight:700;line-height:1.35}
-.chapter h4{font-size:18px;font-weight:700;color:var(--gold);margin:26px 0 10px;display:flex;align-items:center;gap:9px}
-.chapter h4::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 10px rgba(247,147,26,.7);flex:none}
-.chapter p{margin:10px 0;color:#D5DCE5}
-.chapter ul,.chapter ol{margin:10px 24px 10px 0;color:#C7D0DC}
-.chapter li{margin:6px 0}
-.chapter li::marker{color:var(--orange)}
-.video-box{margin:22px 0 8px;border-radius:18px;overflow:hidden;border:1px solid rgba(247,147,26,.30);box-shadow:0 0 40px rgba(247,147,26,.10)}
+nav.toc a{flex:none;font-size:13.5px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 14px;background:rgba(15,17,21,.7);transition:.22s}
+nav.toc a:hover{color:#050507;background:var(--grad);border-color:transparent;text-decoration:none;font-weight:600}
+/* parts */
+section.part{margin:84px 0 26px;text-align:center;position:relative}
+section.part h2{font-size:clamp(28px,5.6vw,44px);font-weight:900;letter-spacing:-.01em}
+section.part h2::after{content:"";display:block;width:74px;height:4px;border-radius:3px;background:var(--grad2);margin:16px auto 0;box-shadow:0 0 18px rgba(247,147,26,.55)}
+section.part p{color:var(--muted);max-width:720px;margin:14px auto 0}
+/* chapters */
+body{counter-reset:chap}
+article.chapter{counter-increment:chap;position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:26px;padding:38px 32px;margin:38px 0;backdrop-filter:blur(14px);box-shadow:0 30px 70px rgba(0,0,0,.5);transition:transform .35s cubic-bezier(.2,.8,.25,1),border-color .35s,box-shadow .35s}
+article.chapter::before{content:counter(chap,decimal-leading-zero);position:absolute;top:-34px;left:6px;font-family:'Space Grotesk',monospace;font-size:150px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.07);pointer-events:none;user-select:none}
+article.chapter::after{content:"";position:absolute;inset:0;border-radius:26px;padding:1px;background:linear-gradient(135deg,rgba(247,147,26,.55),transparent 35%,transparent 65%,rgba(255,214,0,.4));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;pointer-events:none}
+article.chapter:hover{transform:translateY(-4px);box-shadow:0 0 70px rgba(247,147,26,.10),0 34px 80px rgba(0,0,0,.55)}
+article.chapter:hover::after{opacity:1}
+.ch-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px;position:relative}
+.ch-num{flex:none;font-family:'JetBrains Mono';font-size:13px;font-weight:600;color:#050507;background:var(--grad);border-radius:12px;padding:8px 12px;margin-top:4px;box-shadow:0 6px 18px rgba(247,147,26,.35)}
+.ch-head h3{font-size:clamp(22px,3.8vw,30px);font-weight:800;line-height:1.3}
+.chapter h4{font-size:18.5px;font-weight:800;color:var(--gold);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.chapter h4::before{content:"";width:14px;height:4px;border-radius:2px;background:var(--grad);box-shadow:0 0 12px rgba(247,147,26,.8);flex:none}
+.chapter p{margin:10px 0;color:#D8DFEA}
+.chapter ul,.chapter ol{margin:10px 24px 10px 0;color:#CBD4E0}
+.chapter li{margin:7px 0}
+.chapter li::marker{color:var(--orange);font-weight:700}
+.video-box{margin:24px 0 8px;border-radius:18px;overflow:hidden;border:1px solid rgba(247,147,26,.35);box-shadow:0 0 46px rgba(247,147,26,.14),0 18px 40px rgba(0,0,0,.5)}
 .video-box video{width:100%;display:block;background:#000}
 .video-cap{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono'}
-.callout{border:1px solid rgba(255,214,0,.35);background:rgba(255,214,0,.06);border-radius:14px;padding:14px 18px;margin:16px 0;font-size:15px;color:#EDE3B0}
-.callout.warn{border-color:rgba(234,88,12,.5);background:rgba(234,88,12,.08);color:#F5C9AE}
-.srcs{margin-top:22px;padding-top:16px;border-top:1px dashed var(--border);font-size:13.5px;color:var(--muted)}
+.callout{border:1px solid rgba(255,214,0,.38);background:linear-gradient(135deg,rgba(255,214,0,.08),rgba(255,214,0,.03));border-radius:16px;padding:15px 19px;margin:18px 0;font-size:15px;color:#EFE5B2}
+.callout.warn{border-color:rgba(234,88,12,.55);background:linear-gradient(135deg,rgba(234,88,12,.10),rgba(234,88,12,.04));color:#F5C9AE}
+.srcs{margin-top:24px;padding-top:16px;border-top:1px dashed var(--border);font-size:13.5px;color:var(--muted)}
 .srcs a{color:var(--muted);text-decoration:underline}
 .srcs a:hover{color:var(--gold)}
 table.cmp{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
 table.cmp th,table.cmp td{border:1px solid var(--border);padding:10px 12px;text-align:right;vertical-align:top}
-table.cmp th{background:rgba(247,147,26,.10);color:var(--gold);font-weight:600}
-table.cmp td{color:#C7D0DC;background:rgba(255,255,255,.02)}
-footer{margin:70px 0 40px;text-align:center;color:var(--muted);font-size:13.5px}
+table.cmp th{background:rgba(247,147,26,.12);color:var(--gold);font-weight:700}
+table.cmp td{color:#CBD4E0;background:rgba(255,255,255,.02)}
+footer{margin:80px 0 46px;text-align:center;color:var(--muted);font-size:13.5px}
 footer .heart{color:var(--orange)}
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.8,.25,1),transform .7s cubic-bezier(.2,.8,.25,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+ .rv{opacity:1;transform:none;transition:none}
+ #o1,#o2,#o3,.scroll-hint::after{animation:none}
+ html{scroll-behavior:auto}
+ article.chapter{transition:none}
+}
 @media(max-width:640px){
- article.chapter{padding:24px 18px;border-radius:18px}
+ article.chapter{padding:26px 18px;border-radius:20px}
+ article.chapter::before{font-size:96px;top:-20px}
  .ch-head{flex-direction:column;gap:8px}
- header.hero{padding:60px 0 34px}
+ header.hero{padding:74px 0 40px}
+ .hero-stats .stat{padding:12px 18px;min-width:110px}
+ .hero-stats .stat b{font-size:26px}
  .chapter ul,.chapter ol{margin-right:16px}
  table.cmp{font-size:13px}
  table.cmp th,table.cmp td{padding:7px 8px}
@@ -80,15 +118,17 @@ footer .heart{color:var(--orange)}
 </style>
 </head>
 <body>
-<div class="orb" id="o1"></div><div class="orb" id="o2"></div><div id="grid"></div>
+<div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div><div id="grid"></div><div id="grain"></div>
 
 <header class="hero"><div class="wrap">
  <div class="pill">מדריך חי • מתעדכן • עברית</div>
- <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><br>+ Fabric Skills ל-Power BI</h1>
+ <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><span class="l2">+ Fabric Skills ל-Power BI</span></h1>
  <p class="sub">כל נושא שצריך כדי לעבוד נכון עם אפליקציית קלוד דסקטופ: פרויקטים, ארטיפקטים, סקילים, קונקטורים ו-MCP, סאב-אייג'נטים, ניהול קונטקסט וטוקנים, מצבי הרשאות ועוד. ובחלק השני: עבודה נכונה עם Skills for Fabric וסוכני נתונים בעולם Power BI. לכל נושא מצורף סרטון דמו עברי.</p>
+ <div class="hero-stats"><div class="stat"><b>23</b><span>פרקים מפורטים</span></div><div class="stat"><b>23</b><span>סרטוני דמו בעברית</span></div><div class="stat"><b>2</b><span>עולמות: Claude ו-Fabric</span></div><div class="stat"><b>100%</b><span>מבוסס תיעוד רשמי</span></div></div>
  <div class="hero-badges">
-  <span>19 פרקים</span><span>סרטון דמו לכל פרק</span><span>מבוסס תיעוד רשמי של Anthropic ו-Microsoft</span><span>נבדק נכון ל-28 בספטמבר 2026</span>
+  <span>סרטון דמו לכל פרק</span><span>מבוסס תיעוד רשמי של Anthropic ו-Microsoft</span><span>נבדק נכון ל-28 בספטמבר 2026</span>
  </div>
+ <div class="scroll-hint"></div>
 </div></header>
 
 <nav class="toc"><div class="wrap" id="toc"></div></nav>
@@ -120,7 +160,7 @@ footer .heart{color:var(--orange)}
   <li>זה קוד? <b>Code.</b></li>
  </ol>
  <div class="callout">בגרסאות האחרונות Chat ו-Cowork חולקים "בית" אחד: שיחות, משימות, פרויקטים וארטיפקטים באותו סרגל צד. בחלק מהחשבונות (Pro/Max, בהדרגה) כבר אין בחירה ידנית בין Chat ל-Cowork - קלוד מחליט לבד אם זו תשובה מהירה או משימה.</div>
- <div class="video-box"><video controls preload="none" poster=""><source src="videos/01-overview.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none" poster=""><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/01-overview.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 01 - שלוש דרכים לעבוד עם קלוד (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a> · <a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork">Projects in Claude Cowork</a></div>
 </article>
@@ -141,7 +181,7 @@ footer .heart{color:var(--orange)}
   <li>צריך מידע מהכלים שלך (פתקים, יומן)? חבר קונקטור בהגדרות ואז שאל בשפה טבעית.</li>
  </ol>
  <div class="callout warn">שים לב: צילום מסך שולח לקלוד את כל מה שגלוי בחלון - כולל מידע רגיש שמופיע בו. בדוק מה בפריים לפני השליחה.</div>
- <div class="video-box"><video controls preload="none"><source src="videos/02-chat.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/02-chat.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 02 - Chat בדסקטופ (~3 דקות)</div>
  <div class="srcs">מקור: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a></div>
 </article>
@@ -169,7 +209,7 @@ footer .heart{color:var(--orange)}
   <li>שיתוף פרויקט ("Can view" / "Can edit") זמין רק ב-Team ו-Enterprise.</li>
   <li>ארכיון פרויקט מסיר אותו מהממשק אבל לא מוחק קבצים מהמחשב.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="videos/03-projects.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/03-projects.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 03 - פרויקטים (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork">Organize your tasks with projects in Claude Cowork</a> · <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a></div>
 </article>
@@ -202,7 +242,7 @@ footer .heart{color:var(--orange)}
   <li>שגיאה בארטיפקט? כפתור "Try fixing with Claude" מעתיק את פרטי השגיאה להודעה חדשה.</li>
   <li>שיתוף: כל מי שפותח ארטיפקט שקורא לקלוד עושה זאת מהחשבון שלו - אל תבנו על "שיתפתי אז אני משלם".</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="videos/04-artifacts.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/04-artifacts.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 04 - ארטיפקטים (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them">What are artifacts</a> · <a href="https://support.claude.com/en/articles/14729249-use-artifacts-in-claude-cowork">Artifacts in Claude Cowork</a></div>
 </article>
@@ -228,7 +268,7 @@ footer .heart{color:var(--orange)}
   <li>ב-Claude Code: הקלדת <code>/</code> או "+" ו-Slash commands. סקילים אישיים יושבים ב-<code>~/.claude/skills/</code>.</li>
  </ul>
  <div class="callout warn">אבטחה: סקיל יכול להכיל קוד ולהורות על התקנת חבילות צד-שלישי. הסיכונים המרכזיים הם prompt injection ודליפת מידע. התקינו סקילים רק ממקורות מהימנים, וקראו את תוכן הקבצים לפני ההפעלה - במיוחד מה שמחבר לרשתות חיצוניות.</div>
- <div class="video-box"><video controls preload="none"><source src="videos/05-skills.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/05-skills.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 05 - סקילים (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/12512176-what-are-skills">What are skills</a> · <a href="https://support.claude.com/en/articles/12512180-use-skills-in-claude">Use skills in Claude</a> · <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">Create custom skills</a></div>
 </article>
@@ -445,13 +485,97 @@ footer .heart{color:var(--orange)}
  <div class="srcs">מקור: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a></div>
 </article>
 
+<article class="chapter" id="ch15">
+ <div class="ch-head"><span class="ch-num">15</span><h3>סאב-אייג'נטים: בונים סוכן משלכם (עם דמו)</h3></div>
+ <p>סאב-אייג'נט הוא סוכן מומחה שקלוד קוד מעביר אליו משימות: קובץ Markdown עם frontmatter (שם, תיאור, כלים, מודל) ומתחתיו system prompt. קלוד מעביר אליו עבודה אוטומטית כשהתיאור מתאים למשימה - או שאתם מזמינים אותו במפורש. ככה בונים מומחה לסקירת קוד, חוקר ספריות, או בודק ביצועים - כל אחד עם כלים והרשאות משלו.</p>
+ <h4>דמו: סוכן ראשון בשלוש דקות (לפי התיעוד הרשמי)</h4>
+ <ol>
+  <li><b>מבקשים מקלוד לכתוב אותו:</b> "Create a personal code-improver subagent in ~/.claude/agents/ that scans files and suggests improvements... Make it read-only and have it use Sonnet". קלוד כותב את הקובץ עם name, description, tools, model והוראות.</li>
+  <li><b>בודקים את הקובץ:</b> פותחים <code>~/.claude/agents/code-improver.md</code> ומוודאים שה-frontmatter תואם למה שביקשתם (למשל <code>tools: Read, Grep, Glob</code> - קריאה בלבד).</li>
+  <li><b>מריצים:</b> "Use the code-improver agent to suggest improvements in this project". קלוד מעביר את המשימה, ובטרנסקריפט רואים שורת delegation עם שם הסוכן. אם קלוד לא מוצא את הסוכן - מאתחלים את קלוד קוד (סשן רץ לא מזהה תיקיית agents שנוצרה באמצע).</li>
+ </ol>
+ <h4>שליטה מלאה</h4>
+ <ul>
+  <li><b>סקופ:</b> <code>~/.claude/agents/</code> = זמין בכל הפרויקטים במחשב · <code>.claude/agents/</code> בפרויקט = רק שם, ומשותף לצוות ב-git</li>
+  <li><b>האצלה אוטומטית:</b> משפט ה-description קובע מתי קלוד יקרא לסוכן לבד - כותבים אותו כהוראת שימוש ("Use after writing or modifying code")</li>
+  <li><b>רקע או חזית:</b> אפשר להריץ סוכן ב-background ולהמשיך לעבוד, ואפילו להריץ כמה במקביל (יש תקרת concurrency)</li>
+  <li><b>מודל וכלים:</b> לכל סוכן בוחרים מודל (למשל Sonnet הזול למשימות סריקה) ורשימת כלים מצומצמת - עקרון המינימום</li>
+  <li>שימו לב: מ-v2.1.198 הפקודה <code>/agents</code> כבר לא פותחת אשף אינטראקטיבי - יוצרים דרך קלוד או עורכים את הקבצים ישירות. יש גם סוכנים מובנים שמגיעים עם קלוד קוד</li>
+ </ul>
+ <div class="video-box"><video controls preload="none" poster=""><source src="videos/15-subagents.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 15 - בונים סאב-אייג'נט (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/sub-agents">Create custom subagents - Claude Code docs</a></div>
+</article>
+<article class="chapter" id="ch16">
+ <div class="ch-head"><span class="ch-num">16</span><h3>פקודות בקלוד קוד: פקודות סלאש שמורות וסקילים</h3></div>
+ <p>פקודה שמורה היא פרומפט מנצח ששמרתם כקיצור: במקום להקליד מחדש "סקור את ה-PR הזה לפי הקריטריונים שלנו..." כותבים <code>/review</code> וזהו. מקלידים <code>/</code> בתיבת הפרומפט (או כפתור ה-+ ← Slash commands) ורואים את כל מה שזמין: פקודות מובנות, סקילים אישיים, סקילי פרויקט וסקילים מפלאגינים.</p>
+ <h4>ממצא עדכני: פקודות מותאמות מוזגו לתוך סקילים</h4>
+ <ul>
+  <li>קובץ <code>.claude/commands/deploy.md</code> וסקיל <code>.claude/skills/deploy/SKILL.md</code> יוצרים <b>אותה פקודה</b> <code>/deploy</code> ועובדים אותו דבר</li>
+  <li>קבצי <code>.claude/commands/</code> קיימים ממשיכים לעבוד - אין חובה להמיר</li>
+  <li>לעבודה חדשה עדיף סקיל: תיקייה עם קבצים נלווים, frontmatter לשליטה מי מפעיל (אתם או קלוד אוטומטית), וטעינה אוטומטית כשרלוונטי</li>
+ </ul>
+ <h4>מה אפשר לעשות עם פקודה שמורה</h4>
+ <ul>
+  <li><b>ארגומנטים:</b> מעבירים פרמטרים לפקודה (למשל <code>/review 1234</code>) והם מוזרקים לתוך הפרומפט</li>
+  <li><b>קונטקסט דינמי:</b> הזרקת מידע חי לתוך הפקודה (למשל קונטקסט של PR) בזמן ההרצה</li>
+  <li><b>הרשאות:</b> אפשר לאשר מראש כלים מסוימים לסקיל, להגביל גישה, או להריץ אותו בתוך סאב-אייג'נט מבודד</li>
+  <li>שם מתנגש? יש כללי קדימות ברורים בין סקיל אישי, פרויקט, פלאגין ופקודה מובנית - התיעוד מפרט מי מנצח</li>
+ </ul>
+ <div class="video-box"><video controls preload="none" poster=""><source src="videos/16-commands.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 16 - פקודות סלאש שמורות (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/slash-commands">Extend Claude with skills (slash commands) - Claude Code docs</a></div>
+</article>
+<article class="chapter" id="ch17">
+ <div class="ch-head"><span class="ch-num">17</span><h3>הוקס: אוטומציה על אירועים בקלוד קוד</h3></div>
+ <p>הוק הוא פעולה שאתם מגדירים ורצה אוטומטית בנקודות מסוימות במחזור החיים של הסשן: פקודת shell, קריאת HTTP, סאב-אייג'נט או פרומפט למודל. אותם הוקים עובדים בכל מקום שקלוד קוד רץ: טרמינל, תוספי IDE, אפליקציית הדסקטופ וסשני ענן. זו הדרך להפוך "תמיד תריץ פורמט אחרי שאתה עורך קובץ" מבקשה חוזרת - לכלל שקורה לבד.</p>
+ <h4>האירועים שצריך להכיר</h4>
+ <ul>
+  <li><b>פעם בסשן:</b> <code>SessionStart</code> (פתיחה או חידוש - מקום לטעון קונטקסט) ו-<code>SessionEnd</code></li>
+  <li><b>כל תור:</b> <code>UserPromptSubmit</code> (לפני שהפרומפט מגיע למודל) ו-<code>Stop</code> (כשקלוד סיים לענות)</li>
+  <li><b>כל קריאת כלי:</b> <code>PreToolUse</code> (לפני - אפשר לחסום!) ו-<code>PostToolUse</code> (אחרי - למשל פורמט אוטומטי לקובץ שנערך)</li>
+  <li>ועוד: התראות, compact, שינויי קונפיגורציה ועוד - רשימה מלאה בתיעוד</li>
+ </ul>
+ <h4>איך עובדים עם הוקס</h4>
+ <ul>
+  <li><b>Matcher:</b> מגדירים על אילו כלים/אירועים ההוק חל (למשל רק על Edit ו-Write)</li>
+  <li><b>קלט/פלט:</b> ההוק מקבל JSON עם הקונטקסט ב-stdin, ויכול להחזיר החלטה - למשל לחסום פעולה מסוכנת ב-PreToolUse</li>
+  <li><b>ניהול:</b> תפריט <code>/hooks</code> בתוך קלוד קוד לצפייה, כיבוי והסרה; הקונפיגורציה בקבצי settings</li>
+  <li>דוגמאות מהתיעוד: התראת דסקטופ כשקלוד מחכה לתשובה (Notification hook), וסקריפט שחוסם פעולות כתיבה מסוכנות ב-SQL</li>
+ </ul>
+ <div class="callout">אזהרת אבטחה: הוקים רצים עם ההרשאות שלכם, אוטומטית. התקינו הוקים רק ממקורות שאתם סומכים עליהם ובדקו מה הסקריפט עושה - בדיוק כמו סקילים (פרק 05).</div>
+ <div class="video-box"><video controls preload="none" poster=""><source src="videos/17-hooks.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 17 - הוקס (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/hooks">Hooks reference - Claude Code docs</a> · <a href="https://code.claude.com/docs/en/hooks-guide">Automate actions with hooks</a></div>
+</article>
+<article class="chapter" id="ch18">
+ <div class="ch-head"><span class="ch-num">18</span><h3>CLAUDE.md והזיכרון של קלוד קוד</h3></div>
+ <p>CLAUDE.md הוא קובץ ההוראות שקלוד קוד קורא בכל סשן: הבסיס לזה שקלוד עובד <b>בשיטה שלכם</b> בלי שתסבירו מחדש כל פעם. פקודות בילד וטסטים, סטנדרטים של קוד, החלטות ארכיטקטורה, מוסכמות שמות - כל מה שקלוד לא יכול לנחש מהקוד עצמו.</p>
+ <h4>איפה שמים מה (טבלת ההחלטות של התיעוד)</h4>
+ <ul>
+  <li><b>הוראות פרויקט:</b> <code>./CLAUDE.md</code> או <code>./.claude/CLAUDE.md</code> - נכנס ל-git ומשותף לכל הצוות. לכאן סטנדרטים פרויקטיים</li>
+  <li><b>הוראות אישיות גלובליות:</b> <code>~/.claude/CLAUDE.md</code> - ההעדפות שלכם בכל הפרויקטים, רק שלכם</li>
+  <li><b>אישי-פרויקטי:</b> <code>./CLAUDE.local.md</code> - ומוסיפים ל-.gitignore (כתובות סנדבוקס, דאטה לטסטים)</li>
+ </ul>
+ <h4>עבודה נכונה</h4>
+ <ul>
+  <li><b>/init</b> מנתח את הקודבייס ומייצר טייטת CLAUDE.md אוטומטית (ומציע שיפורים אם קיים). מתחילים ממנו ומדייקים</li>
+  <li><b>/context</b> בתוך סשן מראה שהקובץ באמת נטען תחת Memory files</li>
+  <li><b>ייבוא:</b> אפשר לייבא קבצי הוראות נוספים לתוך CLAUDE.md, ולארגן חוקים נושאיים בתיקיית <code>.claude/rules/</code></li>
+  <li><b>AGENTS.md:</b> פורמט משותף שגם כלי AI אחרים קוראים - קלוד קוד תומך, לשיתוף אותן הוראות בין כלים</li>
+  <li><b>Auto memory:</b> מעבר ל-CLAUDE.md הידני, קלוד קוד יכול לזכור דברים אוטומטית - והתיעוד מפרט מתי לבחור בכל מנגנון (שליטה מלאה בכיבוי והדלקה)</li>
+ </ul>
+ <div class="video-box"><video controls preload="none" poster=""><source src="videos/18-claudemd.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 18 - CLAUDE.md (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/memory">How Claude remembers your project - Claude Code docs</a></div>
+</article>
 <section class="part" id="part-b">
  <h2>חלק ב׳: <span class="grad-text">Fabric Skills</span> בעולם Power BI</h2>
  <p>"Skills" בהקשר של Microsoft Fabric הם לא פיצ׳ר אחד אלא שכבה שלמה: הוראות מוכנות (SKILL.md) שמלמדות כלי AI לעבוד מול Fabric, פלאגין רשמי לכתיבת דוחות Power BI, שרת MCP למידול, וסוכן נתונים שעונה בשפה טבעית על המודלים שלכם. החלק הזה מסביר מה קיים היום, איך עובדים איתו נכון, ואיך מוודאים (בידוק) שהתשובות נכונות.</p>
 </section>
 
-<article class="chapter" id="ch15">
- <div class="ch-head"><span class="ch-num">15</span><h3>מה זה Skills for Fabric ואיך מתקינים</h3></div>
+<article class="chapter" id="ch19">
+ <div class="ch-head"><span class="ch-num">19</span><h3>מה זה Skills for Fabric ואיך מתקינים</h3></div>
  <p>Skills for Fabric הם הוראות שימוש חוזרות (open source, רישיון MIT, בריפו <code>microsoft/skills-for-fabric</code>) שמלמדות כלי קוד-AI - GitHub Copilot CLI, VS Code, Claude Code, Cursor - לעבוד מול Microsoft Fabric: אילו REST APIs לקרוא, איזה תחביר שאילתות, ואילו דפוסי עבודה נכונים. בלעדיהם לכלי ה-AI אין ידע מובנה על ה-APIs של Fabric.</p>
  <h4>סקיל מול MCP - ההבדל שחשוב להבין</h4>
  <table class="cmp">
@@ -475,13 +599,13 @@ footer .heart{color:var(--orange)}
   <li>"תעד את כל ה-workspace שלי" ← סריקה ותיעוד Markdown.</li>
  </ul>
  <div class="callout warn">גבול חשוב מהתיעוד: הסקילים מייצרים הגדרות פריטים וקוד - הם <b>לא</b> מרנדרים דוחות Power BI גמורים לבד. לוויזואליזציה: דשבורד Python מקומי, PDF, או בניית הדוח על הסמנטיק מודל (ופלאגין הכתיבה בפרק הבא מכסה חלק מזה בפריוויו).</div>
- <div class="video-box"><video controls preload="none"><source src="videos/15-fabric-skills.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 15 - Skills for Fabric (~3 דקות)</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/19-fabric-skills.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 19 - Skills for Fabric (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/fundamentals/skills-for-fabric-overview">Skills for Fabric overview</a> · <a href="https://github.com/microsoft/skills-for-fabric">microsoft/skills-for-fabric</a></div>
 </article>
 
-<article class="chapter" id="ch16">
- <div class="ch-head"><span class="ch-num">16</span><h3>פלאגין כתיבת הדוחות של Power BI (Preview): מהתכנון לפרסום</h3></div>
+<article class="chapter" id="ch20">
+ <div class="ch-head"><span class="ch-num">20</span><h3>פלאגין כתיבת הדוחות של Power BI (Preview): מהתכנון לפרסום</h3></div>
  <p>אוסף הסקילים <b>AI-powered Power BI reporting</b> (פריוויו, יוני 2026) מאפשר לסוכן AI לכתוב דוחות Power BI משפה טבעית: יצירה מאפס, שינוי דוח קיים, ומודרניזציה של עיצוב. זמין דרך פלאגין <b>Power BI authoring</b> בספריית Skills for Fabric.</p>
  <h4>מה הסוכן עושה בפועל</h4>
  <ul>
@@ -494,13 +618,13 @@ footer .heart{color:var(--orange)}
  <h4>האקוסיסטם המלא</h4>
  <p>פלאגין הכתיבה עובד יחד עם שרת ה-<b>Modeling MCP</b> וסקיל כתיבת הסמנטיק מודל (פרק 17): בונים מודל, ואז דוח מעליו, ואז מפרסמים ל-Fabric - מקצה לקצה.</p>
  <div class="callout">זה פריוויו פעיל שמשתנה מהר. התקנה: <code>/plugin marketplace add microsoft/skills-for-fabric</code> ואז <code>/plugin install powerbi-authoring@fabric-collection</code>.</div>
- <div class="video-box"><video controls preload="none"><source src="videos/16-pbi-authoring.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 16 - פלאגין כתיבת דוחות (~3 דקות)</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/20-pbi-authoring.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 20 - פלאגין כתיבת דוחות (~3 דקות)</div>
  <div class="srcs">מקור: <a href="https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/AI-Powered-Power-BI-reporting-From-design-to-deployment-with/ba-p/5190703">Power BI Updates Blog - AI-Powered reporting skills</a></div>
 </article>
 
-<article class="chapter" id="ch17">
- <div class="ch-head"><span class="ch-num">17</span><h3>שרת ה-Modeling MCP וכתיבת סמנטיק מודל עם AI</h3></div>
+<article class="chapter" id="ch21">
+ <div class="ch-head"><span class="ch-num">21</span><h3>שרת ה-Modeling MCP וכתיבת סמנטיק מודל עם AI</h3></div>
  <p>שרת ה-Power BI Modeling MCP נותן לכלי ה-AI גישה חיה לפעולות מידול: קריאה וכתיבה של הגדרות הסמנטיק מודל. בשילוב עם סקיל כתיבת המודל, הסוכן בונה מימדים, טבלאות עובדות וקשרים - ואתה סוקר לפני שמירה.</p>
  <h4>שימושים מתועדים</h4>
  <ul>
@@ -513,13 +637,13 @@ footer .heart{color:var(--orange)}
   <li>צ'קליסט הכנה של סמנטיק מודל כמקור לסוכן נתונים.</li>
   <li>Notebook עם אוסף utilities.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="videos/17-modeling-mcp.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 17 - Modeling MCP (~3 דקות)</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/21-modeling-mcp.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 21 - Modeling MCP (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices</a> · <a href="https://github.com/microsoft/fabric-toolbox">fabric-toolbox</a></div>
 </article>
 
-<article class="chapter" id="ch18">
- <div class="ch-head"><span class="ch-num">18</span><h3>סוכן הנתונים של Fabric (Data agent): שאלות בעברית-אנגלית על הדאטה שלכם</h3></div>
+<article class="chapter" id="ch22">
+ <div class="ch-head"><span class="ch-num">22</span><h3>סוכן הנתונים של Fabric (Data agent): שאלות בעברית-אנגלית על הדאטה שלכם</h3></div>
  <p>Fabric data agent (פריוויו) הוא סוכן שיחתי שעונה בשפה טבעית על נתונים ב-lakehouses, warehouses, <b>סמנטיק מודלים של Power BI</b>, KQL databases ואונטולוגיות. הקולגות שואלים - הוא מתרגם לשאילתה (NL2SQL / NL2DAX / NL2KQL), מריץ, ומחזיר תשובה עם השלבים והקוד שיצר.</p>
  <h4>דרישות</h4>
  <ul>
@@ -543,13 +667,13 @@ footer .heart{color:var(--orange)}
   <li>הסוכן לקריאה בלבד - אין יצירה/עדכון/מחיקה של דאטה.</li>
   <li>שמות טבלאות ועמודות תיאוריים (SalesData ולא TableA) - ההבדל בין סוכן שעובד לסוכן שמנחש.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="videos/18-data-agent.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 18 - Fabric data agent (~3 דקות)</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/22-data-agent.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 22 - Fabric data agent (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/how-to-create-data-agent">Create a Fabric data agent</a> · <a href="https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent">Data agent concepts</a></div>
 </article>
 
-<article class="chapter" id="ch19">
- <div class="ch-head"><span class="ch-num">19</span><h3>Prep for AI והבידוק: איך מוודאים שה-AI עונה נכון על Power BI</h3></div>
+<article class="chapter" id="ch23">
+ <div class="ch-head"><span class="ch-num">23</span><h3>Prep for AI והבידוק: איך מוודאים שה-AI עונה נכון על Power BI</h3></div>
  <p>זה הפרק שהופך "AI שמנחש" לכלי שאפשר לסמוך עליו. איכות התשובות של סוכן הנתונים (ושל Copilot) על סמנטיק מודל תלויה כמעט entirely בהכנת המודל - ובבידוק שיטתי של התשובות.</p>
  <h4>שלושת רכיבי Prep for AI (בדסקטופ ובשירות: Home ← Prep data for AI)</h4>
  <ol>
@@ -575,8 +699,8 @@ footer .heart{color:var(--orange)}
   <li>מודל לא ב-star schema; שדות מוסתרים ב-verified answers; מדדים כפולים/חופפים; שמות כמו TR_AMT; מדדים אימפליסיטיים; שדות תאריך דו-משמעיים; הוראות שסותרות verified answers; הוראות ארוכות ומסובכות.</li>
  </ul>
  <div class="callout">מצב רישוי ויציבות: data agent - פריוויו, דורש F2+ / P1+. יצירת DAX של Copilot למודלים - GA. "Advanced DAX generation" לסוכנים - פריוויו (מצב runtime חדש) עם דיוק משופר לשאלות מורכבות. טבלת הסטטוס המלאה בקישור למטה.</div>
- <div class="video-box"><video controls preload="none"><source src="videos/19-prep-ai.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 19 - Prep for AI ובידוק (~3 דקות)</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/23-prep-ai.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 23 - Prep for AI ובידוק (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices for data agent</a> · <a href="https://learn.microsoft.com/en-us/fabric/fundamentals/copilot-ai-feature-state">Release status of AI and Copilot in Fabric</a></div>
 </article>
 
@@ -587,9 +711,14 @@ footer .heart{color:var(--orange)}
 </div><!-- /wrap -->
 <script>
 const CHAPTERS=[
- ['ch01','01 · סקירה כללית'],['ch02','02 · Chat בדסקטופ'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · סקילים'],['ch06','06 · קונקטורים ו-MCP'],['ch07','07 · פלאגינים'],['ch08','08 · זיכרון וחיפוש'],['ch09','09 · קונטקסט וטוקנים'],['ch10','10 · Cowork לעומק'],['ch11','11 · סשנים וסביבות'],['ch12','12 · מצבי הרשאות'],['ch13','13 · סקירת קוד ו-PR'],['ch14','14 · קיצורים וטיפים'],['ch15','15 · Skills for Fabric'],['ch16','16 · כתיבת דוחות PBI'],['ch17','17 · Modeling MCP'],['ch18','18 · Fabric data agent'],['ch19','19 · Prep for AI ובידוק']
+ ['ch01','01 · סקירה כללית'],['ch02','02 · Chat בדסקטופ'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · סקילים'],['ch06','06 · קונקטורים ו-MCP'],['ch07','07 · פלאגינים'],['ch08','08 · זיכרון וחיפוש'],['ch09','09 · קונטקסט וטוקנים'],['ch10','10 · Cowork לעומק'],['ch11','11 · סשנים וסביבות'],['ch12','12 · מצבי הרשאות'],['ch13','13 · סקירת קוד ו-PR'],['ch14','14 · קיצורים וטיפים'],['ch15','15 · סאב-אייג'נטים'],['ch16','16 · פקודות סלאש'],['ch17','17 · הוקס'],['ch18','18 · CLAUDE.md'],['ch19','19 · Skills for Fabric'],['ch20','20 · כתיבת דוחות PBI'],['ch21','21 · Modeling MCP'],['ch22','22 · Fabric data agent'],['ch23','23 · Prep for AI ובידוק']
 ];
 document.getElementById('toc').innerHTML=CHAPTERS.map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join('');
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+ document.querySelectorAll('article.chapter,section.part').forEach(el=>el.classList.add('rv'));
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px',threshold:.05});
+ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+}
 </script>
 </body>
-    </html>
+</html>
