@@ -527,6 +527,16 @@ footer .heart{color:var(--coral)}
   <li>הגדרות ב-<code>.claude/</code> של הפרויקט נשמרות בגיט - כל הצוות מקבל אותן הוקס.</li>
  </ol>
  <div class="callout"><b>זהירות:</b> הוק רץ על המחשב שלכם עם ההרשאות שלכם, בכל פעם שהאירוע קורה. כתבו הוקס קטנים, צפויים ומהירים - ואל תשימו בהם לוגיקה שאתם לא מבינים.</div>
+ <h4>שגרות (Routines): אוטומציה על לוח זמנים</h4>
+ <p>הוק מגיב לאירוע בתוך סשן; <b>שגרה</b> היא הגדרה שמורה - פרומפט, ריפו אחד או יותר, וקונקטורים - שרצה אוטומטית על לוח זמנים, מקריאת API או מאירוע GitHub (הפיצ׳ר ב-Research Preview). שגרות רצות על התשתית הענןית של Anthropic (או על סביבה מתארחת-עצמית של הארגון), כך שהן עובדות גם כשהמחשב שלכם סגור.</p>
+ <ul>
+  <li><b>איפה:</b> בעמוד <code>claude.ai/code/routines</code>, בלשונית Code באפליקציית הדסקטופ (Routines בסרגל הצד), או ב-CLI עם <b>/schedule</b>. זמין ב-Pro, Max, Team ו-Enterprise.</li>
+  <li><b>דוגמאות:</b> סיכום Issues שנפתחו מאתמול כל בוקר עבודה, סקירת PR אוטומטית על כל pull_request, דיג׳סט מיילים יומי מתוזמן.</li>
+  <li><b>מגבלות:</b> יש מכסת ריצות יומית לחשבון (ריצות חד-פעמיות לא נספרות); הצריכה יורדת ממכסת המנוי הרגילה. פעולות שהשגרה עושה דרך GitHub והקונקטורים מתועדות על שמכם.</li>
+  <li><b>שים לב:</b> האפשרות "Local" בדסקטופ יוצרת <b>Desktop scheduled task</b> - משימה מקומית שרצה על המחשב שלכם (תכונה נפרדת, לא שגרת ענן).</li>
+ </ul>
+ <div class="callout"><b>בסביבה נעולה:</b> האדמין יכול לכבות שגרות לכל הארגון (מתג Routines ב-admin settings) - אם האפשרות חסרה, כנראה שכבו אותה ברמת הארגון. וחשוב: שרתי MCP מקומיים שהוספתם ב-CLI <b>לא</b> זמינים לשגרות - הן רואות רק קונקטורים של חשבון claude.ai או שרתים שמוגדרים ב-<code>.mcp.json</code> בתוך הריפו. האלטרנטיבה המקומית: Desktop scheduled tasks, שרצות על המחשב שלכם עם גישה לקבצים מקומיים.</div>
+ 
  <div class="video-box" style="padding:22px;text-align:center;color:var(--muted);font-size:14px;background:#f6f4ee">סרטון הפרק החדש בעבודה - יעלה בקרוב עם הדגמה על הממשק האמיתי</div>
  <div class="video-cap">סרטון דמו 16 - הוקס (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/hooks">Hooks documentation</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
