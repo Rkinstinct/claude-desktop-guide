@@ -113,7 +113,7 @@ footer .heart{color:var(--coral)}
  <div class="pill">מדריך חי • מתעדכן • עברית</div>
  <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><span class="l2">+ Fabric Skills ל-Power BI</span></h1>
  <p class="sub">המדריך לעובד הארגוני: Claude Chat ו-Claude Code ברישיון ארגוני נעול - בלי Cowork, בלי ענן, בלי חנות פלאגינים. מה שכן: צ'אט, קוד, ושרתי MCP וסקילים שטוענים בעצמכם. ובחלק האחרון: Skills for Fabric ועבודה עם Power BI. לכל פרק מצורף סרטון דמו עברי.</p>
- <div class="hero-stats"><div class="stat"><b>23</b><span>פרקים מפורטים</span></div><div class="stat"><b>23</b><span>סרטוני דמו - משודרגים כעת לממשק האמיתי</span></div><div class="stat"><b>2</b><span>עולמות: Claude ו-Fabric</span></div><div class="stat"><b>100%</b><span>מבוסס תיעוד רשמי</span></div></div>
+ <div class="hero-stats"><div class="stat"><b>21</b><span>פרקים מפורטים</span></div><div class="stat"><b>21</b><span>סרטוני דמו - משודרגים כעת לממשק האמיתי</span></div><div class="stat"><b>2</b><span>עולמות: Claude ו-Fabric</span></div><div class="stat"><b>100%</b><span>מבוסס תיעוד רשמי</span></div></div>
  <div class="hero-badges">
   <span>סרטון דמו לכל פרק</span><span>מבוסס תיעוד רשמי של Anthropic ו-Microsoft</span><span>נכתב מחדש נכון ל-29 בספטמבר 2026</span>
  </div>
@@ -148,7 +148,7 @@ footer .heart{color:var(--coral)}
   <li><b>חלק א׳ (פרקים 1-6):</b> Claude Chat מההתחלה - שיחה ראשונה, פרויקטים, ארטיפקטים, זיכרון וקונטקסט.</li>
   <li><b>חלק ב׳ (פרקים 7-12):</b> Claude Code - התקנה, סשן ראשון, הרשאות, חשיבה מורחבת וסקירת קוד.</li>
   <li><b>חלק ג׳ (פרקים 13-18):</b> הולכים לעומק - סקילים, פקודות, סאב-אייג'נטים, הוקס, CLAUDE.md ו-MCP.</li>
-  <li><b>חלק ד׳ (פרקים 19-23):</b> היישום הארגוני שלכם - Skills for Fabric ועבודה עם Power BI.</li>
+  <li><b>חלק ד׳ (פרקים 19-21):</b> היישום הארגוני שלכם - Skills for Fabric ועבודה עם Power BI.</li>
  </ol>
  <p>כל פרק עונה על שלוש שאלות: מה זה, מתי משתמשים, ואיך עובדים - ומלווה בסרטון דמו עברי קצר על הממשק האמיתי.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/01-overview.mp4" type="video/mp4"></video></div>
@@ -656,7 +656,7 @@ footer .heart{color:var(--coral)}
  <h4>שימושים מתועדים</h4>
  <ul>
   <li>יצירת סמנטיק מודל מעל lakehouse בשפה טבעית.</li>
-  <li><b>שינוי שמות ידידותיים בקנה מידה:</b> במודל גדול, לבקש מה-LLM דרך ה-Modeling MCP לייצר שמות עסקיים ברורים לטבלאות, עמודות ומדדים (Totaal Revenue במקום TR_AMT) - קריטי לאיכות תשובות ה-AI (פרק 23). לסקור ולוודא שהשינוי לא שובר DAX, קשרים או אובייקטים תלויים לפני השמירה.</li>
+  <li><b>שינוי שמות ידידותיים בקנה מידה:</b> במודל גדול, לבקש מה-LLM דרך ה-Modeling MCP לייצר שמות עסקיים ברורים לטבלאות, עמודות ומדדים (Totaal Revenue במקום TR_AMT) - קריטי לאיכות תשובות ה-AI על המודל. לסקור ולוודא שהשינוי לא שובר DAX, קשרים או אובייקטים תלויים לפני השמירה.</li>
  </ul>
  <h4>כלים משלימים (fabric-toolbox)</h4>
  <ul>
@@ -669,68 +669,6 @@ footer .heart{color:var(--coral)}
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices</a> · <a href="https://github.com/microsoft/fabric-toolbox">fabric-toolbox</a></div>
 </article>
 
-<article class="chapter" id="ch22">
- <div class="ch-head"><span class="ch-num">22</span><h3>סוכן הנתונים של Fabric (Data agent): שאלות בעברית-אנגלית על הדאטה שלכם</h3></div>
- <p>Fabric data agent (פריוויו) הוא סוכן שיחתי שעונה בשפה טבעית על נתונים ב-lakehouses, warehouses, <b>סמנטיק מודלים של Power BI</b>, KQL databases ואונטולוגיות. הקולגות שואלים - הוא מתרגם לשאילתה (NL2SQL / NL2DAX / NL2KQL), מריץ, ומחזיר תשובה עם השלבים והקוד שיצר.</p>
- <h4>דרישות</h4>
- <ul>
-  <li>קיבולת F2 ומעלה, או Power BI Premium per capacity (P1+) עם Fabric מופעל.</li>
-  <li>הרשאת <b>Read</b> על מקור הנתונים. לסמנטיק מודל - Read בלבד מספיק (לא צריך Build, ולא חברות ב-workspace); Write נדרש רק לשינוי המודל או ל-Prep for AI.</li>
-  <li>אין צורך במפתח Azure OpenAI - מיקרוסופט מנהלת את ה-AI והאימות תחת זהות ה-Entra ID של המשתמש.</li>
- </ul>
- <h4>בנייה נכונה</h4>
- <ol>
-  <li>ב-workspace: + New Item ← Fabric data agent ← שם.</li>
-  <li>הוספת עד <b>5 מקורות</b> בכל שילוב; ב-Explorer מסמנים אילו טבלאות זמינות ל-AI.</li>
-  <li>שאילת שאלות מבחן ובדיקת השלבים + ה-DAX שנוצר (פרק 23 - הבידוק).</li>
-  <li>הוראות סוכן (עד 15,000 תווים): הנחיות רוחביות בלבד - ניתוב בין מקורות, קיצורים, טון. <b>לא</b> הוראות ספציפיות למודל (ראו מלכודה למטה).</li>
-  <li>שאילתות דוגמה (few-shot) לכל מקור נתמך - משפרות דיוק משמעותית. לא נתמך לסמנטיק מודלים.</li>
-  <li>Publish עם תיאור טוב - יוצר גרסה מפורסמת לצד טיוטה שממשיכים ללטש. ניהול עם Git integration ו-deployment pipelines.</li>
- </ol>
- <h4>מלכודות קריטיות</h4>
- <ul>
-  <li><b>הוראות ברמת הסוכן מתעלמות כששואלים סמנטיק מודל!</b> כלי יצירת ה-DAX קורא רק את ה-Prep for AI של המודל. הוראות ספציפיות למודל - רק שם.</li>
-  <li>שאלות "למה" ("למה הפרודוקטיביות ירדה?") מחוץ לסקופ - הסוכן שולף ומעבד דאטה מובנה, לא עושה אנליטיקה סיבתית.</li>
-  <li>הסוכן לקריאה בלבד - אין יצירה/עדכון/מחיקה של דאטה.</li>
-  <li>שמות טבלאות ועמודות תיאוריים (SalesData ולא TableA) - ההבדל בין סוכן שעובד לסוכן שמנחש.</li>
- </ul>
- <div class="video-box" style="padding:22px;text-align:center;color:var(--muted);font-size:14px;background:#f6f4ee">סרטון הפרק החדש בעבודה - יעלה בקרוב עם הדגמה על הממשק האמיתי</div>
- <div class="video-cap">סרטון דמו 22 - Fabric data agent (~3 דקות)</div>
- <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/how-to-create-data-agent">Create a Fabric data agent</a> · <a href="https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent">Data agent concepts</a></div>
-</article>
-
-<article class="chapter" id="ch23">
- <div class="ch-head"><span class="ch-num">23</span><h3>Prep for AI והבידוק: איך מוודאים שה-AI עונה נכון על Power BI</h3></div>
- <p>זה הפרק שהופך "AI שמנחש" לכלי שאפשר לסמוך עליו. איכות התשובות של סוכן הנתונים (ושל Copilot) על סמנטיק מודל תלויה כמעט entirely בהכנת המודל - ובבידוק שיטתי של התשובות.</p>
- <h4>שלושת רכיבי Prep for AI (בדסקטופ ובשירות: Home ← Prep data for AI)</h4>
- <ol>
-  <li><b>AI data schema:</b> תת-קבוצה ממוקדת של המודל שה-AI עובד איתה - רק הטבלאות, העמודות והמדדים הרלוונטיים. פותר דו-משמעות ("מכירות" - Gross או Net?) ומשפר דיוק ומהירות. כוללים גם אובייקטים תלויים (מדד שמפנה למדדים אחרים). חשוב: לבחור את אותן טבלאות גם בסוכן הנתונים.</li>
-  <li><b>Verified answers:</b> תשובות מאומתות ברמת המודל: 5-7 שאלות טריגר לכל תשובה, מבוססות ויז'ואל. הן מנחות את יצירת ה-DAX למבנה הנכון (הסוכן לא מחזיר את הוויז'ואל עצמו). לא עובד עם שדות מוסתרים.</li>
-  <li><b>AI instructions:</b> הגדרות מונחים עסקיים ולוגיקה ("top performer = מי שהשיג 110%+ מהקווטה"), העדפות מדד, ברירות זמן. כתובים במודל - לא בסוכן.</li>
- </ol>
- <h4>תהליך הבידוק המומלץ (מהתיעוד הרשמי, 10 צעדים)</h4>
- <ol>
-  <li>מטבים את המודל עצמו (BPA + Memory Analyzer) - מודל מנופח = רעש לכלי ה-DAX.</li>
-  <li>מגדירים AI data schema לפי סקופ הסוכן.</li>
-  <li>יוצרים Verified answers לשאלות הנפוצות.</li>
-  <li>מחברים למודל לסוכן ובודקים תשובות - <b>לפני</b> הוספת instructions, כדי ללמוד איפה הם באמת צריכים.</li>
-  <li>מוסיפים AI instructions לפי הממצאים.</li>
-  <li>מסדרים ויז'ואלים בדוחות: כותרות תיאוריות - המטא-דאטה שלהם מזין את יצירת ה-DAX.</li>
-  <li><b>בודקים את ה-DAX של כל תשובה</b> - הסוכן חושף את השאילתה; קוראים אותה ומוודאים שהיא עונה על השאלה.</li>
-  <li>הוראות סוכן - רק הנחיות רוחביות חוצות-מקורות.</li>
-  <li>ולידציה ואיטרציה מתמשכת: אפשר הערכה אוטומטית עם ה-Python SDK מול זוגות שאלה-תשובה + משוב משתמשים.</li>
-  <li>Git + deployment pipelines בין dev/test/prod.</li>
- </ol>
- <h4>מלכודות נפוצות (רשימת אזהרה)</h4>
- <ul>
-  <li>מודל לא ב-star schema; שדות מוסתרים ב-verified answers; מדדים כפולים/חופפים; שמות כמו TR_AMT; מדדים אימפליסיטיים; שדות תאריך דו-משמעיים; הוראות שסותרות verified answers; הוראות ארוכות ומסובכות.</li>
- </ul>
- <div class="callout">מצב רישוי ויציבות: data agent - פריוויו, דורש F2+ / P1+. יצירת DAX של Copilot למודלים - GA. "Advanced DAX generation" לסוכנים - פריוויו (מצב runtime חדש) עם דיוק משופר לשאלות מורכבות. טבלת הסטטוס המלאה בקישור למטה.</div>
- <div class="video-box" style="padding:22px;text-align:center;color:var(--muted);font-size:14px;background:#f6f4ee">סרטון הפרק החדש בעבודה - יעלה בקרוב עם הדגמה על הממשק האמיתי</div>
- <div class="video-cap">סרטון דמו 23 - Prep for AI ובידוק (~3 דקות)</div>
- <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices for data agent</a> · <a href="https://learn.microsoft.com/en-us/fabric/fundamentals/copilot-ai-feature-state">Release status of AI and Copilot in Fabric</a></div>
-</article>
-
 <footer>
  <p>נבנה בעברית על בסיס התיעוד הרשמי של <a href="https://claude.com">Anthropic</a> ו-<a href="https://learn.microsoft.com/fabric">Microsoft</a> · הסרטונים הם דמו מונפש עם קריינות עברית · <span class="heart">◆</span> חלק מסדרת המדריכים של <a href="https://rkinstinct.github.io/data-ai-hub/">Data &amp; AI Hub</a></p>
 </footer>
@@ -738,7 +676,7 @@ footer .heart{color:var(--coral)}
 </div><!-- /wrap -->
 <script>
 const CHAPTERS=[
- ['ch01','01 · מה יש לכם ואיך המדריך עובד'],['ch02','02 · Chat: השיחה הראשונה'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · זיכרון, חיפוש ואינקוגניטו'],['ch06','06 · קונטקסט וטוקנים'],['ch07','07 · Claude Code: התקנה'],['ch08','08 · סשנים והפרויקט הראשון'],['ch09','09 · מצבי הרשאות'],['ch10','10 · חשיבה מורחבת'],['ch11','11 · סקירת קוד ו-PR'],['ch12','12 · קיצורים וטיפים'],['ch13','13 · סקילים'],['ch14','14 · פקודות סלאש'],['ch15','15 · סאב-אייג'נטים'],['ch16','16 · הוקס'],['ch17','17 · CLAUDE.md'],['ch18','18 · MCP בסביבה נעולה'],['ch19','19 · Skills for Fabric'],['ch20','20 · כתיבת דוחות PBI'],['ch21','21 · Modeling MCP'],['ch22','22 · Fabric data agent'],['ch23','23 · Prep for AI ובידוק']
+ ['ch01','01 · מה יש לכם ואיך המדריך עובד'],['ch02','02 · Chat: השיחה הראשונה'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · זיכרון, חיפוש ואינקוגניטו'],['ch06','06 · קונטקסט וטוקנים'],['ch07','07 · Claude Code: התקנה'],['ch08','08 · סשנים והפרויקט הראשון'],['ch09','09 · מצבי הרשאות'],['ch10','10 · חשיבה מורחבת'],['ch11','11 · סקירת קוד ו-PR'],['ch12','12 · קיצורים וטיפים'],['ch13','13 · סקילים'],['ch14','14 · פקודות סלאש'],['ch15','15 · סאב-אייג'נטים'],['ch16','16 · הוקס'],['ch17','17 · CLAUDE.md'],['ch18','18 · MCP בסביבה נעולה'],['ch19','19 · Skills for Fabric'],['ch20','20 · כתיבת דוחות PBI'],['ch21','21 · Modeling MCP']
 ];
 document.getElementById('toc').innerHTML=CHAPTERS.map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join('');
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
