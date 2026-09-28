@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>המדריך המלא ל-Claude Desktop + Fabric Skills ל-Power BI</title>
+<meta name="description" content="מדריך עברי מפורט לעבודה עם Claude Desktop - כל נושא עם סרטון דמו - ועבודה נכונה עם Fabric skills בעולם Power BI">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#030304; --surface:#0F1115; --surface2:#161a21; --text:#fff; --muted:#94A3B8;
+ --orange:#F7931A; --burnt:#EA580C; --gold:#FFD600;
+ --border:rgba(255,255,255,.10);
+ --grad:linear-gradient(90deg,var(--orange),var(--gold));
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Heebo','Inter',sans-serif;line-height:1.75;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd{font-family:'JetBrains Mono',monospace;background:rgba(247,147,26,.12);border:1px solid rgba(247,147,26,.25);border-radius:6px;padding:1px 7px;font-size:.88em;color:#FFDF80;direction:ltr;display:inline-block}
+kbd{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);color:#fff}
+.orb{position:fixed;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+#o1{width:560px;height:560px;background:var(--orange);opacity:.13;top:-220px;right:-160px}
+#o2{width:520px;height:520px;background:var(--burnt);opacity:.10;bottom:-200px;left:-140px}
+#grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:54px 54px;pointer-events:none;z-index:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+/* header */
+header.hero{padding:88px 0 46px;text-align:center}
+.pill{display:inline-block;font-family:'JetBrains Mono';font-size:12.5px;letter-spacing:.14em;color:var(--orange);border:1px solid rgba(247,147,26,.45);border-radius:999px;padding:7px 18px;background:rgba(247,147,26,.08);margin-bottom:26px}
+h1{font-size:clamp(30px,6.4vw,54px);font-weight:800;line-height:1.25;margin-bottom:18px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{color:var(--muted);font-size:clamp(16px,2.6vw,20px);max-width:760px;margin:0 auto 30px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.hero-badges span{font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 15px;background:rgba(15,17,21,.6)}
+/* nav */
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(3,3,4,.82);backdrop-filter:blur(14px);border-block:1px solid var(--border);padding:12px 0;margin-bottom:44px}
+nav.toc .wrap{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
+nav.toc a{flex:none;font-size:13.5px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 14px;background:rgba(15,17,21,.7)}
+nav.toc a:hover{color:var(--gold);border-color:rgba(255,214,0,.4);text-decoration:none}
+/* sections */
+section.part{margin:60px 0 20px;text-align:center}
+section.part h2{font-size:clamp(24px,4.6vw,36px);font-weight:800}
+section.part p{color:var(--muted);max-width:720px;margin:10px auto 0}
+article.chapter{background:rgba(15,17,21,.66);border:1px solid var(--border);border-radius:24px;padding:34px 30px;margin:34px 0;backdrop-filter:blur(12px);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+article.chapter:hover{border-color:rgba(247,147,26,.35);box-shadow:0 0 60px rgba(247,147,26,.07),0 24px 60px rgba(0,0,0,.45)}
+.ch-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px}
+.ch-num{flex:none;font-family:'JetBrains Mono';font-size:13px;font-weight:600;color:var(--orange);border:1px solid rgba(247,147,26,.45);background:rgba(247,147,26,.08);border-radius:12px;padding:8px 12px;margin-top:4px}
+.ch-head h3{font-size:clamp(21px,3.4vw,27px);font-weight:700;line-height:1.35}
+.chapter h4{font-size:18px;font-weight:700;color:var(--gold);margin:26px 0 10px;display:flex;align-items:center;gap:9px}
+.chapter h4::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 10px rgba(247,147,26,.7);flex:none}
+.chapter p{margin:10px 0;color:#D5DCE5}
+.chapter ul,.chapter ol{margin:10px 24px 10px 0;color:#C7D0DC}
+.chapter li{margin:6px 0}
+.chapter li::marker{color:var(--orange)}
+.video-box{margin:22px 0 8px;border-radius:18px;overflow:hidden;border:1px solid rgba(247,147,26,.30);box-shadow:0 0 40px rgba(247,147,26,.10)}
+.video-box video{width:100%;display:block;background:#000}
+.video-cap{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono'}
+.callout{border:1px solid rgba(255,214,0,.35);background:rgba(255,214,0,.06);border-radius:14px;padding:14px 18px;margin:16px 0;font-size:15px;color:#EDE3B0}
+.callout.warn{border-color:rgba(234,88,12,.5);background:rgba(234,88,12,.08);color:#F5C9AE}
+.srcs{margin-top:22px;padding-top:16px;border-top:1px dashed var(--border);font-size:13.5px;color:var(--muted)}
+.srcs a{color:var(--muted);text-decoration:underline}
+.srcs a:hover{color:var(--gold)}
+table.cmp{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
+table.cmp th,table.cmp td{border:1px solid var(--border);padding:10px 12px;text-align:right;vertical-align:top}
+table.cmp th{background:rgba(247,147,26,.10);color:var(--gold);font-weight:600}
+table.cmp td{color:#C7D0DC;background:rgba(255,255,255,.02)}
+footer{margin:70px 0 40px;text-align:center;color:var(--muted);font-size:13.5px}
+footer .heart{color:var(--orange)}
+@media(max-width:640px){
+ article.chapter{padding:24px 18px;border-radius:18px}
+ .ch-head{flex-direction:column;gap:8px}
+ header.hero{padding:60px 0 34px}
+ .chapter ul,.chapter ol{margin-right:16px}
+ table.cmp{font-size:13px}
+ table.cmp th,table.cmp td{padding:7px 8px}
+}
+</style>
+</head>
+<body>
+<div class="orb" id="o1"></div><div class="orb" id="o2"></div><div id="grid"></div>
+
+<header class="hero"><div class="wrap">
+ <div class="pill">מדריך חי • מתעדכן • עברית</div>
+ <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><br>+ Fabric Skills ל-Power BI</h1>
+ <p class="sub">כל נושא שצריך כדי לעבוד נכון עם אפליקציית קלוד דסקטופ: פרויקטים, ארטיפקטים, סקילים, קונקטורים ו-MCP, סאב-אייג'נטים, ניהול קונטקסט וטוקנים, מצבי הרשאות ועוד. ובחלק השני: עבודה נכונה עם Skills for Fabric וסוכני נתונים בעולם Power BI. לכל נושא מצורף סרטון דמו עברי.</p>
+ <div class="hero-badges">
+  <span>19 פרקים</span><span>סרטון דמו לכל פרק</span><span>מבוסס תיעוד רשמי של Anthropic ו-Microsoft</span><span>נבדק נכון ל-28 בספטמבר 2026</span>
+ </div>
+</div></header>
+
+<nav class="toc"><div class="wrap" id="toc"></div></nav>
+
+<div class="wrap">
+
+<div class="callout" style="max-width:860px;margin:0 auto 30px"><b>שקיפות:</b> הסרטונים באתר הם סרטוני דמו מונפשים שנבנו על בסיס התיעוד הרשמי - הם מדמים את זרימות העבודה ואינם הקלטת מסך של האפליקציה עצמה. כל פרק מקשר למקורות הרשמיים שעל פיהם נכתב. המוצרים משתנים מהר; מה שנכון היום עלול להשתנות.</div>
+
+<section class="part" id="part-a">
+ <h2>חלק א׳: <span class="grad-text">Claude Desktop</span> מהקצה לקצה</h2>
+ <p>אפליקציית קלוד דסקטופ (Mac, Windows, ו-Linux בבטא) מחלקת את העבודה לשלושה מצבים: <b>Chat</b> לשיחה, <b>Cowork</b> להאצלת משימות מורכבות, ו-<b>Code</b> לפיתוח תוכנה. חשוב לא להתבלבל: לא כל פיצ׳ר קיים בכל מצב, וחלק מהדברים שמוכרים מ-Claude Code בטרמינל נראים אחרת כאן. הפרקים הבאים מסודרים מהיסודות למתקדם.</p>
+</section>
+
+<article class="chapter" id="ch01">
+ <div class="ch-head"><span class="ch-num">01</span><h3>סקירה כללית: Chat, Cowork ו-Code - שלוש דרכים לעבוד עם קלוד</h3></div>
+ <p>אפליקציית Claude Desktop נותנת שלוש דרכים לעבוד עם קלוד באותה אפליקציה. הבחירה ביניהן היא ההחלטה הראשונה בכל משימה, ואף פעם לא "מה שבא לי":</p>
+ <table class="cmp">
+  <tr><th></th><th>Chat</th><th>Cowork</th><th>Code</th></tr>
+  <tr><td><b>מתאים ל</b></td><td>שיחה שאתה מוביל תור-אחר-תור: שאלות, סיעור מוחות, טיוטות</td><td>עבודה מורכבת שמאצילים: מחקר, ניתוח, מסמכים ודליברבלים גמורים</td><td>פיתוח תוכנה: כתיבה, בדיקה, הרצה ודיפלוי של קוד</td><tr>
+  <tr><td><b>איפה רץ</b></td><td>ווב, דסקטופ ומובייל</td><td>דסקטופ (Mac/Windows/Linux בטא) + ווב ומובייל</td><td>טרמינל, דסקטופ וווב - מקומית או בענן</td></tr>
+  <tr><td><b>פיצ׳רים מרכזיים</b></td><td>כניסה מהירה, הכתבה קולית, פרויקטים, ארטיפקטים</td><td>תיקיות מקומיות, פרויקטים, פלאגינים, סאב-אייג'נטים, משימות מתוזמנות</td><td>מצבי Plan ו-Auto, דיפים ויזואליים, גיט, צ'קפוינטים, סשנים מקומיים וענן</td></tr>
+ </table>
+ <h4>הנקודה שרוב האנשים מפספסים</h4>
+ <p>Cowork ו-Code רצים על אותו מנוע - Claude Code. זה אומר שבשניהם קלוד יכול לעבוד עצמאית לאורך זמן, לפצל עבודה לסאב-אייג'נטים ולהחזיק משימות ארוכות. ההבדל הוא בסביבה: Cowork עובד במרחב מוגן ומוגבל לתיקיות ששיתפת, ו-Code רץ ישירות בפרויקט שלך עם גישה מלאה לקבצים, טרמינל וכלי פיתוח.</p>
+ <h4>איך בוחרים - שלוש שאלות</h4>
+ <ol>
+  <li>זו שאלה או טיוטה שאני רוצה לקשור אחת-אחת? <b>Chat.</b></li>
+  <li>זו משימה מורכבת שאני רוצה לתת ולחזור אליה כשהיא מוכנה? <b>Cowork.</b></li>
+  <li>זה קוד? <b>Code.</b></li>
+ </ol>
+ <div class="callout">בגרסאות האחרונות Chat ו-Cowork חולקים "בית" אחד: שיחות, משימות, פרויקטים וארטיפקטים באותו סרגל צד. בחלק מהחשבונות (Pro/Max, בהדרגה) כבר אין בחירה ידנית בין Chat ל-Cowork - קלוד מחליט לבד אם זו תשובה מהירה או משימה.</div>
+ <div class="video-box"><video controls preload="none" poster=""><source src="videos/01-overview.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 01 - שלוש דרכים לעבוד עם קלוד (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a> · <a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork">Projects in Claude Cowork</a></div>
+</article>
+
+<article class="chapter" id="ch02">
+ <div class="ch-head"><span class="ch-num">02</span><h3>Chat בדסקטופ: כניסה מהירה, צילומי מסך והכתבה קולית</h3></div>
+ <p>Chat הוא אותו קלוד של claude.ai, אבל האפליקציה הטבעית מוסיפה שלוש יכולות שמשנות הרגלי עבודה (חלקן כרגע ב-Mac בלבד):</p>
+ <ul>
+  <li><b>כניסה מהירה (Quick entry):</b> הקשה כפולה על מקש <kbd>Option</b> במק מעלה חלון קומפקטי שמרחף מעל כל אפליקציה. שואלים וממשיכים לעבוד בלי לעזוב את מה שפתוח.</li>
+  <li><b>צילומי מסך ושיתוף חלון:</b> במקום לתאר "יש לי דשבורד מוזר", גוררים סמן על החלון וקלוד רואה בדיוק מה שאתה רואה. מהיר ומדויק יותר מתיאור במילים.</li>
+  <li><b>הכתבה קולית (Dictation):</b> מדברים במקום להקליד - שימושי לחשיבה בקול, כשהידיים עסוקות, או כשהרעיון ארוך מדי להקלדה.</li>
+  <li><b>קונקטורים מקומיים:</b> Chat בדסקטופ יכול להתחבר לכלים שרצים על המחשב עצמו (ראו פרק 06).</li>
+ </ul>
+ <h4>זרימת עבודה נכונה</h4>
+ <ol>
+  <li>נתקלת במסך שלא מובן (דשבורד, שגיאה, מסמך)? הקש כפולה על <kbd>Option</kbd>, צלם את החלון, ושאל "מה אני רואה כאן ומה חריג?".</li>
+  <li>צריך לחשוב בקול על מבנה מצגת? פתח כניסה מהירה, עבור לקול, דבר חופשי - ובקש תשובה מסודרת.</li>
+  <li>צריך מידע מהכלים שלך (פתקים, יומן)? חבר קונקטור בהגדרות ואז שאל בשפה טבעית.</li>
+ </ol>
+ <div class="callout warn">שים לב: צילום מסך שולח לקלוד את כל מה שגלוי בחלון - כולל מידע רגיש שמופיע בו. בדוק מה בפריים לפני השליחה.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/02-chat.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 02 - Chat בדסקטופ (~3 דקות)</div>
+ <div class="srcs">מקור: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a></div>
+</article>
+
+<article class="chapter" id="ch03">
+ <div class="ch-head"><span class="ch-num">03</span><h3>פרויקטים: מרחב עבודה עם הוראות, קבצים, זיכרון ומשימות</h3></div>
+ <p>פרויקט הוא מרחב עבודה ייעודי לנושא אחד, עם הוראות משלו, קבצים, קונטקסט, משימות מתוזמנות וזיכרון נפרד. במקום שהכל יתערבב בצ'אט אחד ארוך - כל תחום מקבל בית.</p>
+ <h4>שלוש דרכים ליצור פרויקט (ב-Cowork)</h4>
+ <ol>
+  <li><b>מהתחלה:</b> תיקייה חדשה עם הוראות וקבצים שאתה מעלה.</li>
+  <li><b>ייבוא מפרויקט Chat קיים:</b> מעביר את הקבצים וההוראות של פרויקט ווב לפרויקט Cowork חדש (אין העברה מרובה - פרויקט אחד בכל פעם).</li>
+  <li><b>תיקייה קיימת במחשב:</b> בוחרים תיקייה, והיא הופכת לקונטקסט של הפרויקט.</li>
+ </ol>
+ <h4>מה כל פרויקט מחזיק</h4>
+ <ul>
+  <li><b>הוראות (Instructions):</b> טון, פורמט, כללים - חלים על כל משימה בפרויקט.</li>
+  <li><b>משימות מתוזמנות:</b> משימות חוזרות ספציפיות לפרויקט (פרק 10).</li>
+  <li><b>קונטקסט:</b> תיקייה מקומית, קישור לפרויקט צ'אט, או URL.</li>
+  <li><b>זיכרון:</b> קלוד זוכר מה שקרה במשימות קודמות של אותו פרויקט - ורק בו. זיכרון לא דולף בין פרויקטים.</li>
+ </ul>
+ <h4>מלכודות</h4>
+ <ul>
+  <li>פרויקט שנוצר מתיקייה מקומית <b>נשאר על אותו מחשב</b> ולא נשמר לחשבון - הוא לא יופיע במכשירים אחרים.</li>
+  <li>פרויקטים זמינים ב-Cowork בלבד, לא ב-Claude Code (בתכנון לעדכון עתידי).</li>
+  <li>שיתוף פרויקט ("Can view" / "Can edit") זמין רק ב-Team ו-Enterprise.</li>
+  <li>ארכיון פרויקט מסיר אותו מהממשק אבל לא מוחק קבצים מהמחשב.</li>
+ </ul>
+ <div class="video-box"><video controls preload="none"><source src="videos/03-projects.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 03 - פרויקטים (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork">Organize your tasks with projects in Claude Cowork</a> · <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a></div>
+</article>
+
+<article class="chapter" id="ch04">
+ <div class="ch-head"><span class="ch-num">04</span><h3>ארטיפקטים: מסמכים, מצגות, דשבורדים ואפליקציות קטנות לצד השיחה</h3></div>
+ <p>ארטיפקט הוא כל דבר שקלוד יוצר ושתרצה לשים מול אנשים: מסמך, מצגת, דשבורד, דף נחיתה או כלי אינטראקטיבי קטן. הוא נפתח בחלון משלו לצד השיחה, אפשר לערוך אותו, לחזור אליו ולשתף. קלוד יוצר ארטיפקט כשהתוכן משמעותי (בדרך כלל מעל 15 שורות), עומד בפני עצמו, וסביר שתרצה לערוך או לחזור אליו.</p>
+ <div class="callout">ארטיפקטים דורשים הפעלה של <b>Code execution and file creation</b> תחת Settings &gt; Capabilities (או Organization settings ב-Team/Enterprise). ארטיפקטים חדשים נשמרים לחשבון וניתנים לשיתוף.</div>
+ <h4>תבניות התחלה (בטא, מסלולים בתשלום)</h4>
+ <ul>
+  <li><b>Docs:</b> מסמכים חיים שכותבים עם קלוד והצוות בזמן אמת. ייצוא ל-Word, PDF, Markdown ו-Google Docs.</li>
+  <li><b>Slides:</b> מצגות שנבנות מהחומר שלך; עריכה ישירה, הצגה בתוך קלוד, ייצוא ל-PowerPoint או PDF.</li>
+  <li><b>Design:</b> ויז'ואלים, מוקאפים ודפי נחיתה - יכולים לעבוד עם מערכת העיצוב שלך (צבעים, פונטים, קומפוננטות). ייצוא כ-zip, PDF, PPTX או HTML עצמאי.</li>
+ </ul>
+ <h4>עריכה נכונה</h4>
+ <ul>
+  <li>מבקשים מקלוד לשנות - או עורכים ישירות בתוך הארטיפקט.</li>
+  <li>במסמך Markdown: מסמנים טקסט, לוחצים "Edit with Claude" וכותבים מה לשנות - בלי לתאר איפה זה נמצא.</li>
+  <li>עריכת הודעה קודמת בשיחה יוצרת ענף חדש עם ארטיפקטים משלו - כך בודקים כיוון אחר בלי לאבד את הקודם.</li>
+ </ul>
+ <h4>יכולות מתקדמות</h4>
+ <ul>
+  <li><b>ארטיפקטים שמשתמשים בקלוד:</b> הארטיפקט עצמו קורא לקלוד - אפליקציה קטנה שרצה על התשתית של Anthropic. בלי מפתח API, בלי עלות לך; השימוש נספר אצל כל משתמש במסלול שלו.</li>
+  <li><b>חיבור לאפליקציות (Pro ומעלה):</b> ארטיפקט יכול לקרוא ולכתוב בכלים שחיברת (Asana, Google Calendar, Slack). בפעם הראשונה קלוד מראה לאילו כלים הוא ניגש ומבקש אישור. כל משתמש מתחבר לאפליקציות שלו - גם בארטיפקט משותף.</li>
+  <li><b>אחסון נתונים:</b> עד 20MB טקסט לארטיפקט, אישי (כל אחד רואה את שלו) או משותף (כולם רואים אותו דבר). בדוק מה משותף לפני שמזינים מידע רגיש.</li>
+ </ul>
+ <h4>מלכודות</h4>
+ <ul>
+  <li>"ארטיפקטים ישנים" (מלפני 16.9.2026) ממשיכים לעבוד אבל אי אפשר ליצור חדשים כמותם; ב-Cowork, "live artifacts" מלפני 19.8.2026 לא ניתנים לעריכה במקום.</li>
+  <li>שגיאה בארטיפקט? כפתור "Try fixing with Claude" מעתיק את פרטי השגיאה להודעה חדשה.</li>
+  <li>שיתוף: כל מי שפותח ארטיפקט שקורא לקלוד עושה זאת מהחשבון שלו - אל תבנו על "שיתפתי אז אני משלם".</li>
+ </ul>
+ <div class="video-box"><video controls preload="none"><source src="videos/04-artifacts.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 04 - ארטיפקטים (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them">What are artifacts</a> · <a href="https://support.claude.com/en/articles/14729249-use-artifacts-in-claude-cowork">Artifacts in Claude Cowork</a></div>
+</article>
+
+<article class="chapter" id="ch05">
+ <div class="ch-head"><span class="ch-num">05</span><h3>סקילים: ללמד את קלוד את שיטת העבודה שלך</h3></div>
+ <p>סקיל (Skill) הוא תיקייה עם הוראות, סקריפטים ומשאבים שקלוד טוען דינמית כשצריך - כדי לבצע משימה מסוימת בצורה עקבית: מסמכים בקווי המותג, ניתוח נתונים בשיטה של הארגון, אוטומציה אישית. סקילים זמינים בכל המסלולים (כולל Free) ודורשים הפעלת Code execution.</p>
+ <h4>איך זה עובד - Progressive disclosure</h4>
+ <p>קלוד סוקר אילו סקילים רלוונטיים לבקשה, טוען רק את מה שנחוץ, ומיישם את ההוראות. זה המנגנון שמונע מהקונטקסט להתפוצץ (ראו פרק 09): הידע של הסקיל לא יושב בזיכרון כל הזמן, אלא נשלף ברגע הנכון.</p>
+ <h4>ארבעה סוגי סקילים</h4>
+ <ol>
+  <li><b>סקילים של Anthropic:</b> יצירת Excel, Word, PowerPoint ו-PDF משופרת - פועלים אוטומטית כשרלוונטי, בלי לבקש.</li>
+  <li><b>סקילים מותאמים אישית:</b> בונים תיקייה עם קובץ SKILL.md, אורזים כ-ZIP, ומעלים ב-Customize &gt; Skills (כפתור "+"). פרטי לחשבון שלך.</li>
+  <li><b>סקילים ארגוניים (Team/Enterprise):</b> ה-Owner מספק לכולם; מופיעים אוטומטית ברשימה של כל חבר.</li>
+  <li><b>סקילי שותפים:</b> מ-Notion, Figma, Atlassian ועוד, בספריית הסקילים - מתוכננים לעבוד עם הקונקטורים שלהם.</li>
+ </ol>
+ <h4>שיתוף סקילים (Team/Enterprise)</h4>
+ <p>השיתוף כבוי כברירת מחדל - Owner מפעיל ב-Organization settings &gt; Skills. אפשר לשתף עם אנשים ספציפיים, קבוצה, או כל הארגון (נכנס לספרייה הארגונית). סקיל משותף הוא read-only; עדכון שלך זורם אוטומטית לכל מי שקיבל.</p>
+ <h4>שימוש בפועל</h4>
+ <ul>
+  <li>בצ'אט וב-Cowork: קלוד מפעיל לבד כשרלוונטי, או שתכתוב במפורש "השתמש בסקיל קווי המותג שלי".</li>
+  <li>בתוספי Microsoft 365 (Excel, Word, PowerPoint, Outlook): הקלדת <code>/</code> בסרגל הצד מציגה את הסקילים; סקיל עם תבנית Excel/PowerPoint נטען ישירות לקובץ הפתוח.</li>
+  <li>ב-Claude Code: הקלדת <code>/</code> או "+" ו-Slash commands. סקילים אישיים יושבים ב-<code>~/.claude/skills/</code>.</li>
+ </ul>
+ <div class="callout warn">אבטחה: סקיל יכול להכיל קוד ולהורות על התקנת חבילות צד-שלישי. הסיכונים המרכזיים הם prompt injection ודליפת מידע. התקינו סקילים רק ממקורות מהימנים, וקראו את תוכן הקבצים לפני ההפעלה - במיוחד מה שמחבר לרשתות חיצוניות.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/05-skills.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 05 - סקילים (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/12512176-what-are-skills">What are skills</a> · <a href="https://support.claude.com/en/articles/12512180-use-skills-in-claude">Use skills in Claude</a> · <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">Create custom skills</a></div>
+</article>
+
+<article class="chapter" id="ch06">
+ <div class="ch-head"><span class="ch-num">06</span><h3>קונקטורים ו-MCP: לחבר את קלוד לכלים שלך - נכון</h3></div>
+ <p>קלוד מתחבר לכלים בשני אופנים, והבחירה ביניהם היא ההבנה הכי חשובה כאן:</p>
+ <table class="cmp">
+  <tr><th></th><th>קונקטור מרוחק (Remote)</th><th>הרחבת דסקטופ (Desktop extension)</th></tr>
+  <tr><td><b>מתי</b></td><td>שירות ענן שמתחברים אליו (Slack, Notion, Linear, GitHub)</td><td>כלי שרץ על המחשב: קבצים מקומיים, DB על localhost, אפליקציית דסקטופ</td></tr>
+  <tr><td><b>זמין ב</b></td><td>כל המשטחים - ווב, מובייל, Cowork, דסקטופ, Code</td><td>דסקטופ ו-Claude Code בלבד</td></tr>
+  <tr><td><b>התקנה</b></td><td>Settings &gt; Connectors או ספריית הקונקטורים</td><td>Settings &gt; Extensions - התקנה בקליק מקובץ MCPB</td></tr>
+ </table>
+ <h4>MCP בקצרה</h4>
+ <p>Model Context Protocol הוא הפרוטוקול הפתוח שמחבר מודלים למקורות מידע וכלים. בעבר התקנת שרת MCP מקומי דרשה עריכת JSON ידנית; היום <b>Desktop extensions</b> (קבצי <code>.mcpb</code>) הופכים את זה להתקנה בקליק - כולל ממשק להזנת מפתחות API (מוצפנים באחסון המאובטח של מערכת ההפעלה) ותמיכה בשרתי Node.js (סביבה מובנית, לא צריך התקנה), Python ובינארי.</p>
+ <h4>איך מתקינים</h4>
+ <ol>
+  <li>קונקטור ענן: תפריט "Search and tools" בצ'אט ← "Add connectors", או Settings &gt; Connectors. מתחבר בכל מקום אחר עוד הגדרה.</li>
+  <li>הרחבת דסקטופ מהספרייה: Settings &gt; Extensions ← "Browse extensions" ← Install ← ממלאים הגדרות.</li>
+  <li>הרחבה מותאמת: Settings &gt; Extensions ← "Advanced settings" ← "Install Extension..." ובוחרים קובץ <code>.mcpb</code>.</li>
+  <li>בדיקה שהכל חי: כפתור ה-+ בתיבת הצ'אט ← Connectors מציג שרתים מחוברים וכלים; או Developer settings ללוגים.</li>
+ </ol>
+ <h4>קונקטורים אינטראקטיביים</h4>
+ <p>חלק מהקונקטורים מציגים ממשק חי בתוך השיחה - לוח Asana, דשבורד Amplitude, עיצוב Figma - במקום תשובת טקסט. מסומנים בתג "Interactive" בספרייה, פועלים אוטומטית, רצים ב-iframe מבודד עם CSP קפדני, ולא מבקשים הרשאות מעבר לקונקטור עצמו. רכישות דרכם - לא נתמכות.</p>
+ <h4>מלכודות</h4>
+ <ul>
+  <li>שרת MCP מקומי מ-npm/PyPI לא יכול להיכנס לספרייה - לאורזים כ-MCPB.</li>
+  <li>הרחבה מותקנת אבל הכלים לא זמינים? אתחול האפליקציה ובדיקת שדות חובה בהגדרות.</li>
+  <li>ב-Team/Enterprise ה-Owner שולט אילו הרחבות וקונקטורים מאושרים (allowlist); מדיניות ארגונית גוברת על הגדרות באפליקציה.</li>
+ </ul>
+ <div class="video-box"><video controls preload="none"><source src="videos/06-connectors.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 06 - קונקטורים ו-MCP (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors">Desktop vs web connectors</a> · <a href="https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop">Local MCP servers / desktop extensions</a> · <a href="https://support.claude.com/en/articles/13454812-use-interactive-connectors-in-claude">Interactive connectors</a> · <a href="https://claude.com/docs/connectors/directory">Connectors directory</a></div>
+</article>
+
+<article class="chapter" id="ch07">
+ <div class="ch-head"><span class="ch-num">07</span><h3>פלאגינים: חבילות יכולות מוכנות להתקנה</h3></div>
+ <p>פלאגין הוא חבילה שמוסיפה לקלוד יכולות שאין לו מהקופסה: נתונים פיננסיים חיים, חיפוש בבסיס הידע הפנימי של החברה, עבודה במסגרת compliance מסוימת. מבחינה טכנית פלאגין יכול לארוז יחד סקילים, סוכנים, hooks, שרתי MCP והגדרות LSP.</p>
+ <h4>מרוחק מול מקומי</h4>
+ <ul>
+  <li>פלאגין עם שרת MCP מרוחק - זמין בכל מקום.</li>
+  <li>פלאגין עם שרת MCP מקומי - עובד ב-Cowork וב-Claude Code, לא בצ'אט.</li>
+ </ul>
+ <h4>התקנה בדסקטופ (בלי טרמינל)</h4>
+ <ol>
+  <li>בסשן Code מקומי או SSH: כפתור ה-+ ליד תיבת הפרומפט ← Plugins.</li>
+  <li>"Add plugin" פותח את דפדפן הפלאגינים מהמרקטפלייסים שמוגדרים אצלך (כולל הרשמי של Anthropic).</li>
+  <li>"Manage plugins" לאפשר, לכבות או להסיר.</li>
+ </ol>
+ <h4>מלכודות</h4>
+ <ul>
+  <li>סקופ: פלאגין יכול להיות ברמת חשבון, פרויקט, או מקומי בלבד.</li>
+  <li>פלאגינים מהדסקטופ לא זמינים בסשני ענן; בסשן ענן מצהירים עליהם ב-<code>.claude/settings.json</code> תחת <code>enabledPlugins</code> והם מותקנים בתחילת הסשן.</li>
+  <li>לא זמין בסשני WSL.</li>
+  <li>בניהול ארגוני, פלאגינים מנוהלים מרכזית זמינים כמו ב-CLI.</li>
+ </ul>
+ <div class="video-box"><video controls preload="none"><source src="videos/07-plugins.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 07 - פלאגינים (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a> · <a href="https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory">Unified directory</a></div>
+</article>
+
+<article class="chapter" id="ch08">
+ <div class="ch-head"><span class="ch-num">08</span><h3>זיכרון, חיפוש בשיחות עבר וצ'אטים אנונימיים</h3></div>
+ <p>שני מנגנונים הופכים את קלוד מממשק חסר-זיכרון לשותף שמכיר אותך לאורך זמן - ומנגנון שלישי לכשאתה דווקא רוצה שלא יזכרו:</p>
+ <h4>חיפוש בשיחות עבר (מסלולים בתשלום)</h4>
+ <p>שואלים בשפה טבעית - "מה החלטנו על התמחור ברבעון שעבר?" - וקלוד מחפש בשיחות הקודמות עם RAG (יופיע כקריאת כלי בשיחה). הגבולות: כל הצ'אטים מחוץ לפרויקטים, וכל פרויקט בתוך עצמו בלבד. מופעל כברירת מחדל; כיבוי ב-Settings &gt; Memory ← "Search and reference chats".</p>
+ <h4>זיכרון (Memory)</h4>
+ <ul>
+  <li>קלוד שומר זיכרונות כנושאים בזמן השיחה (לא סיכום בסוף). אפשר גם לומר "תזכור את זה".</li>
+  <li>מה נשמר: תפקיד, פרויקטים, אנשים ומקומות בעבודה, העדפות תקשורת וסגנון עבודה, העדפות טכניות.</li>
+  <li>נושאים רגישים (בריאות, דת, פוליטיקה וכו') <b>לא</b> נשמרים כברירת מחדל - אפשר להפעיל "Include sensitive topics in memory".</li>
+  <li>לכל פרויקט זיכרון נפרד + סיכום פרויקט.</li>
+  <li>זיכרון משותף בין Chat ל-Cowork <b>רק כש-Cowork רץ בענן</b> - סשנים מקומיים לא משתמשים בזיכרון.</li>
+  <li>ברירת מחדל: דולק ב-Free/Pro/Max; ב-Team/Enterprise כבוי עד שה-Owner מדליק.</li>
+  <li>בקרה: Pause (שומר הקיים, מפסיק שימוש ויצירה) או Reset (מחיקה מלאה ובלתי הפיכה).</li>
+ </ul>
+ <h4>Incognito - כשלא רוצים שישאר זכר</h4>
+ <p>אייקון רפאים בפתיחת צ'אט חדש (מחוץ לפרויקט) פותח שיחה זמנית: לא נשמרת בהיסטוריה, לא נכנסת לזיכרון, ולא מופיעה בחיפושי עבר. זמין לכל המסלולים. שים לב: ב-Team/Enterprise צ'אטים אנונימיים כלולים בייצוא נתונים ארגוני.</p>
+ <div class="callout">טיפ: יצאת מקלוד וחזרת אחרי שדרוג? אם משהו "נשכח" בהגירת הזיכרון - היתה אפשרות ייצוא של הזיכרון הישן ב-Settings &gt; Memory (עד 9.9.2026). שווה לבדוק שהזיכרון החדש בנוי מחדש כמו שצריך.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/08-memory.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 08 - זיכרון וחיפוש (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Chat search and memory</a> · <a href="https://support.claude.com/en/articles/12260368-use-incognito-chats">Incognito chats</a></div>
+</article>
+
+<article class="chapter" id="ch09">
+ <div class="ch-head"><span class="ch-num">09</span><h3>קונטקסט וטוקנים: ניהול נכון של חלון ההקשר</h3></div>
+ <p>חלון ההקשר הוא זיכרון העבודה של המודל: תקציב טוקנים סופי שמכיל את ההוראות, כלי העבודה, ההודעות שלך, התשובות הקודמות וכל תוצאת כלי. כשהוא מתמלא - הביצועים יורדים וקלוד "שוכח". ניהול נכון שלו הוא ההבדל בין סשן שמצליח לסשן שמתדרדר.</p>
+ <h4>מה אוכל את החלון</h4>
+ <ul>
+  <li>הודעות ארוכות, קבצים שהודבקו, תוצאות של קריאות קבצים וכלים.</li>
+  <li>שיחה ארוכה שמרכיבה הכל: גם ההיסטוריה עצמה צורכת טוקנים.</li>
+ </ul>
+ <h4>הכלים המובנים</h4>
+ <ul>
+  <li><b>טבעת שימוש (Usage ring):</b> לצד בורר המודל ב-Code - מציגה ניצול חלון ההקשר של הסשן הנוכחי וניצול המסלול התקופתי.</li>
+  <li><b>דחיסה אוטומטית:</b> כשהקונטקסט מתמלא, קלוד מסכם את השיחה וממשיך - אתה לא צריך לעשות כלום.</li>
+  <li><b><code>/compact</code>:</b> דחיסה ידנית מוקדמת - משחרר מקום לפני שהביצועים נפגעים. הרגע הנכון: אחרי שהשלמת שלב, לפני נושא חדש.</li>
+  <li><b>Progressive disclosure של סקילים:</b> ידע נטען רק כשרלוונטי במקום לשבת בקונטקסט תמיד (פרק 05).</li>
+ </ul>
+ <h4>כללי עבודה נכונה</h4>
+ <ol>
+  <li>סשן חדש לנושא חדש. אל תגרור שיחת בוקר שלמה לתוך משימת אחה"צ.</li>
+  <li>תן לקלוד למשוך קבצים בעצמו (ב-Cowork/Code) במקום להדביק תוכן ענק לצ'אט.</li>
+  <li>משימה ענקית? פצל לשלבים עם צ'קפוינט; אחרי כל שלב <code>/compact</code> או סשן חדש עם סיכום.</li>
+  <li>מסמכים ענקיים לניתוח חוזר? שים בפרויקט במקום להדביק שוב ושוב.</li>
+  <li>שים לב לטבעת השימוש; מעל ~70% - זמן לדחוס או לפצל.</li>
+ </ol>
+ <div class="video-box"><video controls preload="none"><source src="videos/09-context.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 09 - קונטקסט וטוקנים (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a> · <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">Context windows</a></div>
+</article>
+
+<article class="chapter" id="ch10">
+ <div class="ch-head"><span class="ch-num">10</span><h3>Cowork לעומק: משימות, תיקיות, תזמון, דפדפן ו-Dispatch</h3></div>
+ <p>Cowork נבנה לעבודה שדורשת מאמץ אמיתי: משיכה מהרבה מקורות, הבנה, ותוצר גמור. קלוד שואל שאלות הבהרה קצרות (סקופ, פורמט, אילוצים), בונה תוכנית שאתה סוקר בסרגל הצד, ועובד דרכה - ואתה רואה את המקורות, הקבצים וההתקדמות בזמן אמת. אפשר להריץ כמה משימות במקביל, כל אחת בשיחה משלה.</p>
+ <h4>יכולות מפתח</h4>
+ <ul>
+  <li><b>גישה לתיקייה:</b> נותנים תיקייה במחשב - קלוד קורא, מבין מה רלוונטי, ושומר תוצרים חזרה לאותה תיקייה.</li>
+  <li><b>משימות מתוזמנות:</b> בריפ יומי מהסלאק והיומן, סיכום שבועי, טריאז' תיבת דואר בבוקר. מגדירים פעם אחת - ורץ בכל פעם שהאפליקציה פתוחה; אם המחשב היה סגור במועד, הוא משלים כשחוזרים.</li>
+  <li><b>גלישה בדפדפן:</b> עם Claude in Chrome קלוד מנווט אתרים, ממלא וגולל, ומושך ממצאים למשימה - בדיקת מחירי מתחרים בעשרה אתרים בלי שפתחת טאב.</li>
+  <li><b>סביבה מוגנת:</b> Cowork רץ במרחב מכיל: קריאה/כתיבה רק בתיקיות ששיתפת, שום דבר מחוץ להן.</li>
+  <li><b>Dispatch:</b> שיחה מתמשכת עם קלוד מהטלפון. שולחים משימה מהכיס - Dispatch מחליט איפה לבצע: מחקר ומסמכים נשארים ב-Cowork, באגים ו-PRs הופכים לסשן Code עם תג Dispatch והתראה כשמסתיים. דורש Pro/Max.</li>
+ </ul>
+ <div class="callout">Cowork זמין במסלולים בתשלום (Pro, Max, Team, Enterprise) בדסקטופ ל-Mac ול-Windows, ומצריך את הגרסה העדכנית.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/10-cowork.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 10 - Cowork לעומק (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a> · <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop docs (Dispatch)</a></div>
+</article>
+
+<article class="chapter" id="ch11">
+ <div class="ch-head"><span class="ch-num">11</span><h3>Code בדסקטופ חלק א׳: סשנים, סביבות ועבודה מקבילה</h3></div>
+ <p>טאב Code הוא סביבת פיתוח מלאה על בסיס Claude Code. כל שיחה היא <b>סשן</b> עם היסטוריה, תיקיית פרויקט ושינויי קוד משלו - ואפשר להריץ כמה במקביל מהסרגל (<kbd>Cmd/Ctrl+N</b> לסשן חדש).</p>
+ <h4>ארבעה דברים לקבוע לפני ההודעה הראשונה</h4>
+ <ol>
+  <li><b>סביבה:</b> Local (המחשב שלך), Cloud (ממשיך לרוץ אחרי שסוגרים את האפליקציה, ניטור גם מ-claude.ai/code ומהמובייל, תומך בכמה ריפוזitories לסשן), SSH (מכונה מרוחקת), או WSL ב-Windows.</li>
+  <li><b>תיקיית פרויקט:</b> התיקייה או הריפו שקלוד עובד בה.</li>
+  <li><b>מודל:</b> מהדרופ-דאון ליד כפתור השליחה; ניתן להחלפה באמצע.</li>
+  <li><b>מצב הרשאות:</b> כמה עצמאות קלוד מקבל (פרק 12).</li>
+ </ol>
+ <h4>עבודה מקבילה נכונה</h4>
+ <ul>
+  <li><b>בידוד גיט:</b> בריפו, כל סשן מקבל עותק מבודד (Git worktree) - שינויי סשן א' לא נוגעים בסשן ב' עד הקומיט. ב-Windows נדרש Git for Windows.</li>
+  <li><b>מסך מפוצל:</b> החזקת <kbd>Cmd/Ctrl</kbd> ולחיצה על סשן פותחת אותו לצד הנוכחי.</li>
+  <li><b>שאלת צד (Side chat):</b> <kbd>Cmd/Ctrl+;</kbd> או <code>/btw</code> - שאלה שרואה את כל הקונטקסט בלי להוסיף כלום לשיחה הראשית. מושלם ל"מה הקוד הזה עושה?" בלי לסטות.</li>
+  <li><b>עבודה בין סשנים:</b> אפשר לשאול "איזה סשן נגע בריפקטור ההתחברות?", "מה הסשן של ה-API החליט?", או "תגיד לסשן התשלומים שהסכימה השתנתה" - וקלוד מעביר הודעות עם שיוך ברור. ארכיון סשן תמיד מבקש אישור, בכל מצב.</li>
+ </ul>
+ <div class="callout">התראות: כשסשן מסיים משימה ואתה לא מסתכל עליו - מגיעה התראת מערכת. בסשני ענן אפשר להמשיך לעקוב מהטלפון.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/11-code-sessions.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 11 - סשנים וסביבות (~3 דקות)</div>
+ <div class="srcs">מקור: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a></div>
+</article>
+
+<article class="chapter" id="ch12">
+ <div class="ch-head"><span class="ch-num">12</span><h3>מצבי הרשאות: Plan מול Execute - כמה עצמאות לתת לקלוד</h3></div>
+ <p>מצב ההרשאות קובע מתי קלוד עוצר לשאול. מחליפים באמצע סשן מהסלקטור ליד כפתור השליחה, והבחירה נזכרת לכל תיקייה:</p>
+ <table class="cmp">
+  <tr><th>מצב</th><th>התנהגות</th><th>מתי</th></tr>
+  <tr><td><b>Manual</b></td><td>שואל לפני כל עריכת קובץ וכל פקודה; רואים דיף ומאשרים/דוחים</td><td>קוד רגיש, לימוד, כשלא סומכים עדיין</td></tr>
+  <tr><td><b>Accept edits</b></td><td>מאשר עריכות קבצים אוטומטית, שואל על פקודות טרמינל אחרות</td><td>איטרציה מהירה כשסומכים על שינויי הקבצים</td></tr>
+  <tr><td><b>Plan</b></td><td>קורא וחוקר בלי לגעת בקוד, ומציג תוכנית לאישור</td><td>משימות מורכבות - קודם מסכימים על הגישה</td></tr>
+  <tr><td><b>Auto</b></td><td>מבצע הכל עם בדיקות בטיחות ברקע שמוודאות התאמה לבקשה</td><td>משימות שגרתיות מוגדרות היטב (דורש מודלים עדכניים)</td></tr>
+  <tr><td><b>Bypass permissions</b></td><td>רץ בלי בקשות אישור כמעט בכלל</td><td>רק בקונטיינר/VM מבודד!</td></tr>
+ </table>
+ <h4>הזרימה המומלצת למשימה מורכבת</h4>
+ <ol>
+  <li>פתח ב-<b>Plan</b>: קלוד חוקר את הקוד ומציג תוכנית מלאה עם צ'ויור ייעודי שאפשר לחזור אליו.</li>
+  <li>סקור את התוכנית, תקן את הגישה, אשר.</li>
+  <li>עבור ל-<b>Accept edits</b> (או Manual בקוד רגיש) לביצוע.</li>
+  <li>רוצה לדייק? לחץ stop לעצירה מיידית, או פשוט כתוב תיקון ושלח - קלוד קורא אותו בסוף הפעולה הנוכחית ומתאים.</li>
+ </ol>
+ <div class="callout warn">גם באתרים חיצוניים בדפדפן המובנה: בכל מצב חוץ מ-Auto/Bypass יש בדיקת allowlist לדומיין, ומסווגי בטיחות בוחנים כל פעולת כתיבה (קליקים, הקלדה). קלוד לא ירכוש, יפתח חשבון או יעקוף CAPTCHA בלעדיך.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/12-permissions.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 12 - מצבי הרשאות (~3 דקות)</div>
+ <div class="srcs">מקור: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a></div>
+</article>
+
+<article class="chapter" id="ch13">
+ <div class="ch-head"><span class="ch-num">13</span><h3>סקירת קוד, דיפים ו-PR: מעגל הביקורת המלא</h3></div>
+ <p>הערך של Code בדסקטופ הוא שאתה נשאר בעל הבית של מה שנכנס לקוד. מעגל העבודה המלא:</p>
+ <h4>1. סקירת דיפים</h4>
+ <p>אחרי שינוי מופיע מדד שורות (<code>+12 -1</code>). לחיצה פותחת צפיית דיף: רשימת קבצים ושינויים. לחיצה על שורה פותחת תיבת תגובה; אחרי כמה תגובות, <kbd>Cmd/Ctrl+Enter</kbd> שולח הכל בבת אחת - וקלוד מתקן ומציג דיף חדש.</p>
+ <h4>2. Review code</h4>
+ <p>כפתור "Review code" בתוך צפיית הדיף מבקש מקלוד להעריך את השינויים לפני קומיט: שגיאות קומפילציה, באגי לוגיקה ודאים, פרצות אבטחה. הוא לא יתפנק על סגנון או דברים שהלינטר תופס.</p>
+ <h4>3. תצוגה מקדימה חיה</h4>
+ <p>קלוד מרים שרת פיתוח ופותח בחלונית הדפדפן המובנית, מצלם מסך, בודק DOM, לוחץ, ממלא טפסים ומתקן בעיות - אימות עצמי אחרי כל עריכה (אפשר לכבות ב-<code>.claude/launch.json</code> עם <code>"autoVerify": false</code>).</p>
+ <h4>4. PR ו-CI</h4>
+ <p>אחרי פתיחת Pull Request מופיע פס סטטוס CI (דרך GitHub CLI): <b>Auto-fix</b> מנסה לתקן בדיקות שנכשלו, <b>Auto-merge</b> ממזג (squash) כשהכל ירוק. נדרש <code>gh</code> מותקן ומחובר.</p>
+ <h4>סאב-אייג'נטים ומשימות רקע</h4>
+ <p>חלונית ה-Tasks מציגה את העבודה הפנימית של הסשן: סאב-אייג'נטים, פקודות רקע וזרימות דינמיות. קלוד מפצל מחקר לסוכנים מתמחים (למשל סוכן Plan לסריקת קוד לפני תכנון) - אתה רואה הכל, ויכול לעצור כל אחד.</p>
+ <div class="video-box"><video controls preload="none"><source src="videos/13-review.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 13 - סקירת קוד ו-PR (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a> · <a href="https://code.claude.com/docs/en/sub-agents">Custom subagents</a></div>
+</article>
+
+<article class="chapter" id="ch14">
+ <div class="ch-head"><span class="ch-num">14</span><h3>קיצורי מקלדת, Computer Use וטיפים למשתמש מתקדם</h3></div>
+ <h4>קיצורים ששווה לשנן (Code tab; ב-Windows Ctrl במקום Cmd)</h4>
+ <ul>
+  <li><kbd>Cmd+/</kbd> כל הקיצורים · <kbd>Cmd+N</kbd> סשן חדש · <kbd>Ctrl+Tab</kbd> מעבר בין סשנים</li>
+  <li><kbd>Esc</kbd> עצירת התשובה · <kbd>Cmd+;</kbd> שאלת צד · <kbd>Ctrl+O</kbd> מעבר בין מצבי תצוגה (Normal/Verbose/Summary)</li>
+  <li><kbd>Cmd+Shift+D</kbd> חלונית דיף · <kbd>Cmd+Shift+B</kbd> דפדפן · <kbd>Ctrl+`</kbd> טרמינל · <kbd>Cmd+\</kbd> סגירת חלונית</li>
+  <li><kbd>Cmd+Shift+M</kbd> מצב הרשאות · <kbd>Cmd+Shift+I</kbd> מודל · <kbd>Cmd+Shift+E</kbd> רמת מאמץ</li>
+ </ul>
+ <h4>Computer use - קלוד שולט במסך (research preview, Pro/Max, Mac/Windows)</h4>
+ <p>קלוד פותח אפליקציות ועובד בממשק כמוך - לאוטומציה של כלים בלי CLI או API. כבוי כברירת מחדל; מדליקים ב-Settings וב-Mac נותנים הרשאות Accessibility ו-Screen Recording. קלוד תמיד מעדיף כלי מדויק (קונקטור, Bash, דפדפן) לפני שליטה במסך, ורמות הגישה קבועות לפי סוג אפליקציה: דפדפנים view-only, טרמינלים ועורכי קוד click-only. כל אפליקציה חדשה דורשת אישור.</p>
+ <h4>שלושה טיפים שמשנים הרגלים</h4>
+ <ol>
+  <li>מצבי תצוגה: Verbose כשדיבגתם "למה הוא עשה את זה", Summary כשסורקים כמה סשנים במקביל.</li>
+  <li><code>@</code> + שם קובץ בפרומפט מוסיף קובץ לקונטקסט (סשנים מקומיים).</li>
+  <li>עבור בין משטחים: "Continue in" מעביר סשן מקומי לענן או ל-IDE באמצע העבודה.</li>
+ </ol>
+ <div class="video-box"><video controls preload="none"><source src="videos/14-power.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 14 - קיצורים וטיפים (~3 דקות)</div>
+ <div class="srcs">מקור: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a></div>
+</article>
+
+<section class="part" id="part-b">
+ <h2>חלק ב׳: <span class="grad-text">Fabric Skills</span> בעולם Power BI</h2>
+ <p>"Skills" בהקשר של Microsoft Fabric הם לא פיצ׳ר אחד אלא שכבה שלמה: הוראות מוכנות (SKILL.md) שמלמדות כלי AI לעבוד מול Fabric, פלאגין רשמי לכתיבת דוחות Power BI, שרת MCP למידול, וסוכן נתונים שעונה בשפה טבעית על המודלים שלכם. החלק הזה מסביר מה קיים היום, איך עובדים איתו נכון, ואיך מוודאים (בידוק) שהתשובות נכונות.</p>
+</section>
+
+<article class="chapter" id="ch15">
+ <div class="ch-head"><span class="ch-num">15</span><h3>מה זה Skills for Fabric ואיך מתקינים</h3></div>
+ <p>Skills for Fabric הם הוראות שימוש חוזרות (open source, רישיון MIT, בריפו <code>microsoft/skills-for-fabric</code>) שמלמדות כלי קוד-AI - GitHub Copilot CLI, VS Code, Claude Code, Cursor - לעבוד מול Microsoft Fabric: אילו REST APIs לקרוא, איזה תחביר שאילתות, ואילו דפוסי עבודה נכונים. בלעדיהם לכלי ה-AI אין ידע מובנה על ה-APIs של Fabric.</p>
+ <h4>סקיל מול MCP - ההבדל שחשוב להבין</h4>
+ <table class="cmp">
+  <tr><th></th><th>Skill</th><th>MCP server</th></tr>
+  <tr><td><b>תפקיד</b></td><td>מספק ידע ודפוסים - "מה לעשות"</td><td>מספק גישה חיה לדאטה - "עושה"</td></tr>
+  <tr><td><b>תוכן</b></td><td>מסמכי Markdown (SKILL.md)</td><td>שרתים שרצים כתהליכים</td></tr>
+  <tr><td><b>דוגמה</b></td><td>"איך שואלים מחסן נתונים"</td><td>"הריץ את שאילתת ה-SQL הזו"</td></tr>
+ </table>
+ <p>הם עובדים הכי טוב ביחד: הסקיל מלמד, ה-MCP מחבר.</p>
+ <h4>התקנה</h4>
+ <ol>
+  <li>רישום המרקטפלייס בכלי ה-AI (למשל ב-GitHub Copilot CLI או Claude Code): <code>/plugin marketplace add microsoft/skills-for-fabric</code></li>
+  <li>התקנת פלאגין, למשל: <code>/plugin install powerbi-authoring@fabric-collection</code></li>
+  <li>ב-VS Code 1.108+ זיהוי אוטומטי מתיקיית <code>~/.copilot/</code>; ב-Cursor/אחרים - שיבוט הריפו והכללים נקלטים אוטומטית.</li>
+ </ol>
+ <h4>מה אפשר לעשות איתם (דוגמאות אמיתיות מהתיעוד)</h4>
+ <ul>
+  <li>"בנה ארכיטקטורת medallion (Bronze/Silver/Gold) לדאטה שלי" ← יוצר lakehouses, notebooks ו-pipelines.</li>
+  <li>"הגדר Git integration ו-deployment pipeline ל-workspace".</li>
+  <li>"כתוב סמנטיק מודל מעל ה-Gold lakehouse שלי".</li>
+  <li>"תעד את כל ה-workspace שלי" ← סריקה ותיעוד Markdown.</li>
+ </ul>
+ <div class="callout warn">גבול חשוב מהתיעוד: הסקילים מייצרים הגדרות פריטים וקוד - הם <b>לא</b> מרנדרים דוחות Power BI גמורים לבד. לוויזואליזציה: דשבורד Python מקומי, PDF, או בניית הדוח על הסמנטיק מודל (ופלאגין הכתיבה בפרק הבא מכסה חלק מזה בפריוויו).</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/15-fabric-skills.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 15 - Skills for Fabric (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/fundamentals/skills-for-fabric-overview">Skills for Fabric overview</a> · <a href="https://github.com/microsoft/skills-for-fabric">microsoft/skills-for-fabric</a></div>
+</article>
+
+<article class="chapter" id="ch16">
+ <div class="ch-head"><span class="ch-num">16</span><h3>פלאגין כתיבת הדוחות של Power BI (Preview): מהתכנון לפרסום</h3></div>
+ <p>אוסף הסקילים <b>AI-powered Power BI reporting</b> (פריוויו, יוני 2026) מאפשר לסוכן AI לכתוב דוחות Power BI משפה טבעית: יצירה מאפס, שינוי דוח קיים, ומודרניזציה של עיצוב. זמין דרך פלאגין <b>Power BI authoring</b> בספריית Skills for Fabric.</p>
+ <h4>מה הסוכן עושה בפועל</h4>
+ <ul>
+  <li>כותב קבצי <b>PBIR</b> תקינים-סכמטית (הפורמט של פרויקטי PBIP) - דפים, ויז'ואלים, סלייסרים, טבלאות.</li>
+  <li>עובד עם ה-Desktop bridge: טוען מחדש את השינויים ב-Power BI Desktop הפתוח (בלי לסגור ולפתוח), מצלם מסך של הדפים, רואה את הפלט האמיתי ומתקן באיטרציות.</li>
+  <li>סקיל העיצוב (<code>powerbi-report-design</code>) מייצר "תדריך עיצוב" מסודר לפי עקרונות best practice - ואז מיישמים אותו.</li>
+ </ul>
+ <h4>דוגמת פרומפט שעובד (מהבלוג הרשמי)</h4>
+ <p>"צור דוח עם דף Opportunities שיש בו ארבעה KPIs למדדים Revenue Won, Revenue in Pipeline... הוסף סלייסרים לרמות סיכון... והוסף דף Collabs עם ארבעה כרטיסי KPI..." - והסוכן בונה את הדפים.</p>
+ <h4>האקוסיסטם המלא</h4>
+ <p>פלאגין הכתיבה עובד יחד עם שרת ה-<b>Modeling MCP</b> וסקיל כתיבת הסמנטיק מודל (פרק 17): בונים מודל, ואז דוח מעליו, ואז מפרסמים ל-Fabric - מקצה לקצה.</p>
+ <div class="callout">זה פריוויו פעיל שמשתנה מהר. התקנה: <code>/plugin marketplace add microsoft/skills-for-fabric</code> ואז <code>/plugin install powerbi-authoring@fabric-collection</code>.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/16-pbi-authoring.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 16 - פלאגין כתיבת דוחות (~3 דקות)</div>
+ <div class="srcs">מקור: <a href="https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/AI-Powered-Power-BI-reporting-From-design-to-deployment-with/ba-p/5190703">Power BI Updates Blog - AI-Powered reporting skills</a></div>
+</article>
+
+<article class="chapter" id="ch17">
+ <div class="ch-head"><span class="ch-num">17</span><h3>שרת ה-Modeling MCP וכתיבת סמנטיק מודל עם AI</h3></div>
+ <p>שרת ה-Power BI Modeling MCP נותן לכלי ה-AI גישה חיה לפעולות מידול: קריאה וכתיבה של הגדרות הסמנטיק מודל. בשילוב עם סקיל כתיבת המודל, הסוכן בונה מימדים, טבלאות עובדות וקשרים - ואתה סוקר לפני שמירה.</p>
+ <h4>שימושים מתועדים</h4>
+ <ul>
+  <li>יצירת סמנטיק מודל מעל lakehouse בשפה טבעית.</li>
+  <li><b>שינוי שמות ידידותיים בקנה מידה:</b> במודל גדול, לבקש מה-LLM דרך ה-Modeling MCP לייצר שמות עסקיים ברורים לטבלאות, עמודות ומדדים (Totaal Revenue במקום TR_AMT) - קריטי לאיכות תשובות ה-AI (פרק 19). לסקור ולוודא שהשינוי לא שובר DAX, קשרים או אובייקטים תלויים לפני השמירה.</li>
+ </ul>
+ <h4>כלים משלימים (fabric-toolbox)</h4>
+ <ul>
+  <li><b>Semantic Link Labs</b> - עדכון המודל תכנותית מ-notebook ב-Fabric, כולל <code>get_measure_dependencies</code> למיפוי תלויות.</li>
+  <li>צ'קליסט הכנה של סמנטיק מודל כמקור לסוכן נתונים.</li>
+  <li>Notebook עם אוסף utilities.</li>
+ </ul>
+ <div class="video-box"><video controls preload="none"><source src="videos/17-modeling-mcp.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 17 - Modeling MCP (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices</a> · <a href="https://github.com/microsoft/fabric-toolbox">fabric-toolbox</a></div>
+</article>
+
+<article class="chapter" id="ch18">
+ <div class="ch-head"><span class="ch-num">18</span><h3>סוכן הנתונים של Fabric (Data agent): שאלות בעברית-אנגלית על הדאטה שלכם</h3></div>
+ <p>Fabric data agent (פריוויו) הוא סוכן שיחתי שעונה בשפה טבעית על נתונים ב-lakehouses, warehouses, <b>סמנטיק מודלים של Power BI</b>, KQL databases ואונטולוגיות. הקולגות שואלים - הוא מתרגם לשאילתה (NL2SQL / NL2DAX / NL2KQL), מריץ, ומחזיר תשובה עם השלבים והקוד שיצר.</p>
+ <h4>דרישות</h4>
+ <ul>
+  <li>קיבולת F2 ומעלה, או Power BI Premium per capacity (P1+) עם Fabric מופעל.</li>
+  <li>הרשאת <b>Read</b> על מקור הנתונים. לסמנטיק מודל - Read בלבד מספיק (לא צריך Build, ולא חברות ב-workspace); Write נדרש רק לשינוי המודל או ל-Prep for AI.</li>
+  <li>אין צורך במפתח Azure OpenAI - מיקרוסופט מנהלת את ה-AI והאימות תחת זהות ה-Entra ID של המשתמש.</li>
+ </ul>
+ <h4>בנייה נכונה</h4>
+ <ol>
+  <li>ב-workspace: + New Item ← Fabric data agent ← שם.</li>
+  <li>הוספת עד <b>5 מקורות</b> בכל שילוב; ב-Explorer מסמנים אילו טבלאות זמינות ל-AI.</li>
+  <li>שאילת שאלות מבחן ובדיקת השלבים + ה-DAX שנוצר (פרק 19 - הבידוק).</li>
+  <li>הוראות סוכן (עד 15,000 תווים): הנחיות רוחביות בלבד - ניתוב בין מקורות, קיצורים, טון. <b>לא</b> הוראות ספציפיות למודל (ראו מלכודה למטה).</li>
+  <li>שאילתות דוגמה (few-shot) לכל מקור נתמך - משפרות דיוק משמעותית. לא נתמך לסמנטיק מודלים.</li>
+  <li>Publish עם תיאור טוב - יוצר גרסה מפורסמת לצד טיוטה שממשיכים ללטש. ניהול עם Git integration ו-deployment pipelines.</li>
+ </ol>
+ <h4>מלכודות קריטיות</h4>
+ <ul>
+  <li><b>הוראות ברמת הסוכן מתעלמות כששואלים סמנטיק מודל!</b> כלי יצירת ה-DAX קורא רק את ה-Prep for AI של המודל. הוראות ספציפיות למודל - רק שם.</li>
+  <li>שאלות "למה" ("למה הפרודוקטיביות ירדה?") מחוץ לסקופ - הסוכן שולף ומעבד דאטה מובנה, לא עושה אנליטיקה סיבתית.</li>
+  <li>הסוכן לקריאה בלבד - אין יצירה/עדכון/מחיקה של דאטה.</li>
+  <li>שמות טבלאות ועמודות תיאוריים (SalesData ולא TableA) - ההבדל בין סוכן שעובד לסוכן שמנחש.</li>
+ </ul>
+ <div class="video-box"><video controls preload="none"><source src="videos/18-data-agent.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 18 - Fabric data agent (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/how-to-create-data-agent">Create a Fabric data agent</a> · <a href="https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent">Data agent concepts</a></div>
+</article>
+
+<article class="chapter" id="ch19">
+ <div class="ch-head"><span class="ch-num">19</span><h3>Prep for AI והבידוק: איך מוודאים שה-AI עונה נכון על Power BI</h3></div>
+ <p>זה הפרק שהופך "AI שמנחש" לכלי שאפשר לסמוך עליו. איכות התשובות של סוכן הנתונים (ושל Copilot) על סמנטיק מודל תלויה כמעט entirely בהכנת המודל - ובבידוק שיטתי של התשובות.</p>
+ <h4>שלושת רכיבי Prep for AI (בדסקטופ ובשירות: Home ← Prep data for AI)</h4>
+ <ol>
+  <li><b>AI data schema:</b> תת-קבוצה ממוקדת של המודל שה-AI עובד איתה - רק הטבלאות, העמודות והמדדים הרלוונטיים. פותר דו-משמעות ("מכירות" - Gross או Net?) ומשפר דיוק ומהירות. כוללים גם אובייקטים תלויים (מדד שמפנה למדדים אחרים). חשוב: לבחור את אותן טבלאות גם בסוכן הנתונים.</li>
+  <li><b>Verified answers:</b> תשובות מאומתות ברמת המודל: 5-7 שאלות טריגר לכל תשובה, מבוססות ויז'ואל. הן מנחות את יצירת ה-DAX למבנה הנכון (הסוכן לא מחזיר את הוויז'ואל עצמו). לא עובד עם שדות מוסתרים.</li>
+  <li><b>AI instructions:</b> הגדרות מונחים עסקיים ולוגיקה ("top performer = מי שהשיג 110%+ מהקווטה"), העדפות מדד, ברירות זמן. כתובים במודל - לא בסוכן.</li>
+ </ol>
+ <h4>תהליך הבידוק המומלץ (מהתיעוד הרשמי, 10 צעדים)</h4>
+ <ol>
+  <li>מטבים את המודל עצמו (BPA + Memory Analyzer) - מודל מנופח = רעש לכלי ה-DAX.</li>
+  <li>מגדירים AI data schema לפי סקופ הסוכן.</li>
+  <li>יוצרים Verified answers לשאלות הנפוצות.</li>
+  <li>מחברים למודל לסוכן ובודקים תשובות - <b>לפני</b> הוספת instructions, כדי ללמוד איפה הם באמת צריכים.</li>
+  <li>מוסיפים AI instructions לפי הממצאים.</li>
+  <li>מסדרים ויז'ואלים בדוחות: כותרות תיאוריות - המטא-דאטה שלהם מזין את יצירת ה-DAX.</li>
+  <li><b>בודקים את ה-DAX של כל תשובה</b> - הסוכן חושף את השאילתה; קוראים אותה ומוודאים שהיא עונה על השאלה.</li>
+  <li>הוראות סוכן - רק הנחיות רוחביות חוצות-מקורות.</li>
+  <li>ולידציה ואיטרציה מתמשכת: אפשר הערכה אוטומטית עם ה-Python SDK מול זוגות שאלה-תשובה + משוב משתמשים.</li>
+  <li>Git + deployment pipelines בין dev/test/prod.</li>
+ </ol>
+ <h4>מלכודות נפוצות (רשימת אזהרה)</h4>
+ <ul>
+  <li>מודל לא ב-star schema; שדות מוסתרים ב-verified answers; מדדים כפולים/חופפים; שמות כמו TR_AMT; מדדים אימפליסיטיים; שדות תאריך דו-משמעיים; הוראות שסותרות verified answers; הוראות ארוכות ומסובכות.</li>
+ </ul>
+ <div class="callout">מצב רישוי ויציבות: data agent - פריוויו, דורש F2+ / P1+. יצירת DAX של Copilot למודלים - GA. "Advanced DAX generation" לסוכנים - פריוויו (מצב runtime חדש) עם דיוק משופר לשאלות מורכבות. טבלת הסטטוס המלאה בקישור למטה.</div>
+ <div class="video-box"><video controls preload="none"><source src="videos/19-prep-ai.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 19 - Prep for AI ובידוק (~3 דקות)</div>
+ <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices for data agent</a> · <a href="https://learn.microsoft.com/en-us/fabric/fundamentals/copilot-ai-feature-state">Release status of AI and Copilot in Fabric</a></div>
+</article>
+
+<footer>
+ <p>נבנה בעברית על בסיס התיעוד הרשמי של <a href="https://claude.com">Anthropic</a> ו-<a href="https://learn.microsoft.com/fabric">Microsoft</a> · הסרטונים הם דמו מונפש עם קריינות עברית · <span class="heart">◆</span> חלק מסדרת המדריכים של <a href="https://rkinstinct.github.io/data-ai-hub/">Data &amp; AI Hub</a></p>
+</footer>
+
+</div><!-- /wrap -->
+<script>
+const CHAPTERS=[
+ ['ch01','01 · סקירה כללית'],['ch02','02 · Chat בדסקטופ'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · סקילים'],['ch06','06 · קונקטורים ו-MCP'],['ch07','07 · פלאגינים'],['ch08','08 · זיכרון וחיפוש'],['ch09','09 · קונטקסט וטוקנים'],['ch10','10 · Cowork לעומק'],['ch11','11 · סשנים וסביבות'],['ch12','12 · מצבי הרשאות'],['ch13','13 · סקירת קוד ו-PR'],['ch14','14 · קיצורים וטיפים'],['ch15','15 · Skills for Fabric'],['ch16','16 · כתיבת דוחות PBI'],['ch17','17 · Modeling MCP'],['ch18','18 · Fabric data agent'],['ch19','19 · Prep for AI ובידוק']
+];
+document.getElementById('toc').innerHTML=CHAPTERS.map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join('');
+</script>
+</body>
+    </html>
