@@ -78,6 +78,10 @@ table.cmp th,table.cmp td{border:1px solid var(--border);padding:10px 12px;text-
 table.cmp th{background:#f9ece4;color:var(--coral-deep);font-weight:600;font-family:'Poppins','Heebo',sans-serif}
 table.cmp td{color:#3c3a34;background:#fff}
 table.cmp tr:nth-child(even) td{background:#fcfbf8}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;border-radius:10px}
+.tbl-scroll table.cmp{margin:0}
+table.cmp td,table.cmp th{overflow-wrap:break-word}
+.srcs{overflow-wrap:break-word}
 footer{margin:80px 0 46px;text-align:center;color:var(--muted);font-size:13.5px}
 footer .heart{color:var(--coral)}
 /* reveal on scroll */
@@ -97,6 +101,7 @@ footer .heart{color:var(--coral)}
  .hero-stats .stat{padding:12px 18px;min-width:110px}
  .hero-stats .stat b{font-size:26px}
  .chapter ul,.chapter ol{margin-right:16px}
+ .tbl-scroll table.cmp{min-width:600px}
  table.cmp{font-size:13px}
  table.cmp th,table.cmp td{padding:7px 8px}
 }
@@ -128,12 +133,12 @@ footer .heart{color:var(--coral)}
 <article class="chapter" id="ch01">
  <div class="ch-head"><span class="ch-num">01</span><h3>סקירה כללית: Chat, Cowork ו-Code - שלוש דרכים לעבוד עם קלוד</h3></div>
  <p>אפליקציית Claude Desktop נותנת שלוש דרכים לעבוד עם קלוד באותה אפליקציה. הבחירה ביניהן היא ההחלטה הראשונה בכל משימה, ואף פעם לא "מה שבא לי":</p>
- <table class="cmp">
+ <div class="tbl-scroll"><table class="cmp">
   <tr><th></th><th>Chat</th><th>Cowork</th><th>Code</th></tr>
   <tr><td><b>מתאים ל</b></td><td>שיחה שאתה מוביל תור-אחר-תור: שאלות, סיעור מוחות, טיוטות</td><td>עבודה מורכבת שמאצילים: מחקר, ניתוח, מסמכים ודליברבלים גמורים</td><td>פיתוח תוכנה: כתיבה, בדיקה, הרצה ודיפלוי של קוד</td><tr>
   <tr><td><b>איפה רץ</b></td><td>ווב, דסקטופ ומובייל</td><td>דסקטופ (Mac/Windows/Linux בטא) + ווב ומובייל</td><td>טרמינל, דסקטופ וווב - מקומית או בענן</td></tr>
   <tr><td><b>פיצ׳רים מרכזיים</b></td><td>כניסה מהירה, הכתבה קולית, פרויקטים, ארטיפקטים</td><td>תיקיות מקומיות, פרויקטים, פלאגינים, סאב-אייג'נטים, משימות מתוזמנות</td><td>מצבי Plan ו-Auto, דיפים ויזואליים, גיט, צ'קפוינטים, סשנים מקומיים וענן</td></tr>
- </table>
+ </table></div>
  <h4>הנקודה שרוב האנשים מפספסים</h4>
  <p>Cowork ו-Code רצים על אותו מנוע - Claude Code. זה אומר שבשניהם קלוד יכול לעבוד עצמאית לאורך זמן, לפצל עבודה לסאב-אייג'נטים ולהחזיק משימות ארוכות. ההבדל הוא בסביבה: Cowork עובד במרחב מוגן ומוגבל לתיקיות ששיתפת, ו-Code רץ ישירות בפרויקט שלך עם גישה מלאה לקבצים, טרמינל וכלי פיתוח.</p>
  <h4>איך בוחרים - שלוש שאלות</h4>
@@ -260,12 +265,12 @@ footer .heart{color:var(--coral)}
 <article class="chapter" id="ch06">
  <div class="ch-head"><span class="ch-num">06</span><h3>קונקטורים ו-MCP: לחבר את קלוד לכלים שלך - נכון</h3></div>
  <p>קלוד מתחבר לכלים בשני אופנים, והבחירה ביניהם היא ההבנה הכי חשובה כאן:</p>
- <table class="cmp">
+ <div class="tbl-scroll"><table class="cmp">
   <tr><th></th><th>קונקטור מרוחק (Remote)</th><th>הרחבת דסקטופ (Desktop extension)</th></tr>
   <tr><td><b>מתי</b></td><td>שירות ענן שמתחברים אליו (Slack, Notion, Linear, GitHub)</td><td>כלי שרץ על המחשב: קבצים מקומיים, DB על localhost, אפליקציית דסקטופ</td></tr>
   <tr><td><b>זמין ב</b></td><td>כל המשטחים - ווב, מובייל, Cowork, דסקטופ, Code</td><td>דסקטופ ו-Claude Code בלבד</td></tr>
   <tr><td><b>התקנה</b></td><td>Settings &gt; Connectors או ספריית הקונקטורים</td><td>Settings &gt; Extensions - התקנה בקליק מקובץ MCPB</td></tr>
- </table>
+ </table></div>
  <h4>MCP בקצרה</h4>
  <p>Model Context Protocol הוא הפרוטוקול הפתוח שמחבר מודלים למקורות מידע וכלים. בעבר התקנת שרת MCP מקומי דרשה עריכת JSON ידנית; היום <b>Desktop extensions</b> (קבצי <code>.mcpb</code>) הופכים את זה להתקנה בקליק - כולל ממשק להזנת מפתחות API (מוצפנים באחסון המאובטח של מערכת ההפעלה) ותמיכה בשרתי Node.js (סביבה מובנית, לא צריך התקנה), Python ובינארי.</p>
  <h4>איך מתקינים</h4>
@@ -415,14 +420,14 @@ footer .heart{color:var(--coral)}
 <article class="chapter" id="ch12">
  <div class="ch-head"><span class="ch-num">12</span><h3>מצבי הרשאות: Plan מול Execute - כמה עצמאות לתת לקלוד</h3></div>
  <p>מצב ההרשאות קובע מתי קלוד עוצר לשאול. מחליפים באמצע סשן מהסלקטור ליד כפתור השליחה, והבחירה נזכרת לכל תיקייה:</p>
- <table class="cmp">
+ <div class="tbl-scroll"><table class="cmp">
   <tr><th>מצב</th><th>התנהגות</th><th>מתי</th></tr>
   <tr><td><b>Manual</b></td><td>שואל לפני כל עריכת קובץ וכל פקודה; רואים דיף ומאשרים/דוחים</td><td>קוד רגיש, לימוד, כשלא סומכים עדיין</td></tr>
   <tr><td><b>Accept edits</b></td><td>מאשר עריכות קבצים אוטומטית, שואל על פקודות טרמינל אחרות</td><td>איטרציה מהירה כשסומכים על שינויי הקבצים</td></tr>
   <tr><td><b>Plan</b></td><td>קורא וחוקר בלי לגעת בקוד, ומציג תוכנית לאישור</td><td>משימות מורכבות - קודם מסכימים על הגישה</td></tr>
   <tr><td><b>Auto</b></td><td>מבצע הכל עם בדיקות בטיחות ברקע שמוודאות התאמה לבקשה</td><td>משימות שגרתיות מוגדרות היטב (דורש מודלים עדכניים)</td></tr>
   <tr><td><b>Bypass permissions</b></td><td>רץ בלי בקשות אישור כמעט בכלל</td><td>רק בקונטיינר/VM מבודד!</td></tr>
- </table>
+ </table></div>
  <h4>הזרימה המומלצת למשימה מורכבת</h4>
  <ol>
   <li>פתח ב-<b>Plan</b>: קלוד חוקר את הקוד ומציג תוכנית מלאה עם צ'ויור ייעודי שאפשר לחזור אליו.</li>
@@ -577,12 +582,12 @@ footer .heart{color:var(--coral)}
  <div class="ch-head"><span class="ch-num">19</span><h3>מה זה Skills for Fabric ואיך מתקינים</h3></div>
  <p>Skills for Fabric הם הוראות שימוש חוזרות (open source, רישיון MIT, בריפו <code>microsoft/skills-for-fabric</code>) שמלמדות כלי קוד-AI - GitHub Copilot CLI, VS Code, Claude Code, Cursor - לעבוד מול Microsoft Fabric: אילו REST APIs לקרוא, איזה תחביר שאילתות, ואילו דפוסי עבודה נכונים. בלעדיהם לכלי ה-AI אין ידע מובנה על ה-APIs של Fabric.</p>
  <h4>סקיל מול MCP - ההבדל שחשוב להבין</h4>
- <table class="cmp">
+ <div class="tbl-scroll"><table class="cmp">
   <tr><th></th><th>Skill</th><th>MCP server</th></tr>
   <tr><td><b>תפקיד</b></td><td>מספק ידע ודפוסים - "מה לעשות"</td><td>מספק גישה חיה לדאטה - "עושה"</td></tr>
   <tr><td><b>תוכן</b></td><td>מסמכי Markdown (SKILL.md)</td><td>שרתים שרצים כתהליכים</td></tr>
   <tr><td><b>דוגמה</b></td><td>"איך שואלים מחסן נתונים"</td><td>"הריץ את שאילתת ה-SQL הזו"</td></tr>
- </table>
+ </table></div>
  <p>הם עובדים הכי טוב ביחד: הסקיל מלמד, ה-MCP מחבר.</p>
  <h4>התקנה</h4>
  <ol>
@@ -720,4 +725,4 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
 }
 </script>
 </body>
-</html>
+                                                                                                                                            </html>
