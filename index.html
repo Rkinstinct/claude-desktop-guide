@@ -299,7 +299,7 @@ footer .heart{color:var(--orange)}
   <li>הרחבה מותקנת אבל הכלים לא זמינים? אתחול האפליקציה ובדיקת שדות חובה בהגדרות.</li>
   <li>ב-Team/Enterprise ה-Owner שולט אילו הרחבות וקונקטורים מאושרים (allowlist); מדיניות ארגונית גוברת על הגדרות באפליקציה.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="videos/06-connectors.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/06-connectors.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 06 - קונקטורים ו-MCP (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors">Desktop vs web connectors</a> · <a href="https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop">Local MCP servers / desktop extensions</a> · <a href="https://support.claude.com/en/articles/13454812-use-interactive-connectors-in-claude">Interactive connectors</a> · <a href="https://claude.com/docs/connectors/directory">Connectors directory</a></div>
 </article>
@@ -325,7 +325,7 @@ footer .heart{color:var(--orange)}
   <li>לא זמין בסשני WSL.</li>
   <li>בניהול ארגוני, פלאגינים מנוהלים מרכזית זמינים כמו ב-CLI.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="videos/07-plugins.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/07-plugins.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 07 - פלאגינים (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a> · <a href="https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory">Unified directory</a></div>
 </article>
@@ -527,7 +527,7 @@ footer .heart{color:var(--orange)}
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/slash-commands">Extend Claude with skills (slash commands) - Claude Code docs</a></div>
 </article>
 <article class="chapter" id="ch17">
- <div class="ch-head"><span class="ch-num">17</span><h3>הוקס: אוטומציה על אירועים בקלוד קוד</h3></div>
+ <div class="ch-head"><span class="ch-num">17</span><h3>הוקס ו-Routines: אוטומציה בקלוד קוד</h3></div>
  <p>הוק הוא פעולה שאתם מגדירים ורצה אוטומטית בנקודות מסוימות במחזור החיים של הסשן: פקודת shell, קריאת HTTP, סאב-אייג'נט או פרומפט למודל. אותם הוקים עובדים בכל מקום שקלוד קוד רץ: טרמינל, תוספי IDE, אפליקציית הדסקטופ וסשני ענן. זו הדרך להפוך "תמיד תריץ פורמט אחרי שאתה עורך קובץ" מבקשה חוזרת - לכלל שקורה לבד.</p>
  <h4>האירועים שצריך להכיר</h4>
  <ul>
@@ -544,7 +544,15 @@ footer .heart{color:var(--orange)}
   <li>דוגמאות מהתיעוד: התראת דסקטופ כשקלוד מחכה לתשובה (Notification hook), וסקריפט שחוסם פעולות כתיבה מסוכנות ב-SQL</li>
  </ul>
  <div class="callout">אזהרת אבטחה: הוקים רצים עם ההרשאות שלכם, אוטומטית. התקינו הוקים רק ממקורות שאתם סומכים עליהם ובדקו מה הסקריפט עושה - בדיוק כמו סקילים (פרק 05).</div>
- <div class="video-box"><video controls preload="none" poster=""><source src="videos/17-hooks.mp4" type="video/mp4"></video></div>
+ <h4>Routines: קלוד קוד על טייס אוטומטי (Research preview)</h4>
+<p>רוטין הוא קונפיגורציה שמורה של קלוד קוד - פרומפט, מאגרים וקונקטורים - שרצה <strong>בענן של Anthropic</strong> על לוח זמנים, גם כשהמחשב שלך סגור. זמין החל ממנוי Pro.</p>
+<ul>
+<li><strong>טריגרים:</strong> זמן קבוע (כל לילה / פעם בשבוע / פעם אחת), קריאת API (HTTP POST עם bearer token), או אירוע GitHub (PR חדש, release).</li>
+<li><strong>יצירה:</strong> בעמוד <a href="https://claude.ai/code/routines" target="_blank" rel="noopener">claude.ai/code/routines</a>, בטאב Code באפליקציית Desktop (New routine ← Cloud), או מה-CLI עם <code>/schedule</code>.</li>
+<li><strong>דוגמה:</strong> רוטין שכל בוקר מסדר את ה-backlog, מתייג issues ושולח סיכום ל-Slack.</li>
+<li><strong>שים לב:</strong> באותו תפריט ב-Desktop, בחירה ב-Local יוצרת משימה מתוזמנת מקומית שרצה על המחשב שלך ולא בענן.</li>
+</ul>
+<div class="video-box"><video controls preload="none" poster=""><source src="videos/17-hooks.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 17 - הוקס (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/hooks">Hooks reference - Claude Code docs</a> · <a href="https://code.claude.com/docs/en/hooks-guide">Automate actions with hooks</a></div>
 </article>
@@ -721,4 +729,4 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
 }
 </script>
 </body>
-</html>
+ </html>
