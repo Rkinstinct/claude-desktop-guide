@@ -7,100 +7,85 @@
 <meta name="description" content="מדריך עברי מפורט לעבודה עם Claude Desktop - כל נושא עם סרטון דמו - ועבודה נכונה עם Fabric skills בעולם Power BI">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
- --bg:#050507; --surface:rgba(16,18,24,.72); --surface2:#14171f; --text:#fff; --muted:#9AA6B8;
- --orange:#F7931A; --burnt:#EA580C; --gold:#FFD600; --violet:#8B5CF6;
- --border:rgba(255,255,255,.09);
- --grad:linear-gradient(92deg,var(--orange),var(--gold));
- --grad2:linear-gradient(92deg,var(--gold),var(--orange) 55%,var(--violet));
+ --bg:#faf9f5; --surface:#ffffff; --surface2:#f3f1ea; --text:#141413; --muted:#6f6c63;
+ --coral:#d97757; --coral-deep:#c2573a; --blue:#6a9bcc; --green:#788c5d;
+ --border:#e8e6dc; --border-strong:#d9d5c7;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Heebo','Inter',sans-serif;line-height:1.75;overflow-x:hidden;
- background-image:radial-gradient(1100px 500px at 85% -5%,rgba(247,147,26,.10),transparent 60%),radial-gradient(900px 480px at 5% 12%,rgba(139,92,246,.09),transparent 60%),radial-gradient(1000px 600px at 50% 110%,rgba(234,88,12,.08),transparent 60%)}
-::selection{background:rgba(247,147,26,.85);color:#050507}
-a{color:var(--gold);text-decoration:none}
+body{background:var(--bg);color:var(--text);font-family:'Lora','Heebo',Georgia,serif;line-height:1.8;overflow-x:hidden}
+::selection{background:var(--coral);color:#fff}
+a{color:var(--coral-deep);text-decoration:none}
 a:hover{text-decoration:underline}
-a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
-code,kbd{font-family:'JetBrains Mono',monospace;background:rgba(247,147,26,.12);border:1px solid rgba(247,147,26,.28);border-radius:6px;padding:1px 7px;font-size:.88em;color:#FFDF80;direction:ltr;display:inline-block}
-kbd{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.20);color:#fff;box-shadow:0 2px 0 rgba(255,255,255,.10)}
-/* ambient layers */
-.orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
-#o1{width:640px;height:640px;background:var(--orange);opacity:.16;top:-260px;right:-200px;animation:drift1 26s ease-in-out infinite alternate}
-#o2{width:560px;height:560px;background:var(--violet);opacity:.13;bottom:-220px;left:-180px;animation:drift2 32s ease-in-out infinite alternate}
-#o3{width:420px;height:420px;background:var(--gold);opacity:.08;top:38%;right:12%;animation:drift1 40s ease-in-out infinite alternate-reverse}
-@keyframes drift1{to{transform:translate(-70px,50px) scale(1.12)}}
-@keyframes drift2{to{transform:translate(90px,-60px) scale(1.08)}}
-#grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);background-size:56px 56px;pointer-events:none;z-index:0;
- -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
-#grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
- background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
+a:focus-visible,button:focus-visible{outline:2px solid var(--coral);outline-offset:2px;border-radius:6px}
+code,kbd{font-family:'JetBrains Mono',monospace;background:#f6e9e2;border:1px solid #ecd5c8;border-radius:6px;padding:1px 7px;font-size:.88em;color:#a4472c;direction:ltr;display:inline-block}
+kbd{background:var(--surface2);border-color:var(--border-strong);color:var(--text);box-shadow:0 2px 0 var(--border-strong)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
 /* hero */
-header.hero{padding:110px 0 60px;text-align:center;position:relative}
-.pill{display:inline-block;font-family:'JetBrains Mono';font-size:12.5px;letter-spacing:.16em;color:var(--gold);border:1px solid rgba(247,147,26,.55);border-radius:999px;padding:8px 20px;background:rgba(247,147,26,.10);margin-bottom:30px;box-shadow:0 0 24px rgba(247,147,26,.22),inset 0 0 12px rgba(247,147,26,.10)}
-h1{font-size:clamp(38px,9vw,86px);font-weight:900;line-height:1.08;letter-spacing:-.01em;margin-bottom:24px}
-.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 26px rgba(247,147,26,.35))}
-h1 .l2{display:block;font-size:.42em;font-weight:800;color:#E8EDF5;-webkit-text-fill-color:#E8EDF5;letter-spacing:0;margin-top:14px;filter:none;background:none}
+header.hero{padding:104px 0 58px;text-align:center;position:relative}
+.pill{display:inline-block;font-family:'JetBrains Mono';font-size:12.5px;letter-spacing:.16em;color:var(--coral-deep);border:1px solid #ecc9b8;border-radius:999px;padding:8px 20px;background:#f9ece4;margin-bottom:30px}
+h1{font-family:'Poppins','Heebo',Arial,sans-serif;font-size:clamp(38px,9vw,80px);font-weight:700;line-height:1.12;letter-spacing:-.015em;margin-bottom:24px;color:var(--text)}
+.grad-text{color:var(--coral)}
+h1 .l2{display:block;font-size:.42em;font-weight:600;color:#4a473f;margin-top:14px}
 .hero p.sub{color:var(--muted);font-size:clamp(16px,2.8vw,21px);max-width:780px;margin:0 auto 36px}
 .hero-stats{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:34px}
-.hero-stats .stat{border:1px solid var(--border);border-radius:20px;padding:16px 26px;background:var(--surface);backdrop-filter:blur(14px);min-width:140px;box-shadow:0 18px 44px rgba(0,0,0,.4)}
-.hero-stats .stat b{display:block;font-family:'Space Grotesk',monospace;font-size:34px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.15}
-.hero-stats .stat span{font-size:13px;color:var(--muted)}
+.hero-stats .stat{border:1px solid var(--border);border-radius:20px;padding:16px 26px;background:var(--surface);min-width:140px;box-shadow:0 10px 30px rgba(20,20,19,.06)}
+.hero-stats .stat b{display:block;font-family:'Poppins','Heebo',sans-serif;font-size:34px;font-weight:700;color:var(--coral);line-height:1.15}
+.hero-stats .stat span{font-size:13px;color:var(--muted);font-family:'Heebo',sans-serif}
 .hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.hero-badges span{font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:7px 16px;background:rgba(15,17,21,.65);transition:.25s}
-.hero-badges span:hover{color:var(--gold);border-color:rgba(255,214,0,.45)}
-.scroll-hint{margin:44px auto 0;width:26px;height:44px;border:2px solid rgba(255,255,255,.25);border-radius:14px;position:relative}
-.scroll-hint::after{content:"";position:absolute;top:7px;left:50%;width:4px;height:9px;margin-left:-2px;border-radius:3px;background:var(--grad);animation:hint 1.8s ease-in-out infinite}
+.hero-badges span{font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:7px 16px;background:var(--surface);transition:.25s;font-family:'Heebo',sans-serif}
+.hero-badges span:hover{color:var(--coral-deep);border-color:#ecc9b8}
+.scroll-hint{margin:44px auto 0;width:26px;height:44px;border:2px solid var(--border-strong);border-radius:14px;position:relative}
+.scroll-hint::after{content:"";position:absolute;top:7px;left:50%;width:4px;height:9px;margin-left:-2px;border-radius:3px;background:var(--coral);animation:hint 1.8s ease-in-out infinite}
 @keyframes hint{0%{transform:translateY(0);opacity:1}70%{transform:translateY(14px);opacity:0}100%{opacity:0}}
 /* toc */
-nav.toc{position:sticky;top:0;z-index:50;background:rgba(5,5,7,.80);backdrop-filter:blur(16px);border-block:1px solid var(--border);padding:12px 0;margin-bottom:48px}
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(250,249,245,.88);backdrop-filter:blur(16px);border-block:1px solid var(--border);padding:12px 0;margin-bottom:48px}
 nav.toc .wrap{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none}
-nav.toc a{flex:none;font-size:13.5px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 14px;background:rgba(15,17,21,.7);transition:.22s}
-nav.toc a:hover{color:#050507;background:var(--grad);border-color:transparent;text-decoration:none;font-weight:600}
+nav.toc a{flex:none;font-size:13.5px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 14px;background:var(--surface);transition:.22s;font-family:'Heebo',sans-serif}
+nav.toc a:hover{color:#fff;background:var(--coral);border-color:var(--coral);text-decoration:none;font-weight:600}
 /* parts */
 section.part{margin:84px 0 26px;text-align:center;position:relative}
-section.part h2{font-size:clamp(28px,5.6vw,44px);font-weight:900;letter-spacing:-.01em}
-section.part h2::after{content:"";display:block;width:74px;height:4px;border-radius:3px;background:var(--grad2);margin:16px auto 0;box-shadow:0 0 18px rgba(247,147,26,.55)}
+section.part h2{font-family:'Poppins','Heebo',sans-serif;font-size:clamp(28px,5.6vw,44px);font-weight:700;letter-spacing:-.01em}
+section.part h2::after{content:"";display:block;width:74px;height:4px;border-radius:3px;background:var(--coral);margin:16px auto 0}
 section.part p{color:var(--muted);max-width:720px;margin:14px auto 0}
 /* chapters */
 body{counter-reset:chap}
-article.chapter{counter-increment:chap;position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:26px;padding:38px 32px;margin:38px 0;backdrop-filter:blur(14px);box-shadow:0 30px 70px rgba(0,0,0,.5);transition:transform .35s cubic-bezier(.2,.8,.25,1),border-color .35s,box-shadow .35s}
-article.chapter::before{content:counter(chap,decimal-leading-zero);position:absolute;top:-34px;left:6px;font-family:'Space Grotesk',monospace;font-size:150px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.07);pointer-events:none;user-select:none}
-article.chapter::after{content:"";position:absolute;inset:0;border-radius:26px;padding:1px;background:linear-gradient(135deg,rgba(247,147,26,.55),transparent 35%,transparent 65%,rgba(255,214,0,.4));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .35s;pointer-events:none}
-article.chapter:hover{transform:translateY(-4px);box-shadow:0 0 70px rgba(247,147,26,.10),0 34px 80px rgba(0,0,0,.55)}
-article.chapter:hover::after{opacity:1}
+article.chapter{counter-increment:chap;position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:38px 32px;margin:38px 0;box-shadow:0 14px 40px rgba(20,20,19,.07);transition:transform .35s cubic-bezier(.2,.8,.25,1),box-shadow .35s,border-color .35s}
+article.chapter::before{content:counter(chap,decimal-leading-zero);position:absolute;top:-34px;left:6px;font-family:'Poppins',sans-serif;font-size:150px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1.5px #eeece3;pointer-events:none;user-select:none}
+article.chapter:hover{transform:translateY(-4px);box-shadow:0 22px 56px rgba(20,20,19,.11);border-color:var(--border-strong)}
 .ch-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:14px;position:relative}
-.ch-num{flex:none;font-family:'JetBrains Mono';font-size:13px;font-weight:600;color:#050507;background:var(--grad);border-radius:12px;padding:8px 12px;margin-top:4px;box-shadow:0 6px 18px rgba(247,147,26,.35)}
-.ch-head h3{font-size:clamp(22px,3.8vw,30px);font-weight:800;line-height:1.3}
-.chapter h4{font-size:18.5px;font-weight:800;color:var(--gold);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
-.chapter h4::before{content:"";width:14px;height:4px;border-radius:2px;background:var(--grad);box-shadow:0 0 12px rgba(247,147,26,.8);flex:none}
-.chapter p{margin:10px 0;color:#D8DFEA}
-.chapter ul,.chapter ol{margin:10px 24px 10px 0;color:#CBD4E0}
+.ch-num{flex:none;font-family:'JetBrains Mono';font-size:13px;font-weight:600;color:#fff;background:var(--coral);border-radius:12px;padding:8px 12px;margin-top:4px}
+.ch-head h3{font-family:'Poppins','Heebo',sans-serif;font-size:clamp(22px,3.8vw,30px);font-weight:700;line-height:1.3}
+.chapter h4{font-family:'Poppins','Heebo',sans-serif;font-size:18.5px;font-weight:600;color:var(--coral-deep);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.chapter h4::before{content:"";width:14px;height:4px;border-radius:2px;background:var(--coral);flex:none}
+.chapter p{margin:10px 0;color:#3c3a34}
+.chapter ul,.chapter ol{margin:10px 24px 10px 0;color:#3c3a34}
 .chapter li{margin:7px 0}
-.chapter li::marker{color:var(--orange);font-weight:700}
-.video-box{margin:24px 0 8px;border-radius:18px;overflow:hidden;border:1px solid rgba(247,147,26,.35);box-shadow:0 0 46px rgba(247,147,26,.14),0 18px 40px rgba(0,0,0,.5)}
-.video-box video{width:100%;display:block;background:#000}
+.chapter li::marker{color:var(--coral);font-weight:700}
+.video-box{margin:24px 0 8px;border-radius:18px;overflow:hidden;border:1px solid var(--border-strong);box-shadow:0 14px 36px rgba(20,20,19,.10)}
+.video-box video{width:100%;display:block;background:#141413}
 .video-cap{font-size:12.5px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono'}
-.callout{border:1px solid rgba(255,214,0,.38);background:linear-gradient(135deg,rgba(255,214,0,.08),rgba(255,214,0,.03));border-radius:16px;padding:15px 19px;margin:18px 0;font-size:15px;color:#EFE5B2}
-.callout.warn{border-color:rgba(234,88,12,.55);background:linear-gradient(135deg,rgba(234,88,12,.10),rgba(234,88,12,.04));color:#F5C9AE}
-.srcs{margin-top:24px;padding-top:16px;border-top:1px dashed var(--border);font-size:13.5px;color:var(--muted)}
+.callout{border:1px solid #e3d9a8;background:#faf6e3;border-radius:16px;padding:15px 19px;margin:18px 0;font-size:15px;color:#5d5628}
+.callout.warn{border-color:#ecc9b8;background:#f9ece4;color:#7c4529}
+.srcs{margin-top:24px;padding-top:16px;border-top:1px dashed var(--border-strong);font-size:13.5px;color:var(--muted)}
 .srcs a{color:var(--muted);text-decoration:underline}
-.srcs a:hover{color:var(--gold)}
+.srcs a:hover{color:var(--coral-deep)}
 table.cmp{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px}
 table.cmp th,table.cmp td{border:1px solid var(--border);padding:10px 12px;text-align:right;vertical-align:top}
-table.cmp th{background:rgba(247,147,26,.12);color:var(--gold);font-weight:700}
-table.cmp td{color:#CBD4E0;background:rgba(255,255,255,.02)}
+table.cmp th{background:#f9ece4;color:var(--coral-deep);font-weight:600;font-family:'Poppins','Heebo',sans-serif}
+table.cmp td{color:#3c3a34;background:#fff}
+table.cmp tr:nth-child(even) td{background:#fcfbf8}
 footer{margin:80px 0 46px;text-align:center;color:var(--muted);font-size:13.5px}
-footer .heart{color:var(--orange)}
+footer .heart{color:var(--coral)}
 /* reveal on scroll */
 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.2,.8,.25,1),transform .7s cubic-bezier(.2,.8,.25,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
  .rv{opacity:1;transform:none;transition:none}
- #o1,#o2,#o3,.scroll-hint::after{animation:none}
+ .scroll-hint::after{animation:none}
  html{scroll-behavior:auto}
  article.chapter{transition:none}
 }
@@ -118,8 +103,6 @@ footer .heart{color:var(--orange)}
 </style>
 </head>
 <body>
-<div class="orb" id="o1"></div><div class="orb" id="o2"></div><div class="orb" id="o3"></div><div id="grid"></div><div id="grain"></div>
-
 <header class="hero"><div class="wrap">
  <div class="pill">מדריך חי • מתעדכן • עברית</div>
  <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><span class="l2">+ Fabric Skills ל-Power BI</span></h1>
@@ -160,7 +143,8 @@ footer .heart{color:var(--orange)}
   <li>זה קוד? <b>Code.</b></li>
  </ol>
  <div class="callout">בגרסאות האחרונות Chat ו-Cowork חולקים "בית" אחד: שיחות, משימות, פרויקטים וארטיפקטים באותו סרגל צד. בחלק מהחשבונות (Pro/Max, בהדרגה) כבר אין בחירה ידנית בין Chat ל-Cowork - קלוד מחליט לבד אם זו תשובה מהירה או משימה.</div>
- <div class="video-box"><video controls preload="none" poster=""><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/01-overview.mp4" type="video/mp4"></video></div>
+  <div class="callout"><b>שינוי מתגלגל (ספטמבר 2026):</b> קלוד ממזגת את Chat ו-Cowork לממשק אחד - בלי בורר בכלל. כותבים מה שצריך, וקלוד מחליט אם זו תשובה מהירה או משימה מלאה. מתחיל ב-Pro/Max בווב, דסקטופ ומובייל; השיחות, הפרויקטים וההגדרות עוברים איתך.</div>
+<div class="video-box"><video controls preload="none" poster=""><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/01-overview.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 01 - שלוש דרכים לעבוד עם קלוד (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a> · <a href="https://support.claude.com/en/articles/14116274-organize-your-tasks-with-projects-in-claude-cowork">Projects in Claude Cowork</a></div>
 </article>
@@ -216,7 +200,7 @@ footer .heart{color:var(--orange)}
 
 <article class="chapter" id="ch04">
  <div class="ch-head"><span class="ch-num">04</span><h3>ארטיפקטים: מסמכים, מצגות, דשבורדים ואפליקציות קטנות לצד השיחה</h3></div>
- <p>ארטיפקט הוא כל דבר שקלוד יוצר ושתרצה לשים מול אנשים: מסמך, מצגת, דשבורד, דף נחיתה או כלי אינטראקטיבי קטן. הוא נפתח בחלון משלו לצד השיחה, אפשר לערוך אותו, לחזור אליו ולשתף. קלוד יוצר ארטיפקט כשהתוכן משמעותי (בדרך כלל מעל 15 שורות), עומד בפני עצמו, וסביר שתרצה לערוך או לחזור אליו.</p>
+ <p>ארטיפקט הוא כל דבר שקלוד יוצר ושתרצה לשים מול אנשים: מסמך, מצגת, דשבורד, דף נחיתה או כלי אינטראקטיבי קטן. הוא נפתח בחלון משלו לצד השיחה, אפשר לערוך אותו, לחזור אליו ולשתף. ומאז יוני 2026 גם <b>עריכה במקום</b>: מסמנים חלק בטיוטה, כותבים את התיקון, וקלוד עורך בדיוק שם - בלי לתאר מחדש בשיחה. קלוד יוצר ארטיפקט כשהתוכן משמעותי (בדרך כלל מעל 15 שורות), עומד בפני עצמו, וסביר שתרצה לערוך או לחזור אליו.</p>
  <div class="callout">ארטיפקטים דורשים הפעלה של <b>Code execution and file creation</b> תחת Settings &gt; Capabilities (או Organization settings ב-Team/Enterprise). ארטיפקטים חדשים נשמרים לחשבון וניתנים לשיתוף.</div>
  <h4>תבניות התחלה (בטא, מסלולים בתשלום)</h4>
  <ul>
@@ -343,10 +327,10 @@ footer .heart{color:var(--orange)}
   <li>לכל פרויקט זיכרון נפרד + סיכום פרויקט.</li>
   <li>זיכרון משותף בין Chat ל-Cowork <b>רק כש-Cowork רץ בענן</b> - סשנים מקומיים לא משתמשים בזיכרון.</li>
   <li>ברירת מחדל: דולק ב-Free/Pro/Max; ב-Team/Enterprise כבוי עד שה-Owner מדליק.</li>
-  <li>בקרה: Pause (שומר הקיים, מפסיק שימוש ויצירה) או Reset (מחיקה מלאה ובלתי הפיכה).</li>
+  <li>בקרה מלאה: ב-Settings &gt; Memory רואים את כל הנושאים השמורים ברשימה, ואפשר <b>לערוך או למחוק כל פריט</b> בנפרד. מתג נפרד מכבה את חיפוש העבר.</li>
  </ul>
  <h4>Incognito - כשלא רוצים שישאר זכר</h4>
- <p>אייקון רפאים בפתיחת צ'אט חדש (מחוץ לפרויקט) פותח שיחה זמנית: לא נשמרת בהיסטוריה, לא נכנסת לזיכרון, ולא מופיעה בחיפושי עבר. זמין לכל המסלולים. שים לב: ב-Team/Enterprise צ'אטים אנונימיים כלולים בייצוא נתונים ארגוני.</p>
+ <p>אייקון רפאים בפינה הימנית העליונה של צ'אט חדש (מחוץ לפרויקט) פותח שיחה זמנית: לא נשמרת בהיסטוריה, לא נכנסת לזיכרון, ולא מופיעה בחיפושי עבר. זמין לכל המסלולים. שים לב: ב-Team/Enterprise צ'אטים אנונימיים כלולים בייצוא נתונים ארגוני.</p>
  <div class="callout">טיפ: יצאת מקלוד וחזרת אחרי שדרוג? אם משהו "נשכח" בהגירת הזיכרון - היתה אפשרות ייצוא של הזיכרון הישן ב-Settings &gt; Memory (עד 9.9.2026). שווה לבדוק שהזיכרון החדש בנוי מחדש כמו שצריך.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/08-memory.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 08 - זיכרון וחיפוש (~3 דקות)</div>
@@ -382,20 +366,27 @@ footer .heart{color:var(--orange)}
 </article>
 
 <article class="chapter" id="ch10">
- <div class="ch-head"><span class="ch-num">10</span><h3>Cowork לעומק: משימות, תיקיות, תזמון, דפדפן ו-Dispatch</h3></div>
- <p>Cowork נבנה לעבודה שדורשת מאמץ אמיתי: משיכה מהרבה מקורות, הבנה, ותוצר גמור. קלוד שואל שאלות הבהרה קצרות (סקופ, פורמט, אילוצים), בונה תוכנית שאתה סוקר בסרגל הצד, ועובד דרכה - ואתה רואה את המקורות, הקבצים וההתקדמות בזמן אמת. אפשר להריץ כמה משימות במקביל, כל אחת בשיחה משלה.</p>
+ <div class="ch-head"><span class="ch-num">10</span><h3>Cowork לעומק: בענן, בווב, במובייל - ובלי בורר בכלל</h3></div>
+ <p>Cowork נבנה לעבודה שדורשת מאמץ אמיתי: משיכה מהרבה מקורות, הבנה, ותוצר גמור. קלוד שואל שאלות הבהרה קצרות (סקופ, פורמט, אילוצים), בונה תוכנית שאתה סוקר, ועובד דרכה - ואתה רואה את המקורות, הקבצים וההתקדמות בזמן אמת. אפשר להריץ כמה משימות במקביל.</p>
+ <h4>השינוי הגדול של 2026: Cowork בכל מקום, ומתמזג לתוך קלוד</h4>
+ <ul>
+  <li><b>כל המשטחים:</b> Cowork זמין בדסקטופ, בווב, במובייל ובפאנל הצדדי של Claude in Chrome. הסשנים והקבצים שמורים בחשבון ומסונכרנים בין המכשירים.</li>
+  <li><b>ריצה בענן (בטא):</b> העבודה רצה על השרתים של Anthropic - ממשיכה גם כשסוגרים את המחשב הנייד, ומשימות מתוזמנות רצות <b>בלי שום מכשיר מחובר</b>.</li>
+  <li><b>מעבר בין מכשירים:</b> מתחילים משימה בדסקטופ, בודקים מהנייד, אוספים את התוצר איפה שנוח. כשקלוד מסיים או צריך תשובה - התראה לטלפון.</li>
+  <li><b>מיזוג Chat+Cowork:</b> בממשק החדש (מתגלגל ל-Pro/Max) אין בורר בכלל - כותבים מה שצריך וקלוד מחליט אם זו תשובה או משימה. אי אפשר לחזור אחורה אחרי המעבר, וכל התוכן עובר איתך.</li>
+ </ul>
  <h4>יכולות מפתח</h4>
  <ul>
-  <li><b>גישה לתיקייה:</b> נותנים תיקייה במחשב - קלוד קורא, מבין מה רלוונטי, ושומר תוצרים חזרה לאותה תיקייה.</li>
-  <li><b>משימות מתוזמנות:</b> בריפ יומי מהסלאק והיומן, סיכום שבועי, טריאז' תיבת דואר בבוקר. מגדירים פעם אחת - ורץ בכל פעם שהאפליקציה פתוחה; אם המחשב היה סגור במועד, הוא משלים כשחוזרים.</li>
-  <li><b>גלישה בדפדפן:</b> עם Claude in Chrome קלוד מנווט אתרים, ממלא וגולל, ומושך ממצאים למשימה - בדיקת מחירי מתחרים בעשרה אתרים בלי שפתחת טאב.</li>
-  <li><b>סביבה מוגנת:</b> Cowork רץ במרחב מכיל: קריאה/כתיבה רק בתיקיות ששיתפת, שום דבר מחוץ להן.</li>
-  <li><b>Dispatch:</b> שיחה מתמשכת עם קלוד מהטלפון. שולחים משימה מהכיס - Dispatch מחליט איפה לבצע: מחקר ומסמכים נשארים ב-Cowork, באגים ו-PRs הופכים לסשן Code עם תג Dispatch והתראה כשמסתיים. דורש Pro/Max.</li>
+  <li><b>גישה לתיקייה:</b> נותנים תיקייה במחשב - קלוד קורא, מבין, ושומר תוצרים חזרה. סשן בענן מגיע לתיקייה רק כשאפליקציית הדסקטופ פתוחה, רק לתיקיות שחיברת, ובהרשאות שהגדרת.</li>
+  <li><b>משימות מתוזמנות:</b> בריפ יומי, סיכום שבועי, טריאז' תיבת דואר. רצות <b>בענן</b> - לא צריך שהמחשב יהיה ער.</li>
+  <li><b>גלישה בדפדפן:</b> דפדפן מובנה באפליקציית הדסקטופ (מתגלגל), או כרום שלך דרך Claude in Chrome. נהיגה בדפדפן כחלק ממשימה דורשת את הדסקטופ פתוח.</li>
+  <li><b>Computer use (בטא, Pro/Max):</b> קלוד לוחץ, מקליד ומנווט את המסך ישירות.</li>
+  <li><b>Dispatch:</b> שולחים משימה מהטלפון - מחקר ומסמכים נשארים ב-Cowork, באגים ו-PRs הופכים לסשן Code עם התראה כשמסתיים.</li>
  </ul>
- <div class="callout">Cowork זמין במסלולים בתשלום (Pro, Max, Team, Enterprise) בדסקטופ ל-Mac ול-Windows, ומצריך את הגרסה העדכנית.</div>
+ <div class="callout">מה דורש את אפליקציית הדסקטופ פתוחה? כל מה שנוגע במחשב שלך: תיקיות מקומיות, קונקטורים מקומיים, נהיגה בדפדפן ו-computer use. כל השאר רץ בענן מכל מכשיר.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/10-cowork.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 10 - Cowork לעומק (~3 דקות)</div>
- <div class="srcs">מקורות: <a href="https://claude.com/resources/tutorials/navigating-the-claude-desktop-app">Navigating the Claude desktop app</a> · <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop docs (Dispatch)</a></div>
+ <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile">Cowork on web, desktop and mobile</a> · <a href="https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude">Cowork and chat are one Claude</a></div>
 </article>
 
 <article class="chapter" id="ch11">
@@ -502,7 +493,7 @@ footer .heart{color:var(--orange)}
   <li><b>מודל וכלים:</b> לכל סוכן בוחרים מודל (למשל Sonnet הזול למשימות סריקה) ורשימת כלים מצומצמת - עקרון המינימום</li>
   <li>שימו לב: מ-v2.1.198 הפקודה <code>/agents</code> כבר לא פותחת אשף אינטראקטיבי - יוצרים דרך קלוד או עורכים את הקבצים ישירות. יש גם סוכנים מובנים שמגיעים עם קלוד קוד</li>
  </ul>
- <div class="video-box"><video controls preload="none" poster=""><source src="videos/15-subagents.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/15-subagents.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 15 - בונים סאב-אייג'נט (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/sub-agents">Create custom subagents - Claude Code docs</a></div>
 </article>
