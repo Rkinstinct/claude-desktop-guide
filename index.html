@@ -490,13 +490,14 @@ footer .heart{color:var(--coral)}
  </ul>
  <h4>איך עובדים איתם</h4>
  <ol>
-  <li><b>/agents</b> מציג, יוצר ועורך סאב-אייג'נטים. ההגדרה נשמרת בקובץ בתוך <code>.claude/agents/</code> בפרויקט - ולכן ניתנת לשיתוף בגיט עם הצוות.</li>
+  <li><b>הגדרה בקובץ:</b> יוצרים סאב-אייג'נט בקובץ Markdown בתוך <code>.claude/agents/</code> בפרויקט - שם, תיאור מתי להיעזר בו, וכלים מותרים. ניתן לשיתוף בגיט עם הצוות. (בממשק שבהדגמה אין אשף <code>/agents</code> - ההגדרה נעשית ישירות בקובץ.)</li>
   <li>לא חייבים להגדיר מראש: תנו משימה מורכבת והסוכן הראשי יחליט לפצל בעצמו.</li>
   <li>רוצים לכפות? כתבו במפורש: "הרץ את הבדיקות בסאב-אייג'נט ותחזיר רק כשלונות".</li>
  </ol>
  <div class="callout"><b>כלל אצבע:</b> משימה שדורשת סריקה רחבה אבל תשובה קצרה - מועמדת מושלמת לסאב-אייג'נט. הראשי נשאר חד, והדו"ח חוזר נקי.</div>
- <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/15-subagents.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 15 - סאב-אייג'נטים (~3 דקות)</div>
+ <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות סאב-אייג'נט; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה.</div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch15-subagents-v2.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 15 - סאב-אייג'נטים (~דקה וחצי)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/sub-agents">Custom subagents</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
 </article>
 
