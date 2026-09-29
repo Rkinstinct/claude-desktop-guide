@@ -526,7 +526,7 @@ footer .heart{color:var(--coral)}
  <h4>איך מגדירים</h4>
  <ol>
   <li>הוקס מוגדרים בקבצי ההגדרות של הפרויקט (או האישיים) - אירוע, תנאי, והפקודה לריצה.</li>
-  <li><b>/hooks</b> בתוך סשן מציג את ההוקס הפעילים ולאיזה אירוע הם קשורים.</li>
+  <li>ברגע שההגדרות במקום - ההוקס פועלים לבד: אין פקודה שמנהלת אותם מתוך הסשן, אבל רואים אותם בפעולה. בהדגמה למטה הוק PostToolUse כותב שורה ללוג אחרי כל עריכה, והוק PreToolUse חוסם ניסיון push ישיר.</li>
   <li>הגדרות ב-<code>.claude/</code> של הפרויקט נשמרות בגיט - כל הצוות מקבל אותן הוקס.</li>
  </ol>
  <div class="callout"><b>זהירות:</b> הוק רץ על המחשב שלכם עם ההרשאות שלכם, בכל פעם שהאירוע קורה. כתבו הוקס קטנים, צפויים ומהירים - ואל תשימו בהם לוגיקה שאתם לא מבינים.</div>
@@ -540,8 +540,9 @@ footer .heart{color:var(--coral)}
  </ul>
  <div class="callout"><b>בסביבה נעולה:</b> האדמין יכול לכבות שגרות לכל הארגון (מתג Routines ב-admin settings) - אם האפשרות חסרה, כנראה שכבו אותה ברמת הארגון. וחשוב: שרתי MCP מקומיים שהוספתם ב-CLI <b>לא</b> זמינים לשגרות - הן רואות רק קונקטורים של חשבון claude.ai או שרתים שמוגדרים ב-<code>.mcp.json</code> בתוך הריפו. האלטרנטיבה המקומית: Desktop scheduled tasks, שרצות על המחשב שלכם עם גישה לקבצים מקומיים.</div>
  
- <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch16-hooks-routines.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 16 - הוקס (~3 דקות)</div>
+ <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה.</div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch16-hooks-v2.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 16 - הוקס (~שתי דקות ורבע)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/hooks">Hooks documentation</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
 </article>
 
