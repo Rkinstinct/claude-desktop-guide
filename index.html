@@ -102,7 +102,7 @@ footer .heart{color:var(--coral)}
  <div class="pill">מדריך חי • מתעדכן • עברית</div>
  <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><span class="l2">+ Fabric Skills ל-Power BI</span></h1>
  <p class="sub">המדריך לעובד הארגוני: Claude Chat ו-Claude Code ברישיון ארגוני נעול - בלי Cowork, בלי ענן, בלי חנות פלאגינים. מה שכן: צ'אט, קוד, ושרתי MCP וסקילים שטוענים בעצמכם. ובחלק האחרון: Skills for Fabric ועבודה עם Power BI. לכל פרק מצורף סרטון דמו עברי.</p>
- <div class="hero-stats"><div class="stat"><b>21</b><span>פרקים מפורטים</span></div><div class="stat"><b>21</b><span>סרטוני דמו עבריים - 9 כבר על הממשק האמיתי, השאר בשדרוג</span></div><div class="stat"><b>2</b><span>עולמות: Claude ו-Fabric</span></div><div class="stat"><b>100%</b><span>מבוסס תיעוד רשמי</span></div></div>
+ <div class="hero-stats"><div class="stat"><b>21</b><span>פרקים מפורטים</span></div><div class="stat"><b>21</b><span>סרטוני דמו עבריים - 12 כבר על הממשק האמיתי, השאר בשדרוג</span></div><div class="stat"><b>2</b><span>עולמות: Claude ו-Fabric</span></div><div class="stat"><b>100%</b><span>מבוסס תיעוד רשמי</span></div></div>
  <div class="hero-badges">
   <span>סרטון דמו לכל פרק</span><span>מבוסס תיעוד רשמי של Anthropic ו-Microsoft</span><span>נכתב מחדש נכון ל-29 בספטמבר 2026</span>
  </div>
@@ -131,6 +131,12 @@ footer .heart{color:var(--coral)}
   <li><b>שרתי MCP שטוענים בעצמכם</b> - חיבור של קלוד למערכות שלכם (קבצים, בסיסי נתונים, Fabric) דרך קובץ הגדרות פשוט. פרק 18 מדריך צעד-צעד.</li>
   <li><b>סקילים מקבצים</b> - חבילות הוראות שאתם יוצרים או מקבלים, ומעלים בעצמכם. פרק 13.</li>
  </ul>
+ <h4>מתחילים: התקנה וכניסה</h4>
+ <ol>
+  <li>מורידים את אפליקציית הדסקטופ מ-<code>claude.com/download</code> (Windows ו-Mac) - או עובדים בדפדפן ב-<code>claude.ai</code>.</li>
+  <li>נכנסים עם מייל העבודה של הארגון. הרישיון מזוהה אוטומטית, והמסך שעולה זהה בדסקטופ ובדפדפן.</li>
+  <li>מכאן כל הפרקים בחלק א׳ מתאימים לשניהם - אותם כפתורים, אותם מקומות.</li>
+ </ol>
  <div class="callout"><b>מה שלא תראו ברישיון נעול - וזה תקין:</b> Cowork (סוכן הענן), סשני ענן של Code, ספריית הקונקטורים וחנות הפלאגינים מושבתים אצל ארגונים רבים על ידי האדמין (באמצעות מדיניות כמו <code>secureVmFeaturesEnabled</code> ו-<code>isDesktopExtensionDirectoryEnabled</code>). אם נתקלתם במדריך אחר שמדבר עליהם - תדעו שהם קיימים, פשוט לא אצלכם. כל שאר המדריך לא תלוי בהם.</div>
  <h4>איך ללמוד עם המדריך</h4>
  <ol>
@@ -140,7 +146,7 @@ footer .heart{color:var(--coral)}
   <li><b>חלק ד׳ (פרקים 19-21):</b> היישום הארגוני שלכם - Skills for Fabric ועבודה עם Power BI.</li>
  </ol>
  <p>כל פרק עונה על שלוש שאלות: מה זה, מתי משתמשים, ואיך עובדים - ומלווה בסרטון דמו עברי קצר - בפרקים המרכזיים כבר על הממשק האמיתי, ובשאר בתהליך שדרוג.</p>
- <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/01-overview.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch01-overview.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 01 - מה יש לכם ואיך המדריך עובד (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop">Enterprise configuration for Claude Desktop</a> · <a href="https://support.claude.com/en/articles/11845131-use-claude-code-with-your-team-or-enterprise-plan">Claude Code with Team or Enterprise</a> · <a href="https://support.claude.com/en/articles/10065433-install-claude-desktop">Install Claude Desktop</a></div>
 </article>
@@ -151,9 +157,10 @@ footer .heart{color:var(--coral)}
  <p>Chat הוא המקום שבו מתחילים: שיחה עם קלוד על כל דבר - שאלה, טיוטה, ניתוח קובץ, סיעור מוחות. כמה דקות של היכרות עם המסך חוסכות שעות בהמשך.</p>
  <h4>מה יש על המסך</h4>
  <ul>
-  <li><b>סרגל צד:</b> צ'אטים אחרונים, פרויקטים והגדרות. צ'אט חדש מתחיל בלחיצה על New chat.</li>
-  <li><b>תיבת ההודעה (הקומפוזר):</b> כאן כותבים. ה-<b>+</b> מצרף קבצים ותמונות, והכפתור הימני שולח.</li>
-  <li><b>תפריט המודל ליד כפתור השליחה:</b> בחירת מודל, רמת מאמץ (Effort) והדלקת חשיבה מורחבת - פרק 10 מתעמק.</li>
+  <li><b>סרגל צד:</b> כפתור New לצ'אט חדש, ומתחתיו פרויקטים, ארטיפקטים והצ'אטים האחרונים.</li>
+  <li><b>תיבת ההודעה (הקומפוזר):</b> כאן כותבים. ה-<b>+</b> מצרף קבצים ותמונות, וגם פותח כלים: סקילים, חיפוש ברשת וזיכרון (פרק 5).</li>
+  <li><b>בורר המודל בתוך שורת הקומפוזר:</b> בחירת מודל, רמת מאמץ (Effort) והדלקת חשיבה מורחבת - פרק 10 מתעמק.</li>
+  <li><b>הלשוניות Chat ו-Cowork מעל הקומפוזר:</b> ברישיון נעול לשונית Cowork בדרך כלל מושבתת - נשארים ב-Chat.</li>
  </ul>
  <h4>השיחה הראשונה - איך עובדים נכון</h4>
  <ol>
@@ -164,7 +171,7 @@ footer .heart{color:var(--coral)}
  </ol>
  <h4>מתי Chat ומתי Claude Code</h4>
  <p>כלל אצבע פשוט: אם התוצר הוא תשובה, מסמך או ניתוח - Chat. אם צריך לגעת בקבצים, להריץ פקודות או לבנות תוכנה - Claude Code (חלק ב׳). שניהם חלק מאותו מנוי ארגוני.</p>
- <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/02-chat.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch02-first-chat.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 02 - השיחה הראשונה (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/8664678-change-the-model-effort-and-thinking-settings">Model, effort, and thinking settings</a> · <a href="https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude">Cowork and Chat are one Claude</a></div>
 </article>
@@ -180,9 +187,9 @@ footer .heart{color:var(--coral)}
  </ul>
  <h4>איך בונים פרויקט שעובד</h4>
  <ol>
-  <li>יוצרים פרויקט חדש ונותנים שם ברור.</li>
-  <li>כותבים <b>הוראות (Instructions)</b> קצרות וקונקרטיות: מי הקהל, איזה טון, איזה פורמט פלט, מה אסור.</li>
-  <li>מעלים <b>קבצי רקע</b> שההוראות מפנות אליהם: דוגמאות, תבניות, מונחון.</li>
+  <li>יוצרים פרויקט חדש: שם ברור, ובשדה "What are you trying to achieve?" משפט אחד על המטרה.</li>
+  <li>כותבים <b>הוראות (Instructions)</b> קצרות וקונקרטיות בפאנל הימני: מי הקהל, איזה טון, איזה פורמט פלט, מה אסור.</li>
+  <li>מעלים <b>קבצי רקע לפאנל Context</b> שההוראות מפנות אליהם: דוגמאות, תבניות, מונחון. לכל פרויקט נבנה גם <b>זיכרון</b> משלו מהשיחות שבו.</li>
   <li>עובדים בתוך הפרויקט - כל שיחה חדשה בו כבר יודעת את ההקשר.</li>
  </ol>
  <h4>מלכודות נפוצות</h4>
@@ -191,7 +198,7 @@ footer .heart{color:var(--coral)}
   <li>שיתוף פרויקט ("Can view" / "Can edit") זמין ברישיונות Team ו-Enterprise.</li>
   <li>גם ב-Claude Code עובדים "לפי פרויקט", אבל שם הפרויקט הוא <b>תיקיית העבודה על המחשב</b> (עם קובץ CLAUDE.md משלה, פרק 17) - לא אותו פרויקט של Chat.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/03-projects.mp4" type="video/mp4"></video></div>
+ <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch03-projects.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 03 - פרויקטים (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/10170752-what-are-projects">What are projects</a></div>
 </article>
@@ -207,9 +214,9 @@ footer .heart{color:var(--coral)}
  </ul>
  <h4>איך עובדים איתו</h4>
  <ol>
-  <li>מבקשים תוצר ("תכין דוח מסכם", "תבנה דשבורד קטן מהקובץ") - הארטיפקט נפתח בצד.</li>
-  <li>משכללים בשיחה: "תוסיף עמודת סה״כ", "תשנה את הכותרת" - הגרסה מתעדכנת.</li>
-  <li>משתפים או מורידים את התוצר כשהוא מוכן.</li>
+  <li>מבקשים תוצר ("תכין דוח מסכם", "תבנה דשבורד קטן מהקובץ") - הארטיפקט נפתח בפאנל שמצד השיחה ומתרנדר מיד.</li>
+  <li>משכללים בשיחה: "תוסיף עמודת סה״כ", "תשנה את הכותרת" - אותו ארטיפקט מתעדכן מחדש.</li>
+  <li>כל הארטיפקטים נשמרים בעמוד <b>Artifacts</b> בסרגל הצד - אפשר לחזור אליהם, לשתף או להוריד בכל זמן.</li>
  </ol>
  <h4>טיפ שחוסך זמן</h4>
  <p>אם קיבלתם טקסט ארוך בתוך הצ'אט במקום ארטיפקט - פשוט בקשו: "תהפוך את זה לארטיפקט". זו הדרך המהירה להעביר תוצר למסלול עריכה נכון.</p>
@@ -225,13 +232,13 @@ footer .heart{color:var(--coral)}
  <h4>זיכרון: מה קלוד יודע עליכם</h4>
  <ol>
   <li>קלוד מזהה נושאים חוזרים בשיחות שלכם (תפקיד, העדפות, פרויקטים) ושומר אותם כרשימת נושאים.</li>
-  <li>פתחו Settings ותראו את הרשימה בעצמכם: כל נושא <b>ניתן לעריכה או מחיקה</b> מלאה.</li>
+  <li>פתחו <b>Settings ← Memory</b> ותראו בעצמכם: מתג "Generate memory from chats", רשימת הנושאים, ושדה שבו כותבים לקלוד מה לשנות או למחוק. הכל ניתן לעריכה או מחיקה מלאה.</li>
   <li>כלל אצבע ארגוני: מידע רגיש שלא הייתם רושמים לעצמכם בפתק - אל תכניסו לזיכרון.</li>
  </ol>
- <h4>חיפוש בשיחות עבר</h4>
- <p>מחפשים משהו שנאמר לפני שבועיים? שואלים בשפה טבעית ("מה החלטנו על המחירון של רבע 4?") וקלוד שולף את ההקשר מהשיחה הרלוונטית. אין צורך לזכור איפה זה נכתב.</p>
+ <h4>חיפוש: ברשת ובשיחות עבר</h4>
+ <p>שני חיפושים שכדאי להכיר. <b>חיפוש ברשת:</b> בתפריט ה-+ אפשר להדליק או לכבות Web search לכל שיחה - כשזה דולק, קלוד שולף מידע עדכני מהאינטרנט עם מקורות. <b>חיפוש בשיחות עבר:</b> שואלים בשפה טבעית ("מה החלטנו על המחירון של רבע 4?") וקלוד שולף את ההקשר מהשיחה הרלוונטית - אין צורך לזכור איפה זה נכתב.</p>
  <h4>אינקוגניטו: שיחה שלא נשמרת</h4>
- <p>צ'אט אינקוגניטו (אייקון הרפאים) לא נשמר בהיסטוריה ולא משפיע על הזיכרון. מתאים לניסוי חד-פעמי, שאלה אישית, או טיוטה שלא צריכה להשאיר עקבות. שימו לב: ברישיון ארגוני המדיניות של הארגון חלה גם כאן.</p>
+ <p>צ'אט אינקוגניטו מתחיל מכפתור <b>Use incognito</b> (אייקון הרפאים) בראש מסך הצ'אט. שיחה כזאת נשארת מחוץ להיסטוריה, לזיכרון ולחיפוש, ולא משמשת לאימון המודל. מתאים לניסוי חד-פעמי, שאלה אישית, או טיוטה שלא צריכה להשאיר עקבות. שימו לב: ברישיון ארגוני המדיניות של הארגון חלה גם כאן.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/08-memory.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 05 - זיכרון, חיפוש ואינקוגניטו (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Chat search and memory</a> · <a href="https://support.claude.com/en/articles/12260368-use-incognito-chats">Incognito chats</a></div>
@@ -241,11 +248,11 @@ footer .heart{color:var(--coral)}
 <article class="chapter" id="ch06">
  <div class="ch-head"><span class="ch-num">06</span><h3>קונטקסט וטוקנים: זיכרון העבודה של קלוד</h3></div>
  <p>לכל שיחה יש "חלון הקשר" - כמות המידע המקסימלית שקלוד מחזיק בראש ברגע נתון: ההוראות, הכלים, ההודעות ותוצאות הכלים. כשהחלון מתמלא, הביצועים יורדים. מי שמנהל את החלון נכון - מקבל תשובות טובות יותר.</p>
- <h4>ב-Chat: לראות ולדחוס</h4>
+ <h4>ב-Chat: לעקוב ולפצל בזמן</h4>
  <ul>
-  <li><b>טבעת השימוש</b> ליד תפריט המודל מראה כמה מהחלון נוצל בשיחה הנוכחית.</li>
-  <li>כשהחלון מתמלא מתבצעת <b>דחיסה אוטומטית</b>: קלוד מסכם את השיחה ומשאיר את העיקר.</li>
-  <li><b>/compact</b> דוחס ידנית - כדאי אחרי שלב שהסתיים ולפני נושא חדש באותה שיחה.</li>
+  <li><b>מד השימוש</b> בתפריט המודל מראה כמה מהחלון נוצל בשיחה הנוכחית (Low usage ומעלה).</li>
+  <li>שיחה שהתארכה מאוד? בקשו מקלוד סיכום של מה שהושג, ופתחו צ'אט חדש עם הסיכום. זה ה-/compact הידני שלכם בצ'אט.</li>
+  <li>בצ'אט אין פקודות דחיסה - הניהול הידני המלא (בפקודות) קיים ב-Claude Code, כאן למטה.</li>
  </ul>
  <h4>ב-Claude Code: שלוש פקודות ששוות זהב</h4>
  <ul>
@@ -259,7 +266,7 @@ footer .heart{color:var(--coral)}
   <li>תנו לקלוד למשוך קבצים בעצמו במקום להדביק תוכן ענק לתוך הצ'אט.</li>
   <li>משימה ענקית? חלקו לשלבים, דחסו ביניהם.</li>
   <li>מסמך שחוזרים אליו הרבה? שימו אותו בפרויקט במקום בכל שיחה מחדש.</li>
-  <li>מעל ~70% בטבעת? זמן לדחוס או לפצל.</li>
+  <li>מד השימוש עולה? זמן לסכם ולפצל.</li>
  </ol>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/09-context.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 06 - קונטקסט וטוקנים (~3 דקות)</div>
@@ -449,7 +456,7 @@ footer .heart{color:var(--coral)}
   <li>קיבלתם סקיל מצוות אחר? מספיק להעתיק את התיקייה למקום הנכון - זה כל ה"התקנה".</li>
  </ol>
  <h4>איך משתמשים</h4>
- <p>ברוב המקרים לא צריך לקרוא לסקיל בשם: קלוד מפעיל אותו אוטומטית כשהמשימה מתאימה לתיאור שלו. אפשר גם להפעיל ידנית עם <b>/</b> ושם הסקיל. רשימת הסקילים הזמינים מופיעה בפקודת הרשימה המתאימה (<code>/</code> בתוך סשן Code).</p>
+ <p>ברוב המקרים לא צריך לקרוא לסקיל בשם: קלוד מפעיל אותו אוטומטית כשהמשימה מתאימה לתיאור שלו. אפשר גם להפעיל ידנית עם <b>/</b> ושם הסקיל - הקשת <b>/</b> מציגה את רשימת הסקילים המותקנים, גם בסשן Code וגם בקומפוזר של Chat.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/05-skills.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 13 - סקילים (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/12512176-what-are-skills">What are skills</a> · <a href="https://support.claude.com/en/articles/12512180-use-skills-in-claude">Use skills in Claude</a> · <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">Create custom skills</a></div>
