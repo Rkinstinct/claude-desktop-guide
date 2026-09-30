@@ -1,5 +1,5 @@
 /* A quieter layer over the original guide. Without JS, the original guide remains readable. */
-:root{--ink:#292621;--soft:#706b63;--line:#e8e2d9;--paper:#fffefa;--accent:#b65d42}
+:root{--ink:#292621;--soft:#706b63;--line:#e8e2d9;--paper:#fffefa;--accent:#b65d42;--ease-out:cubic-bezier(.23,1,.32,1);--ease-in-out:cubic-bezier(.77,0,.175,1)}
 body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
 .course-ready .wrap{max-width:1080px;padding-inline:clamp(20px,4vw,48px)}
 .course-ready header.hero{padding:82px 0 58px;text-align:right}
@@ -27,8 +27,8 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
 .course-ready .course-part-label{color:var(--accent);font-size:13px;font-weight:700;white-space:nowrap}
 .course-ready .course-part-head h3{font-size:clamp(20px,3vw,28px);line-height:1.4;font-weight:600}
 .course-ready .lesson-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.course-ready .lesson-card{display:flex;align-items:flex-start;gap:18px;padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:16px;color:var(--ink);min-height:122px;transition:transform .18s,border-color .18s,box-shadow .18s}
-.course-ready .lesson-card:hover,.course-ready .lesson-card:focus-visible{transform:translateY(-2px);border-color:#cfaa98;box-shadow:0 10px 28px rgba(58,43,31,.07);text-decoration:none}
+.course-ready .lesson-card{display:flex;align-items:flex-start;gap:18px;padding:24px;background:var(--paper);border:1px solid var(--line);border-radius:16px;color:var(--ink);min-height:122px;transition:transform .18s var(--ease-out),border-color .18s ease,box-shadow .18s ease}
+.course-ready .lesson-card:focus-visible{transform:translateY(-2px);border-color:#cfaa98;box-shadow:0 10px 28px rgba(58,43,31,.07);text-decoration:none}
 .course-ready .lesson-number{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;font-size:15px;min-width:28px}
 .course-ready .lesson-card strong{font-size:18px;line-height:1.45;font-weight:600;display:block}
 .course-ready .lesson-card small{font-size:13px;color:var(--soft);display:block;margin-top:8px}
@@ -43,7 +43,7 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
 .course-ready .lesson-top h2{font-size:clamp(28px,4vw,42px);line-height:1.35;max-width:760px}
 .course-ready .lesson-top p{color:var(--soft);font-size:15px;margin-top:8px}
 .course-ready .chapter .ch-head{display:none}
-.course-ready .chapter .lesson-step{display:none;animation:fade-step .24s ease both}
+.course-ready .chapter .lesson-step{display:none;animation:fade-step .22s var(--ease-out) both}
 .course-ready .chapter .lesson-step.active{display:block}
 @keyframes fade-step{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
 .course-ready .chapter .lesson-step h4{margin:0 0 20px;font-size:clamp(21px,3vw,26px);line-height:1.4;color:#332d27}
@@ -61,15 +61,13 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
 .course-ready .step-shell{max-width:760px;margin:0 auto 76px}
 .course-ready .step-progress{display:flex;align-items:center;gap:14px;margin:0 0 20px;color:var(--soft);font-size:14px}
 .course-ready .progress-track{height:5px;flex:1;background:#e9e3d9;border-radius:5px;overflow:hidden}
-.course-ready .progress-fill{height:100%;background:var(--coral);border-radius:5px;transition:width .25s}
+.course-ready .progress-fill{height:100%;width:100%;background:var(--coral);border-radius:5px;transform:scaleX(0);transform-origin:right center;transition:transform .3s var(--ease-out)}
 .course-ready .step-picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
 .course-ready .step-picker button{border:1px solid #e6dfd5;background:transparent;color:#655f57;padding:8px 12px;border-radius:999px;font:500 13px 'Heebo',sans-serif;cursor:pointer;text-align:right}
 .course-ready .step-picker button[aria-current="step"]{background:#f5e4dc;color:#8f422d;border-color:#e9c3b1}
-.course-ready .step-picker button:hover{border-color:#ba745c;color:#8f422d}
 .course-ready .step-actions{display:flex;justify-content:space-between;gap:14px}
 .course-ready .step-actions button,.course-ready .step-actions a{border:1px solid #d7cfc3;border-radius:12px;padding:12px 22px;background:#fffefa;color:#4b3c34;font:600 15px 'Heebo',sans-serif;cursor:pointer;text-decoration:none;text-align:center}
 .course-ready .step-actions .next{background:#aa563c;color:white;border-color:#aa563c}
-.course-ready .step-actions .next:hover{background:#8e412b}
 .course-ready .step-actions button:disabled{opacity:.45;cursor:default}
 .course-ready footer{border-top:1px solid var(--line);padding-top:26px;max-width:760px;margin:56px auto 42px;line-height:1.8}
 .course-ready .rv{opacity:1;transform:none;transition:none}
@@ -93,7 +91,7 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
  .course-ready .step-actions button,.course-ready .step-actions a{flex:1;padding:12px 8px}
  .course-ready .chapter table.cmp{min-width:600px}
 }
-@media(prefers-reduced-motion:reduce){.course-ready .chapter .lesson-step{animation:none}.course-ready .lesson-card{transition:none}}
+@media(prefers-reduced-motion:reduce){.course-ready .chapter .lesson-step{animation:none}.course-ready .lesson-card,.course-ready .step-picker button,.course-ready .step-actions button,.course-ready .step-actions a,.course-ready .progress-fill{transition:none}.course-ready .lesson-card:active,.course-ready .step-picker button:active,.course-ready .step-actions button:active,.course-ready .step-actions a:active{transform:none}}
 
 .course-ready .intro-more{max-width:650px;margin-top:14px;color:var(--soft);font-size:14px}
 .course-ready .course-home-intro{padding:16px 24px;margin-bottom:58px}
@@ -111,3 +109,17 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
  .course-ready .course-bar-meta{display:none}
  .course-ready .course-bar .back-link{white-space:nowrap;flex:none}
 }
+
+/* Motion + touch polish pass - principles adapted from emilkowalski/skills (MIT) */
+html{-webkit-tap-highlight-color:transparent}
+.course-ready a,.course-ready button{touch-action:manipulation}
+.course-ready .lesson-card,.course-ready .step-picker button,.course-ready .step-actions button,.course-ready .step-actions a{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.course-ready .step-picker button,.course-ready .step-actions button,.course-ready .step-actions a{transition:transform .14s var(--ease-out),background .18s ease,border-color .18s ease,color .18s ease}
+@media (hover:hover) and (pointer:fine){
+ .course-ready .lesson-card:hover{transform:translateY(-2px);border-color:#cfaa98;box-shadow:0 10px 28px rgba(58,43,31,.07);text-decoration:none}
+ .course-ready .step-picker button:hover{border-color:#ba745c;color:#8f422d}
+ .course-ready .step-actions .next:hover{background:#8e412b}
+}
+.course-ready .step-picker button:active,.course-ready .step-actions button:active,.course-ready .step-actions a:active{transform:scale(.97)}
+.course-ready .lesson-card:active{transform:scale(.985)}
+.course-ready .chapter .video-box video{display:block;max-width:100%;border-radius:14px;border:1px solid var(--line)}
