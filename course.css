@@ -185,7 +185,7 @@ html{-webkit-tap-highlight-color:transparent}
  .course-ready.lesson article.chapter.current{margin:0;padding:0}
  .course-ready.lesson .lesson-top{margin-top:30px}
  .course-ready .chapter .lesson-step p{font-size:16.5px}
- .course-ready .step-rail{margin:0 -20px 4px;padding:0 20px}
+ .course-ready .step-rail{margin:0 0 4px;padding:0}
  .course-ready .step-actions .next .act-label{max-width:150px}
 }
 /* v3 alignment: lesson header lives inside the content column */
