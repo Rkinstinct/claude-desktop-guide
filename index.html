@@ -397,6 +397,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch06-context-tokens.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 06 - קונטקסט וטוקנים (~דקה)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a> · <a href="https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work">Usage and length limits</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">אתם בשיחת Chat ארוכה, מד השימוש כבר גבוה, והתשובות הולכות ומאבדות דיוק. מה הצעד הנכון?</p>
+   <button type="button" class="q-opt">להקליד /compact כדי לדחוס את השיחה<span class="q-fb" hidden>ב-Chat אין פקודות דחיסה - זה קיים רק ב-Claude Code. בצ'אט הדחיסה הידנית היא סיכום + שיחה חדשה.</span></button>
+   <button type="button" class="q-opt" data-ok="1">מבקשים מקלוד סיכום של מה שהושג, ופותחים צ'אט חדש עם הסיכום<span class="q-fb" hidden>נכון. ככה שומרים את כל ההישגים במעט טוקנים, והשיחה החדשה מתחילה עם חלון נקי.</span></button>
+   <button type="button" class="q-opt">ממשיכים כרגיל - קלוד מנהל את החלון לבד<span class="q-fb" hidden>החלון מתמלא והביצועים יורדים בדיוק כפי ששמתם לב. זה האות שלכם לסכם ולפצל, לא להתעלם.</span></button>
+   <button type="button" class="q-opt">מוחקים מהשיחה את ההודעות הישנות וממשיכים<span class="q-fb" hidden>קיצור מסורבל שמסכן את ההקשר שאתם כן צריכים. סיכום אחד טוב עדיף על ניתוח עצמי של ההיסטוריה.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">סיימתם משימה ב-Claude Code ומתחילים משימה אחרת לגמרי באותה תיקייה. איזו פקודה מתאימה?</p>
+   <button type="button" class="q-opt">/compact - לדחוס את ההיסטוריה ולהמשיך<span class="q-fb" hidden>compact נועד להמשיך את אותה עבודה עם סיכום. למשימה אחרת לגמרי הסיכום הוא סתם רעש בחלון.</span></button>
+   <button type="button" class="q-opt">כלום - ממשיכים לכתוב, הסשן כבר מכיר את התיקייה<span class="q-fb" hidden>ההקשר של המשימה הקודמת ימשיך לתפוס מקום ולהשפיע. נושא חדש = התחלה נקייה.</span></button>
+   <button type="button" class="q-opt">/context - לבדוק מה טוען את החלון<span class="q-fb" hidden>context הוא כלי אבחון שמראה מה יש בחלון, לא מנקה אותו. לפעולה עצמה צריך פקודת ניקוי.</span></button>
+   <button type="button" class="q-opt" data-ok="1">/clear - ניקוי מלא של היסטוריית השיחה; זיכרון הפרויקט נשמר<span class="q-fb" hidden>נכון. למשימה חדשה מנקים לגמרי. ומה שלא הולך לאיבוד: זיכרון הפרויקט (CLAUDE.md) נשאר.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">ב-Claude Code אתם צריכים ניתוח של קובץ לוג ענק. מה הדרך הנכונה לתת לו את הקובץ?</p>
+   <button type="button" class="q-opt" data-ok="1">פשוט מפנים אותו לקובץ - הוא קורא אותו מהדיסק בעצמו<span class="q-fb" hidden>נכון. קלוד שולף קבצים לבד וחכם - רק החלקים הרלוונטיים. ככה החלון נשאר פנוי לעבודה.</span></button>
+   <button type="button" class="q-opt">מדביקים את כל תוכן הלוג לתוך ההודעה<span class="q-fb" hidden>הדבקה מלאה ממלאת את חלון ההקשר בתוכן גולמי ומשאירה מעט מקום לעבודה בפועל.</span></button>
+   <button type="button" class="q-opt">מעתיקים רק את השורות שנראות חשודות ומדביקים אותן<span class="q-fb" hidden>קיצור שמנחש מראש מה חשוב - ובלוגים הבעיה לרוב דווקא בשורות שלא נראות חשודות. תנו לקלוד לסרוק.</span></button>
+   <button type="button" class="q-opt">מחלקים את הלוג לעשרות הודעות רצופות<span class="q-fb" hidden>אותה בעיה בחלוקה: כל הטוקנים עדיין נכנסים לחלון, רק בעבודת ידיים. ההפניה לקובץ עושה את זה נכון.</span></button>
+  </div>
+ </div>
 </article>
 
 
