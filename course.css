@@ -219,3 +219,11 @@ body.intro-lock{overflow:hidden}
  .course-ready.lesson .step-actions{padding:8px 0;gap:8px}
  .course-ready.lesson .step-actions button,.course-ready.lesson .step-actions a{padding:8px 10px;font-size:13.5px;border-radius:10px}
 }
+
+/* intro: full-bleed cover on portrait screens, contain on landscape */
+#intro-overlay video{object-fit:cover}
+@media(min-aspect-ratio:4/3){#intro-overlay video{object-fit:contain}}
+/* rail edge fade: clipped step chips fade instead of hard-cut (mobile/tablet) */
+@media(max-width:1023px){
+ .course-ready .step-rail{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 26px calc(100% - 26px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 26px calc(100% - 26px),transparent 100%)}
+}
