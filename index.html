@@ -151,6 +151,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch01-overview.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 01 - מה יש לכם ואיך המדריך עובד (~2.5 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop">Enterprise configuration for Claude Desktop</a> · <a href="https://support.claude.com/en/articles/11845131-use-claude-code-with-your-team-or-enterprise-plan">Claude Code with Team or Enterprise</a> · <a href="https://support.claude.com/en/articles/10065433-install-claude-desktop">Install Claude Desktop</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">סקריפט על המחשב שלכם נופל על שגיאה, ואתם רוצים שקלוד ימצא את הבאג ויתקן אותו בקבצים עצמם. באיזה כלי תעבדו?</p>
+   <button type="button" class="q-opt">Claude Chat - מדביקים את תוכן הסקריפט ומבקשים תיקון<span class="q-fb" hidden>Chat מנתח טקסט שמדביקים, אבל לא נוגע בקבצים על המחשב ולא מריץ כלום. לעבודה על קבצים אמיתיים צריך סוכן, לא צ'אט.</span></button>
+   <button type="button" class="q-opt" data-ok="1">Claude Code - הסוכן שקורא, עורך ומריץ קוד על המחשב שלכם<span class="q-fb" hidden>נכון. Code עובד על הקבצים עצמם: הוא קורא את הסקריפט, מוצא את הבאג, עורך ומריץ שוב לבדוק - לולאה שלמה.</span></button>
+   <button type="button" class="q-opt">שרת MCP - לחבר את קלוד למערכת הקבצים<span class="q-fb" hidden>בלבול נפוץ: MCP הוא צינור נתונים בין קלוד למערכות, לא הסוכן שעובד על הקוד. הסוכן הוא Claude Code.</span></button>
+   <button type="button" class="q-opt">להדביק רק את הודעת השגיאה בצ'אט ולהעתיק את התיקון ידנית<span class="q-fb" hidden>קיצור שעובד לפעמים, אבל אתם עושים ידנית את כל הלולאה: העתקה, הדבקה, הרצה, שוב שגיאה. Code עושה את הלולאה בעצמו ובודק שהתיקון באמת עובד.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">קולגה שולח לכם מדריך מיוטיוב על "חנות הפלאגינים של קלוד", אבל אצלכם בממשק אין חנות בכלל. מה המסקנה הנכונה?</p>
+   <button type="button" class="q-opt">הרישיון שלכם ישן וצריך לבקש שדרוג<span class="q-fb" hidden>לא בהכרח - ברישיון ארגוני נעול האדמין משבית פיצ'רים בכוונה. זה תקין, לא תקלה.</span></button>
+   <button type="button" class="q-opt">לעבור מהאפליקציה לדפדפן, שם החנות קיימת<span class="q-fb" hidden>המסך זהה בדסקטופ ובדפדפן - המדיניות הארגונית חלה על שניהם. המעבר לא יחשוף את החנות.</span></button>
+   <button type="button" class="q-opt">להוריד פלאגין מקובץ חיצוני ולהתקין ידנית<span class="q-fb" hidden>קיצור מסוכן: בסביבה נעולה ההתקנה חסומה, וקובץ חיצוני הוא סיכון אבטחה אמיתי. דברו עם האדמין במקום לעקוף.</span></button>
+   <button type="button" class="q-opt" data-ok="1">שאצלכם הסביבה נעולה - האדמין משבית פיצ'רים כאלה, והמדריך הזה מכסה רק מה שעובד אצלכם<span class="q-fb" hidden>נכון. Cowork, חנות הפלאגינים וספריית הקונקטורים מושבתים אצל ארגונים רבים. הם קיימים - פשוט לא ברישיון הנעול.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">קולגה חדש לגמרי בקלוד שואל אתכם מאיפה להתחיל עם המדריך. מה התשובה הכי טובה?</p>
+   <button type="button" class="q-opt" data-ok="1">חלק א' - שיחה ראשונה, פרויקטים וארטיפקטים, ומשם להתקדם לפי הצורך<span class="q-fb" hidden>נכון. המדריך בנוי הדרגתית: חלק א' נותן את הבסיס שכל שאר החלקים נשענים עליו.</span></button>
+   <button type="button" class="q-opt">ישר לחלק ג' - סקילים, הוקס ו-CLAUDE.md, שם הכוח האמיתי<span class="q-fb" hidden>חלק ג' מניח שכבר עובדים עם קלוד יומיומית. בלי הבסיס של חלק א' העומק ירגיש מנותק.</span></button>
+   <button type="button" class="q-opt">ישר לפרק 18 - לחבר את כל מערכות החברה עם MCP<span class="q-fb" hidden>חיבור מערכות הוא שלב מתקדם שדורש הבנה של מה קלוד עושה בכלל. מתחילים מהשיחה הראשונה.</span></button>
+   <button type="button" class="q-opt">לתת לו לגלות לבד - ככה לומדים הכי טוב<span class="q-fb" hidden>ניסוי וטעיה בלי מפה שורף שעות על דברים שהמדריך כבר סידר בסדר הנכון. הדרגתיות חוסכת זמן.</span></button>
+  </div>
+ </div>
 </article>
 
 
