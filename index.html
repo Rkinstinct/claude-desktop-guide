@@ -114,7 +114,7 @@ footer .heart{color:var(--coral)}
 
 <div class="wrap">
 
-<div class="callout" style="max-width:860px;margin:0 auto 30px"><b>שקיפות:</b> הסרטונים באתר נבנים על צילומי מסך אמיתיים מהתיעוד הרשמי, עם הנפשת סמן וקריינות עברית - ומוחלפים כעת אחד-אחד בגרסה החדשה. כל פרק מקשר למקורות הרשמיים שעל פיהם נכתב. המוצרים משתנים מהר; מה שנכון היום עלול להשתנות.</div>
+<div class="callout" style="max-width:860px;margin:0 auto 30px"><b>שקיפות:</b> הסרטונים באתר נבנים על צילומי מסך אמיתיים מהתיעוד הרשמי, עם הנפשת סמן וקריינות עברית - ומוחלפים כעת אחד-אחד בגרסה החדשה. בסרטוני הדמו מופיעה התווית "Claude Sonnet 4.5", אך בסביבת ההדגמה הבקשות מנותבות דרך שער (Gateway) למודל <code>gpt-oss:120b</code> בענן של Ollama; הממשק, הכלים וזרימות העבודה הם Claude Desktop אמיתי, ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. כל פרק מקשר למקורות הרשמיים שעל פיהם נכתב. המוצרים משתנים מהר; מה שנכון היום עלול להשתנות.</div>
 
 
 
@@ -303,7 +303,6 @@ footer .heart{color:var(--coral)}
  <p>מומלץ לעבוד עם עורך קוד לצד הסוכן: VS Code הוא הבחירה הנפוצה, וההרחבה של Claude Code מציגה את הדיפים והעריכות ישירות בעורך. לא חובה - אפשר לעבוד גם מהדסקטופ או הטרמינל בלבד - אבל עם עורך הסקירה נוחה יותר.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch07-code-intro.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 07 - מה זה Claude Code, התקנה והגדרה (~3 דקות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11845131-use-claude-code-with-your-team-or-enterprise-plan">Claude Code with Team or Enterprise</a> · <a href="https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code">Your first day in Claude Code</a></div>
 </article>
 
@@ -334,11 +333,9 @@ footer .heart{color:var(--coral)}
  </ul>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch08-split-screen.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 08ב - פיצול המסך: צ'אט, טרמינל וקבצים (~40 שניות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <div class="callout"><b>שורת יושרה לסביבה נעולה:</b> ישנם גם סשני ענן שממשיכים לרוץ אחרי שהמחשב נסגר - הם חלק מ-Cowork ולא זמינים ברישיון נעול. כל מה שבפרק הזה עובד מקומית, בלי ענן.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch08-sessions-project.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 08 - סשנים והפרויקט הראשון (~3 דקות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a> · <a href="https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code">Your first day in Claude Code</a></div>
 </article>
 
@@ -367,7 +364,6 @@ footer .heart{color:var(--coral)}
  <p>מעבר למצב הרגעי, אפשר להגדיר <b>כללי allow/deny קבועים</b> לכלי או פקודה ספציפיים (למשל: תמיד לאשר <code>git status</code>, לעולם לא לאשר <code>rm -rf</code>) דרך <code>/permissions</code> או קובץ ההגדרות. ככה המצב נשאר שמרני, והחיכוך היומיומי נעלם.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch09-permissions.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 09 - מצבי הרשאות (~3 דקות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a> · <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a></div>
 </article>
 
@@ -396,7 +392,6 @@ footer .heart{color:var(--coral)}
  <div class="callout"><b>ברישיון ארגוני:</b> האדמין יכול לקבוע רמת מאמץ ברירת-מחדל לסשנים של Claude Code (מדיניות <code>effortLevel</code>) ולהסתיר מודלים או רמות מסוימות. אם בורר שציפיתם לו חסר - כנראה שהוגבל ברמת הארגון.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch10-thinking-effort.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 10 - חשיבה מורחבת ורמת מאמץ (~3 דקות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <div class="srcs">מקור: <a href="https://support.claude.com/en/articles/8664678-change-the-model-effort-and-thinking-settings">Model, effort, and thinking settings</a></div>
 </article>
 
@@ -428,7 +423,6 @@ footer .heart{color:var(--coral)}
  </ol>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch12-shortcuts.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 12 - קיצורים וטיפים (~3 דקות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <div class="srcs">מקור: <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
 </article>
 
@@ -455,7 +449,6 @@ footer .heart{color:var(--coral)}
  <p>ברוב המקרים לא צריך לקרוא לסקיל בשם: קלוד מפעיל אותו אוטומטית כשהמשימה מתאימה לתיאור שלו. אפשר גם להפעיל ידנית עם <b>/</b> ושם הסקיל - הקשת <b>/</b> מציגה את רשימת הסקילים המותקנים, גם בסשן Code וגם בקומפוזר של Chat.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch13-skills.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 13 - סקילים (~3 דקות)</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic.</div>
  <h4>דוגמאות חיות: סקילים מובנים לקבצי Office</h4>
  <p>חלק מהסקילים כבר מובנים ב-Chat - בלי התקנה ובלי העלאת ZIP: מבקשים קובץ בשפה טבעית ("תכין לי טבלת מכירות באקסל"), וקלוד מפעיל את הסקיל המתאים אוטומטית ומחזיר קובץ אמיתי שניתן לעריכה. שימו לב: התוסף (add-in) של PowerPoint ל-Office הוא שדרוג בתשלום - מה שרואים בדמו הוא יצירת קובץ ה-PPTX עצמו.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ms-skill-excel.mp4" type="video/mp4"></video></div>
@@ -493,7 +486,6 @@ footer .heart{color:var(--coral)}
  </ul>
  <h4>פקודות מותאמות אישית</h4>
  <p>הצוות שלכם יכול להגדיר פקודות משלו כסקילים בתוך <code>.claude/skills/</code> בפרויקט - הסקיל הופך אוטומטית לפקודה עם השם שלו, כמו <b>/readme-check</b> בסרטון. ככה תהליך חוזר - "בדיקות לפני merge", "דוח ספרינט" - הופך לפקודה אחת שכולם מריצים אותה אותו דבר.</p>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway) - כפי שאפשר לראות בעצמו בכרטיס <b>/usage</b> במהלך הסרטון. הממשק, הפקודות וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה היה פעיל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch14-slash-commands-v3.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 14 - פקודות סלאש (~שתי דקות וחצי)</div>
  <div class="srcs">מקור: <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
@@ -516,7 +508,6 @@ footer .heart{color:var(--coral)}
   <li>רוצים לכפות? כתבו במפורש: "הרץ את הבדיקות בסאב-אייג'נט ותחזיר רק כשלונות".</li>
  </ol>
  <div class="callout"><b>כלל אצבע:</b> משימה שדורשת סריקה רחבה אבל תשובה קצרה - מועמדת מושלמת לסאב-אייג'נט. הראשי נשאר חד, והדו"ח חוזר נקי.</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות סאב-אייג'נט; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch15-subagents-v2.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 15 - סאב-אייג'נטים (~דקה וחצי)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/sub-agents">Custom subagents</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
@@ -550,13 +541,12 @@ footer .heart{color:var(--coral)}
  </ul>
  <div class="callout"><b>בסביבה נעולה:</b> האדמין יכול לכבות שגרות לכל הארגון (מתג Routines ב-admin settings) - אם האפשרות חסרה, כנראה שכבו אותה ברמת הארגון. וחשוב: שרתי MCP מקומיים שהוספתם ב-CLI <b>לא</b> זמינים לשגרות - הן רואות רק קונקטורים של חשבון claude.ai או שרתים שמוגדרים ב-<code>.mcp.json</code> בתוך הריפו. האלטרנטיבה המקומית: Desktop scheduled tasks, שרצות על המחשב שלכם עם גישה לקבצים מקומיים.</div>
  
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה.</div>
+ <h4>סרטון דמו 16ב - שגרה מקומית (Local)</h4>
+ <p>שתי הדגמות מהממשק האמיתי בפרק: הוקס בפעולה בתוך סשן, ואחר כך יצירה והרצה של שגרה מקומית (Local) מהדסקטופ.</p>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch16-hooks-v2.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 16 - הוקס (~שתי דקות ורבע)</div>
- <h4>סרטון דמו 16ב - שגרה מקומית (Local)</h4>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. ההקלטה עברה דרך שרת proxy מקומי של סביבת ההדגמה הכולל רכיב ביניים (shim) המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; הוא אינו משנה את תוכן התשובות או את זרימת העבודה.</div>
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch16-routines.mp4" type="video/mp4"></video></div>
- <div class="video-cap">יצירת שגרה מקומית (Local), הגדרת תיקייה והרצה ידנית (~100 שניות)</div>
+ <div class="video-cap">סרטון דמו 16ב - שגרה מקומית (Local): יצירה, הגדרת תיקייה והרצה ידנית (~100 שניות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/hooks">Hooks documentation</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
 </article>
 
@@ -578,7 +568,6 @@ footer .heart{color:var(--coral)}
   <li><b>/memory</b> בתוך סשן פותח את קבצי ה-CLAUDE.md שבטווח לעריכה מהירה.</li>
  </ol>
  <div class="callout"><b>כלל אצבע:</b> אם משפט לא יעזור למפתח חדש בצוות - הוא לא שייך ל-CLAUDE.md. הקובץ הטוב ביותר קצר, חד, ומתעדכן כל הזמן.</div>
- <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה.</div>
 <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch17-claudemd-demo.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 17 - CLAUDE.md (~דקה וחצי)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/memory">CLAUDE.md memory documentation</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
@@ -620,7 +609,6 @@ footer .heart{color:var(--coral)}
   <li><b>תאימות גרסת השרת:</b> גרסה חדשה של שרת עלולה לא לעבוד מול האפליקציה המותקנת - עדכנו את האפליקציה, או התקינו את השרת מקומית והפנו את ה-config ישירות לקובץ ההרצה.</li>
   <li><b>תיקיית הסשן:</b> האפליקציה מעבירה לשרת את תיקיית הפרויקט של הסשן בתור roots, ושרתי filesystem משרתים אותה במקום התיקייה שבקונפיג - פתחו את הסשן בתוך התיקייה שרוצים לשרת.</li>
  </ul>
-  <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה. שרת ה-MCP בסרטון מותקן מקומית ונטען בנתיב ישיר לקובץ ההרצה, כמתואר בפרק.</div>
 <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch18-mcp-demo.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 18 - טוענים שרת MCP בעצמכם (~דקה ו-20)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop">Local MCP servers on Claude Desktop</a> · <a href="https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop">Enterprise configuration</a></div>
