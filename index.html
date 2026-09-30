@@ -559,6 +559,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch09-permissions.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 09 - מצבי הרשאות (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a> · <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">אתם מתחילים משימה ראשונה בקודבייס לא מוכר, עם קוד רגיש של לקוח. באיזה מצב הרשאות תעבדו?</p>
+   <button type="button" class="q-opt" data-ok="1">Manual - קלוד שואל לפני כל עריכה, ואתם רואים את הדיף ומאשרים<span class="q-fb" hidden>נכון. קוד רגיש וכלי חדש = אישור ידני על כל פעולה. ככה לומדים את הכלי ושומרים על שליטה מלאה.</span></button>
+   <button type="button" class="q-opt">Auto - שהוא יתקדם מהר בלי לעצור אתכם<span class="q-fb" hidden>Auto מתאים למשימות שגרתיות ומוגדרות היטב. משימה ראשונה בקוד לא מוכר היא בדיוק ההפך.</span></button>
+   <button type="button" class="q-opt">Bypass permissions - הכי מהיר, בלי אישורים בכלל<span class="q-fb" hidden>מסוכן: Bypass נועד לסביבה מבודדת (קונטיינר), לא לקוד אמיתי של לקוח. טעות אחת שם אי אפשר לבטל.</span></button>
+   <button type="button" class="q-opt">Accept edits, ואם יהיו טעויות נתקן אחר כך<span class="q-fb" hidden>קיצור שמהמר: עריכות מתאשרות אוטומטית, ובקוד רגיש אתם עלולים לגלות את הטעות אחרי שהיא כבר בתוך הקובץ.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">לפניכם רפקטורינג גדול שיגע בעשרות קבצים. איך נכון להתחיל?</p>
+   <button type="button" class="q-opt">Manual ולהתחיל לעבוד - נלמד את הגישה תוך כדי<span class="q-fb" hidden>בלי תוכנית מוסכמת, כל אישור דיף הוא החלטה נקודתית בלי תמונה מלאה. ברפקטורינג גדול קודם מסכימים על הגישה.</span></button>
+   <button type="button" class="q-opt">Auto - רפקטורינג זו משימה שגרתית<span class="q-fb" hidden>רפקטורינג רחב הוא כמעט ההגדרה של משימה מורכבת, לא שגרתית. Auto כאן זה הימור.</span></button>
+   <button type="button" class="q-opt">Plan, אבל לתת לו גם לתקן קבצים קטנים בדרך<span class="q-fb" hidden>Plan לא נוגע בכלום - זו בדיוק המהות שלו: חקירה ותוכנית בלבד, בלי עריכה אחת.</span></button>
+   <button type="button" class="q-opt" data-ok="1">Plan - חוקר ומציג תוכנית מלאה לאישור; אחרי האישור עוברים ל-Accept edits לביצוע<span class="q-fb" hidden>נכון. זו הזרימה המומלצת: מסכימים על הגישה כשעוד לא השתנה שום קובץ, ואז מבצעים עם מעקב. משהו השתבש? Esc עוצר.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם עובדים ב-Manual ונמאס לכם לאשר git status בכל פעם - אבל אתם לא רוצים להקל את ההרשאות באופן כללי. מה הפתרון?</p>
+   <button type="button" class="q-opt">לעבור ל-Accept edits - פחות אישורים<span class="q-fb" hidden>Accept edits מקל על כל עריכות הקבצים, לא רק על הפקודה הספציפית הזו. זה הרחבה גורפת במקום נקודתית.</span></button>
+   <button type="button" class="q-opt" data-ok="1">ככלל allow קבוע ל-git status דרך /permissions - המצב נשאר שמרני לכל השאר<span class="q-fb" hidden>נכון. כללי allow/deny קבועים נותנים חריג נקודתי לפקודה בטוחה, בלי לשנות את המצב לשום דבר אחר.</span></button>
+   <button type="button" class="q-opt">כלל allow זמני - הוא יתבטל בסוף הסשן<span class="q-fb" hidden>להפך: כללי /permissions הם קבועים ונשמרים בהגדרות, בדיוק כדי שהחיכוך היומיומי ייעלם לתמיד.</span></button>
+   <button type="button" class="q-opt">Bypass permissions לשעה-שעתיים של עבודה רציפה<span class="q-fb" hidden>קיצור שמוריד את כל המעצורים, לא רק את git status. שעה בלי אישורים על קוד אמיתי היא שעה של סיכון.</span></button>
+  </div>
+ </div>
 </article>
 
 
