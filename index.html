@@ -1125,6 +1125,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch20-pbir-authoring.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 20 - סשן כתיבת דוח PBIP אמיתי בקריינות: Claude בונה את שלד קבצי ה-PBIR בשידור חי ומסביר את גבול הוולידציה (~5 דקות וחצי)</div>
  <div class="srcs">מקור: <a href="https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/AI-Powered-Power-BI-reporting-From-design-to-deployment-with/ba-p/5190703">Power BI Updates Blog - AI-Powered reporting skills</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">ביקשתם מהסוכן דף דוח עם ארבעה כרטיסי KPI וסלייסרים. איך נראית העבודה בפועל?</p>
+   <button type="button" class="q-opt">הוא מייצר תמונה סטטית של הדף ושולח לכם<span class="q-fb" hidden>לא תמונה: הוא כותב קבצי PBIR אמיתיים בפורמט של פרויקט PBIP - דף, ויז'ואלים, סלייסרים.</span></button>
+   <button type="button" class="q-opt" data-ok="1">כותב קבצי PBIR תקינים, טוען מחדש ב-Desktop הפתוח, מצלם מסך, רואה את הפלט ומתקן באיטרציות<span class="q-fb" hidden>נכון. ה-Desktop bridge נותן לולאה אמיתית: שינוי ← רענון ← צילום ← תיקון, בלי לסגור ולפתוח את Desktop.</span></button>
+   <button type="button" class="q-opt">כותב את הקבצים, ואתם סוגרים ופותחים את Desktop אחרי כל שינוי<span class="q-fb" hidden>זו בדיוק המסורבתיות שה-bridge חוסך: הוא טוען מחדש את השינויים ב-Desktop הפתוח.</span></button>
+   <button type="button" class="q-opt">הוא שולח את הקבצים ישר ל-Fabric, ובודקים שם<span class="q-fb" hidden>הלולאה המקומית ב-Desktop היא שלב הבדיקה. פרסום ל-Fabric הוא צעד נפרד שמגיע אחר כך.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">יש לכם דוח קיים שנראה מיושן, ואתם רוצים לשדרג את העיצוב בלי לבנות מחדש. מה הדרך?</p>
+   <button type="button" class="q-opt">לבנות את כל הדוח מאפס - ככה יוצא הכי נקי<span class="q-fb" hidden>בזבוז: הסקילים יודעים גם לשנות דוח קיים. מודרניזציה של עיצוב לא דורשת בנייה מחדש.</span></button>
+   <button type="button" class="q-opt">לשנות צבעים ידנית בכל ויז'ואל עד שזה נראה טוב<span class="q-fb" hidden>קיצור שמנחש עיצוב בלי שיטה. סקיל העיצוב מתחיל מתדריך מסודר לפי best practices - ואז מיישמים אותו.</span></button>
+   <button type="button" class="q-opt">הסקילים לא עוזרים כאן - הם רק יוצרים דוחות חדשים<span class="q-fb" hidden>בלבול: השלישייה היא יצירה, שינוי דוח קיים, ומודרניזציה של עיצוב. דוח קיים בהחלט בטווח.</span></button>
+   <button type="button" class="q-opt" data-ok="1">סקיל powerbi-report-design - מייצר תדריך עיצוב לפי עקרונות best practice, ואז מיישמים אותו על הדוח<span class="q-fb" hidden>נכון. קודם תדריך מסודר, אחר כך יישום - גם על דוח קיים. בלי בנייה מחדש ובלי ניחושים.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם בונים לצוות תהליך עבודה שמסתמך על סקילי הכתיבה של הדוחות. מה חשוב לזכור לפני שמתחייבים?</p>
+   <button type="button" class="q-opt" data-ok="1">זה פריוויו פעיל שמשתנה מהר - בודקים את דף התיעוד לפני סשן עבודה<span class="q-fb" hidden>נכון. בתהליך שמסתמך על פיצ'ר בפריוויו, בדיקת התיעוד לפני עבודה היא חלק מהתהליך, לא מותרות.</span></button>
+   <button type="button" class="q-opt">שום דבר - הפיצ'ר יציב וסופי, אפשר לבנות עליו<span class="q-fb" hidden>להפך: פריוויו פעיל שמשתנה מהר. תהליך שמניח יציבות יישבר בשינוי הבא.</span></button>
+   <button type="button" class="q-opt">פריוויו זמין רק לחשבונות אישיים, לא לארגון<span class="q-fb" hidden>לא נכון - הסקילים חלק מספריית Skills for Fabric הפתוחה, וההתקנה היא העתקת תיקיות. אין הגבלת חשבון כזאת.</span></button>
+   <button type="button" class="q-opt">שומרים את התיעוד של היום בקובץ ועובדים לפיו מעכשיו<span class="q-fb" hidden>קיצור שמקפיא את התיעוד בזמן שפיצ'ר הפריוויו זז. בדיקה מחדש לפני סשן היא הדרך לעבוד עם פיצ'ר שמשתנה.</span></button>
+  </div>
+ </div>
 </article>
 
 
