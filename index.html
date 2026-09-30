@@ -1169,6 +1169,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch21-tmdl-rename.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 21 - שינוי שמות מלא ועקבי בסמנטיק מודל: סשן אמיתי עם קריינות על קבצי ה-TMDL (מסלול Tier-2 של הסקיל), כולל אימות עצמאי מול הדיסק וסבב תיקון אחד (~6 דקות)</div>
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/data-science/semantic-model-best-practices">Semantic model best practices</a> · <a href="https://github.com/microsoft/fabric-toolbox">fabric-toolbox</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">בסמנטיק מודל גדול שלכם מאות שמות קריפטיים כמו TR_AMT. אתם רוצים שמות עסקיים ברורים בקנה מידה. מה הדרך הנכונה?</p>
+   <button type="button" class="q-opt">לשנות ידנית שם-שם - שליטה מלאה<span class="q-fb" hidden>על מאות אובייקטים זה ימים של עבודה מכנית, ובדיוק בשביל זה יש Modeling MCP.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לבקש מה-LLM דרך ה-Modeling MCP לייצר שמות ברורים - ולסקור שהשינוי לא שובר DAX וקשרים לפני השמירה<span class="q-fb" hidden>נכון. שינוי שמות בקנה מידה הוא שימוש מתועד של ה-MCP, והסקירה לפני שמירה היא חלק מהשיטה, לא אופציה.</span></button>
+   <button type="button" class="q-opt">לתת ל-AI לשנות ולשמור ישירות - הוא יודע מה הוא עושה<span class="q-fb" hidden>שינוי שמות עלול לשבור DAX, קשרים ואובייקטים תלויים. בלי סקירה לפני שמירה, תגלו את השבירה מהמשתמשים.</span></button>
+   <button type="button" class="q-opt">להשאיר את השמות הקריפטיים - משתמשים מתרגלים<span class="q-fb" hidden>קיצור שפוגע פעמיים: במשתמשים, ובאיכות התשובות של ה-AI על המודל - שמות ברורים קריטיים לו.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">מה שרת ה-Modeling MCP נותן שסקיל כתיבת סמנטיק מודל לבדו לא נותן?</p>
+   <button type="button" class="q-opt">את הידע איך בונים מודל נכון<span class="q-fb" hidden>דווקא ההיפך: הידע והדפוסים מגיעים מהסקיל. ה-MCP הוא זרוע הביצוע החיה, לא המורה.</span></button>
+   <button type="button" class="q-opt">רינדור של הדוח לבדיקה ויזואלית<span class="q-fb" hidden>ה-MCP עובד על הגדרות המודל - הוא לא מרנדר דוחות. לתצוגה משתמשים בכלים הייעודיים.</span></button>
+   <button type="button" class="q-opt">שום דבר - עריכת קבצי TMDL ידנית שקולה לגמרי<span class="q-fb" hidden>המסלול בקבצים עובד (Tier-2), אבל דורש פריסה מחדש אחרי כל עריכה. ה-MCP פועל עם אפקט מיידי על המודל החי.</span></button>
+   <button type="button" class="q-opt" data-ok="1">גישה חיה לקריאה וכתיבה של הגדרות המודל - עם אפקט מיידי על המודל החי<span class="q-fb" hidden>נכון. זה ההבדל בין "לדעת מה לעשות" (סקיל) ל"לעשות" (MCP). ביחד: הסוכן בונה, ואתם סוקרים לפני שמירה.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">סיימתם סבב שינויי שמות גדול במודל. איך מוודאים שלא נשבר כלום לפני השמירה?</p>
+   <button type="button" class="q-opt" data-ok="1">בודקים DAX, קשרים ואובייקטים תלויים - למשל עם get_measure_dependencies מ-Semantic Link Labs למיפוי תלויות<span class="q-fb" hidden>נכון. מיפוי תלויות מראה בדיוק מה נשען על מה, והסקירה היא חלק מהזרימה לפני שמירה.</span></button>
+   <button type="button" class="q-opt">סומכים על ה-AI - הוא ביצע את השינוי, הוא יודע שהוא תקין<span class="q-fb" hidden>גם ביצוע נכון טכנית יכול לשבור תלויות שהוא לא בדק. הסקירה שלכם היא שכבת הבטיחות.</span></button>
+   <button type="button" class="q-opt">פותחים את הדוח ומעיפים מבט - אם משהו שבור זה קופץ לעין<span class="q-fb" hidden>שבירה ב-DAX או בקשר לא תמיד נראית במבט חטוף - לפעמים היא שקטה עד שמישהו מסנן אחרת. מיפוי תלויות מכסה גם את הבלתי נראה.</span></button>
+   <button type="button" class="q-opt">שומרים גיבוי ומחזירים אם מישהו יתלונן<span class="q-fb" hidden>קיצור שהופך את המשתמשים לבודקי התוכנה שלכם. תלויות בודקים לפני השמירה, לא אחרי התלונה.</span></button>
+  </div>
+ </div>
 </article>
 
 <footer>
