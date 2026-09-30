@@ -49,7 +49,7 @@
  }
  function showStep(n,scroll=true){step=Math.max(0,Math.min(n,active.steps.length-1));
   active.steps.forEach((el,i)=>{el.classList.toggle('active',i===step);el.hidden=i!==step});
-  picker.replaceChildren();active.steps.forEach((el,i)=>{const b=document.createElement('button');b.type='button';b.textContent=el.querySelector('h4')?.textContent.trim()||(i===active.steps.length-1?'הדגמה ומקורות':'היכרות');if(i===step)b.setAttribute('aria-current','step');b.onclick=()=>showStep(i);picker.append(b)});
+  picker.replaceChildren();active.steps.forEach((el,i)=>{const b=document.createElement('button');b.type='button';const num=document.createElement('span');num.className='chip-num';num.textContent=String(i+1).padStart(2,'0');const lbl=document.createElement('span');lbl.textContent=el.querySelector('h4')?.textContent.trim()||(i===active.steps.length-1?'הדגמה ומקורות':'היכרות');b.append(num,lbl);if(i===step)b.setAttribute('aria-current','step');if(i<step)b.classList.add('done');b.onclick=()=>showStep(i);picker.append(b)});
   const count=document.createElement('span');count.textContent=`צעד ${step+1} מתוך ${active.steps.length}`;
   const track=document.createElement('div');track.className='progress-track';const fill=document.createElement('div');fill.className='progress-fill';fill.style.transform=`scaleX(${(step+1)/active.steps.length})`;track.append(fill);status.replaceChildren(count,track);
   previous.disabled=step===0;next.textContent=step===active.steps.length-1?(active.index===all.length-1?'חזרה לכל הפרקים ←':'לפרק הבא ←'):'הצעד הבא ←';
