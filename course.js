@@ -48,12 +48,12 @@
   nodes.forEach(el=>{if(el.tagName==='H4'&&current.length){groups.push(current);current=[]}current.push(el)});
   if(current.length)groups.push(current);
   // Demonstration and sources get their own unhurried final step, rather than sharing a dense text panel.
-  const last=groups.at(-1);if(last){let vi=last.findIndex(el=>el.classList.contains('video-box'));if(vi>0){groups.push(last.splice(vi))}}
-  c.steps=groups.map((group,i)=>{const section=document.createElement('section');section.className='lesson-step';section.setAttribute('aria-label',group[0]?.tagName==='H4'?group[0].textContent.trim():i===groups.length-1?'הדגמה ומקורות':'היכרות עם הנושא');group[0].before(section);group.forEach(el=>section.append(el));return section});
+  for(let gi=0;gi<groups.length;gi++){const g=groups[gi];const vi=g.findIndex(el=>el.classList.contains('video-box'));if(vi>0){groups.splice(gi+1,0,g.splice(vi));gi++}}
+  c.steps=groups.map((group,i)=>{const section=document.createElement('section');section.className='lesson-step';section.setAttribute('aria-label',group[0]?.tagName==='H4'?group[0].textContent.trim():group.some(el=>el.classList.contains('video-box'))?'הדגמה ומקורות':i===0?'היכרות עם הנושא':'הדגמה ומקורות');group[0].before(section);group.forEach(el=>section.append(el));return section});
  }
  function showStep(n,scroll=true){step=Math.max(0,Math.min(n,active.steps.length-1));
   active.steps.forEach((el,i)=>{el.classList.toggle('active',i===step);el.hidden=i!==step});
-  const stepName=i=>active.steps[i].querySelector('h4')?.textContent.trim()||(i===active.steps.length-1?'הדגמה ומקורות':'היכרות עם הנושא');
+  const stepName=i=>active.steps[i].querySelector('h4')?.textContent.trim()||(active.steps[i].querySelector('.video-box')?'הדגמה ומקורות':i===0?'היכרות עם הנושא':'הדגמה ומקורות');
   picker.replaceChildren();active.steps.forEach((el,i)=>{const b=document.createElement('button');b.type='button';const num=document.createElement('span');num.className='chip-num';num.textContent=String(i+1).padStart(2,'0');const lbl=document.createElement('span');lbl.className='chip-label';lbl.textContent=stepName(i);const chk=document.createElement('span');chk.className='chip-check';chk.setAttribute('aria-hidden','true');chk.textContent='✓';b.append(num,lbl,chk);if(i===step)b.setAttribute('aria-current','step');if(i<step)b.classList.add('done');b.onclick=()=>showStep(i);picker.append(b)});
   const count=document.createElement('span');count.className='step-count';count.textContent=`צעד ${step+1} מתוך ${active.steps.length}`;const nm=document.createElement('span');nm.className='step-name';nm.textContent=stepName(step);status.replaceChildren(count,nm);
   barFill.style.transform=`scaleX(${(step+1)/active.steps.length})`;
@@ -73,5 +73,6 @@
   }else active=null;
   window.scrollTo({top:0,behavior:'instant'});
  }
+ document.addEventListener('click',e=>{const b=e.target.closest('.q-opt');if(!b)return;const q=b.closest('.q');if(!q)return;const ok=b.hasAttribute('data-ok');b.classList.add('tried',ok?'ok':'no');const fb=b.querySelector('.q-fb');if(fb)fb.hidden=false;if(ok)q.classList.add('solved')});
  document.body.classList.add('course-ready');window.addEventListener('hashchange',route);route();
 })();
