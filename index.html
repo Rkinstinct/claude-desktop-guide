@@ -898,6 +898,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch16-routines.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 16ב - שגרה מקומית (Local): יצירה, הגדרת תיקייה והרצה ידנית (~100 שניות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/hooks">Hooks documentation</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">כלל צוות: אחרי כל עריכת קובץ מריצים prettier. קלוד שוב ושוב "שוכח". איך אוכפים את הכלל באמת?</p>
+   <button type="button" class="q-opt">לכתוב את הכלל ב-CLAUDE.md באותיות גדולות<span class="q-fb" hidden>CLAUDE.md הוא הנחיה שהמודל צריך לזכור לקיים - בדיוק מה שלא עובד אצלכם. הוק מסיר את הזיכרון מהמשוואה.</span></button>
+   <button type="button" class="q-opt">להזכיר לו בתחילת כל סשן "אל תשכח prettier"<span class="q-fb" hidden>תלוי בזיכרון שלכם ושלו - ובסשן ארוך ההנחיה דוהה. אכיפה אוטומטית לא שוכחת.</span></button>
+   <button type="button" class="q-opt">פקודת /hooks בתוך הסשן שמנהלת את ההוקס<span class="q-fb" hidden>אין פקודת סשן שמנהלת הוקס - הם מוגדרים בקבצי ההגדרות של הפרויקט ופועלים לבד.</span></button>
+   <button type="button" class="q-opt" data-ok="1">הוק PostToolUse שמריץ prettier אחרי כל עריכה - אכיפה אוטומטית בקבצי ההגדרות<span class="q-fb" hidden>נכון. ההוק רץ אוטומטית בנקודת החיים המדויקת, וב-.claude של הפרויקט כל הצוות מקבל אותו דרך הגיט.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">קולגה שולח לכם הוק מהאינטרנט ש"עושה אופטימיזציות קסומות" ומציע להתקין. מה נכון לעשות?</p>
+   <button type="button" class="q-opt" data-ok="1">לקרוא את הסקריפט שורה-שורה לפני ההתקנה - הוק רץ עם ההרשאות שלכם בכל פעם שהאירוע קורה<span class="q-fb" hidden>נכון. הוק הוא קוד שרץ על המחשב שלכם אוטומטית. כמו כל סקריפט - קוראים לפני שמריצים, במיוחד ממקור חיצוני.</span></button>
+   <button type="button" class="q-opt">להתקין ולנסות - אם יהיה רע, פשוט מוחקים<span class="q-fb" hidden>הוק זדוני רץ מיד באירוע הראשון, לפני שתספיקו להחליט שהוא "רע". המחיקה שלו לא מבטלת את מה שהוא כבר עשה.</span></button>
+   <button type="button" class="q-opt">בטוח להתקין - קלוד מריץ הוקס בארגז חול<span class="q-fb" hidden>להפך: ההוק רץ על המחשב שלכם עם ההרשאות שלכם, בלי ארגז חול. זו בדיוק הסיבה לזהירות.</span></button>
+   <button type="button" class="q-opt">להתקין רק בפרויקט אחד קטן - ככה הנזק מוגבל<span class="q-fb" hidden>היקף ההתקנה לא מגביל את ההרשאות: ההוק עדיין רץ עם ההרשאות שלכם ויכול לגעת מחוץ לפרויקט.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם רוצים דיג'סט של Issues חדשים כל בוקר עבודה - גם כשהמחשב שלכם סגור. מה הכלי המתאים?</p>
+   <button type="button" class="q-opt">הוק שמוגדר על אירוע "בוקר"<span class="q-fb" hidden>הוק מגיב לאירוע בתוך סשן פעיל - אין אירוע "בוקר", ובטח לא כשאין סשן בכלל. לתזמון צריך שגרה.</span></button>
+   <button type="button" class="q-opt" data-ok="1">שגרה (Routine) מתוזמנת - רצה על תשתית הענן, גם כשהמחשב סגור<span class="q-fb" hidden>נכון. שגרה = פרומפט שמור + לוח זמנים, רצה בענן ולא תלויה במחשב שלכם. זמינה גם ב-Team ו-Enterprise אם האדמין לא כיבה.</span></button>
+   <button type="button" class="q-opt">Desktop scheduled task מסוג Local<span class="q-fb" hidden>משימה מקומית רצה על המחשב שלכם - כשהוא סגור, היא לא רצה. היא פתרון טוב לצרכים מקומיים, לא לדרישה של "גם כשסגור".</span></button>
+   <button type="button" class="q-opt">הרצה ידנית כל בוקר - גם ככה ריצות חד-פעמיות לא נספרות במכסה<span class="q-fb" hidden>קיצור שמחזיר את האוטומציה אליכם: מישהו צריך לזכור ללחוץ כל בוקר. שגרה מתוזמנת עושה את זה לבד.</span></button>
+  </div>
+ </div>
 </article>
 
 
