@@ -97,7 +97,7 @@ footer .heart{color:var(--coral)}
  table.cmp th,table.cmp td{padding:7px 8px}
 }
 </style>
-<link rel="stylesheet" href="course.css?v=4">
+<link rel="stylesheet" href="course.css?v=5">
 </head>
 <body>
 <header class="hero"><div class="wrap">
@@ -525,6 +525,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch15-subagents-v3.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 15 - סאב-אייג'נטים: שלושה סוקרים במקביל וסוכן docs-auditor מהפרויקט (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/sub-agents">Custom subagents</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">אתם צריכים לסקור מסמך אפיון של 40 עמודים לפני ישיבה - פעם בעיני משתמש, פעם בעיני מהנדס, ופעם בעיני מנהל מוצר. מה הדרך היעילה ביותר?</p>
+   <button type="button" class="q-opt" data-ok="1">לבקש מהסוכן הראשי להפעיל שלושה סאב-אייג'נטים במקביל, אחד לכל נקודת מבט, ולאחד את התוצאות<span class="q-fb" hidden>נכון. כל סאב-אייג'נט מקבל חלון הקשר נקי ומשימה ממוקדת, הם רצים במקביל, והסוכן הראשי מאחד את שלוש הביקורות לתשובה אחת.</span></button>
+   <button type="button" class="q-opt">לפתוח שלוש שיחות נפרדות עם קלוד ולהדביק את המסמך בכל אחת<span class="q-fb" hidden>אפשרי, אבל מסורבל: אתם מנהלים שלושה קשרים ידנית ומאחדים לבד. סאב-אייג'נטים בתוך אותה שיחה עושים את התזמור בשבילכם.</span></button>
+   <button type="button" class="q-opt">להדביק את המסמך שלוש פעמים באותה שיחה, וכל פעם לבקש נקודת מבט אחרת<span class="q-fb" hidden>זה ממלא את חלון ההקשר של השיחה הראשית ב-120 עמודים - בדיוק מה שסאב-אייג'נטים נועדו למנוע. הסריקה הכבדה שייכת לסשנים המשניים.</span></button>
+   <button type="button" class="q-opt">לבקש מהסוכן הראשי "לעבור על זה במהירות" לפני הישיבה<span class="q-fb" hidden>קיצור מפתה, אבל מעבר מהיר של סוכן אחד על 40 עמודים יהיה שטחי. שלוש נקודות מבט ממוקדות מחזירות עומק בזמן דומה.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">הצוות רוצה שקלוד ישמור על מבנה ה-PR המקובל אצלכם בכל פעם שהוא כותב או סוקר קוד - באופן עקבי, בלי שתזכירו לו בכל שיחה מחדש. מה הכלי הנכון?</p>
+   <button type="button" class="q-opt">להזכיר לקלוד את הכללים בתחילת כל שיחה<span class="q-fb" hidden>זה נשמע פשוט, אבל תלוי בזיכרון שלכם - וביום עמוס זה בדיוק מה ששוכחים. סקיל שומר את הכללים באופן קבוע.</span></button>
+   <button type="button" class="q-opt">סאב-אייג'נט, כי הוא חזק יותר ורץ בנפרד<span class="q-fb" hidden>דווקא ההיפך: סאב-אייג'נט מקבל קונטקסט נקי משלו ולא יכול לעצב את השיחה שלכם מבפנים. להנחיה עקבית תוך כדי העבודה מתאים סקיל.</span></button>
+   <button type="button" class="q-opt" data-ok="1">סקיל - קובץ שמזריק את הכללים והתהליך שלכם לתוך הקונטקסט של השיחה<span class="q-fb" hidden>נכון. סקיל חי בתוך הסשן שלכם ומעצב את העבודה תוך כדי, וקלוד מגלה אותו אוטומטית לפי התיאור.</span></button>
+   <button type="button" class="q-opt">לשמור את הכללים בקובץ טקסט ולציין את הנתיב כשצריך<span class="q-fb" hidden>קרוב, אבל דורש מכם לזכור לקרוא לו בכל פעם. סקיל הוא בדיוק זה - רק עם גילוי אוטומטי לפי תיאור.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">התקנתם סאב-אייג'נט שסוקר תיעוד, ואתם רוצים להיות בטוחים שהוא לעולם לא יערוך קבצים. מה הדרך האמינה?</p>
+   <button type="button" class="q-opt">לכתוב לו בהוראות "בבקשה אל תערוך שום דבר"<span class="q-fb" hidden>הוראה מנוסחת יפה היא בקשה, לא אכיפה - הנחיה ארוכה או מבלבלת יכולה לגבור עליה. הגבלת כלים אוכפת בפועל.</span></button>
+   <button type="button" class="q-opt" data-ok="1">להגביל את רשימת הכלים שלו בקובץ הסוכן ל-Read ו-Grep בלבד<span class="q-fb" hidden>נכון. רשימת הכלים היא שכבת הרשאות אמיתית - בלי כלי עריכה אין לו דרך לערוך, לא משנה איך ינסחו את הבקשה.</span></button>
+   <button type="button" class="q-opt">לבחור לו מודל קטן ופחות מסוגל<span class="q-fb" hidden>גודל המודל קובע חוכמה, לא הרשאות - גם מודל קטן עם כלי עריכה יכול לערוך. ההרשאות נקבעות ברשימת הכלים.</span></button>
+   <button type="button" class="q-opt">לא להגביל כלום - פשוט לעבור על הפלט שלו לפני שמאשרים<span class="q-fb" hidden>בקרה לאחר מעשה תופסת בעיות רק אחרי שהן קרו, והיא תלויה בכם בכל הרצה. הרשאות מוגבלות מונעות את הבעיה עצמה.</span></button>
+  </div>
+ </div>
 </article>
 
 
@@ -716,7 +740,7 @@ footer .heart{color:var(--coral)}
 </article>
 
 <footer>
- <p>נבנה בעברית על בסיס התיעוד הרשמי של <a href="https://claude.com">Anthropic</a> ו-<a href="https://learn.microsoft.com/fabric">Microsoft</a> · הסרטונים הם דמו מונפש עם קריינות עברית · עקרונות תנועה וליטוש מ-<a href="https://github.com/emilkowalski/skills">emilkowalski/skills</a> (MIT) · <span class="heart">◆</span> חלק מסדרת המדריכים של <a href="https://rkinstinct.github.io/data-ai-hub/">Data &amp; AI Hub</a></p>
+ <p>נבנה בעברית על בסיס התיעוד הרשמי של <a href="https://claude.com">Anthropic</a> ו-<a href="https://learn.microsoft.com/fabric">Microsoft</a> · הסרטונים הם דמו מונפש עם קריינות עברית · עקרונות תנועה וליטוש מ-<a href="https://github.com/emilkowalski/skills">emilkowalski/skills</a> (MIT) · שאלות החזרה ומבנה הלמידה מבוססים על <a href="https://github.com/scibly-dev/skills">scibly-dev/skills</a> (MIT, © 2026 Scibly) · <span class="heart">◆</span> חלק מסדרת המדריכים של <a href="https://rkinstinct.github.io/data-ai-hub/">Data &amp; AI Hub</a></p>
 </footer>
 
 </div><!-- /wrap -->
@@ -731,6 +755,6 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 }
 </script>
-<script src="course.js?v=4" defer></script>
+<script src="course.js?v=5" defer></script>
 </body>
 </html>
