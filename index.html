@@ -1010,6 +1010,30 @@ footer .heart{color:var(--coral)}
 <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch18-mcp-demo.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 18 - טוענים שרת MCP בעצמכם (~דקה ו-20)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop">Local MCP servers on Claude Desktop</a> · <a href="https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop">Enterprise configuration</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">הוספתם שרת לקובץ ההגדרות, שמרתם - והוא לא מופיע ב-Connectors. ה-JSON תקין. מה הצעד הבא?</p>
+   <button type="button" class="q-opt">לערוך שוב - כנראה שהשמירה לא נקלטה<span class="q-fb" hidden>אם הקובץ תקין ונשמר, העריכה לא הבעיה. שינוי קונפיג נטען רק בהפעלה מחדש.</span></button>
+   <button type="button" class="q-opt" data-ok="1">יציאה מלאה מהאפליקציה והפעלה מחדש - לא רק סגירת חלון<span class="q-fb" hidden>נכון. הגורם השכיח: שינוי קונפיג תקף רק אחרי הפעלה מחדש מלאה. סגירת חלון לא מספיקה.</span></button>
+   <button type="button" class="q-opt">להתקין את האפליקציה מחדש - משהו בה נשבר<span class="q-fb" hidden>קיצור כבד שלא נוגע בבעיה: הקונפיג נטען בהפעלה, וההתקנה מחדש רק מבזבזת זמן.</span></button>
+   <button type="button" class="q-opt">כלום - השרתים נטענים לבד אחרי כמה דקות<span class="q-fb" hidden>אין טעינה עצלנית: הקונפיג נקרא בהפעלה בלבד. בלי הפעלה מחדש הוא יחכה לנצח.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">השרת שאתם טוענים מושך חבילות עם npx, וברשת הארגונית הוא נכשל שוב ושוב. מה הפתרון הנכון?</p>
+   <button type="button" class="q-opt">להמשיך לנסות - לפעמים הרשת פנויה יותר<span class="q-fb" hidden>אם הפרוקסי חוסם, ניסיון חוזר לא יעבור. זו חסימת מדיניות, לא עומס רגעי.</span></button>
+   <button type="button" class="q-opt">לכבות את הפרוקסי לזמן ההתקנה<span class="q-fb" hidden>קיצור שעובר על מדיניות האבטחה של הארגון - וגם לא ניתן לביצוע בלי הרשאות. הפתרון עובר דרך IT.</span></button>
+   <button type="button" class="q-opt">האדמין כנראה חסם MCP - לוותר על הפרק<span class="q-fb" hidden>בלבול בין שתי חסימות שונות: אצלכם isLocalDevMcpEnabled פתוח. מה שנכשל הוא משיכת החבילות מהרשת, לא רשות השימוש.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לבקש מ-IT התקנה מקומית של השרת, ולהפנות את ה-config ישירות לקובץ ההרצה<span class="q-fb" hidden>נכון. שרת מותקן מקומית לא צריך npx בכלל - ה-config מצביע על הקובץ, והרשת יוצאת מהמשוואה.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">הגדרתם שרת filesystem שישרת את C:\work\data, אבל בסשן קלוד רואה תיקייה אחרת לגמרי. מה קורה כאן?</p>
+   <button type="button" class="q-opt">הנתיב בקונפיג שגוי - לתקן את ה-args<span class="q-fb" hidden>הנתיב בקונפיג לא הבעיה: האפליקציה מחליפה אותו בתיקיית הסשן. התיקון הוא במיקום הסשן, לא בקונפיג.</span></button>
+   <button type="button" class="q-opt">הפעלה מחדש נוספת - לא נטען כמו שצריך<span class="q-fb" hidden>הפעלה מחדש לא תשנה: מנגנון ה-roots יעביר שוב את תיקיית הסשן. צריך לפתוח את הסשן במקום הנכון.</span></button>
+   <button type="button" class="q-opt" data-ok="1">האפליקציה מעבירה לשרת את תיקיית הסשן כ-roots - פותחים את הסשן בתוך התיקייה שרוצים לשרת<span class="q-fb" hidden>נכון. שרת filesystem משרת את תיקיית הפרויקט של הסשן במקום התיקייה שבקונפיג. מיקום הסשן קובע.</span></button>
+   <button type="button" class="q-opt">מעתיקים את הקבצים לתוך תיקיית הפרויקט<span class="q-fb" hidden>קיצור שמייצר שני עותקים של הנתונים וסנכרון ידני. פתיחת הסשן בתיקייה הנכונה פותרת בלי העתקות.</span></button>
+  </div>
+ </div>
 </article>
 
 
