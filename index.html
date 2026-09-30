@@ -616,9 +616,12 @@ footer .heart{color:var(--coral)}
   <li><b>JSON שבור:</b> פסיק מיותר או מרכאות חסרות - האפליקציה תתעלם מהקובץ בשקט. ודאו שהקובץ תקין.</li>
   <li><b>Node/Python חסר:</b> חלק מהשרתים דורשים סביבת הרצה. לשרתי Node בדסקטופ יש סביבה מובנית; בטרמינל - צריך התקנה (דרך IT).</li>
   <li><b>לא הופעל מחדש:</b> שינוי קונפיג תקף רק אחרי הפעלה מחדש מלאה.</li>
+  <li><b>תאימות גרסת השרת:</b> גרסה חדשה של שרת עלולה לא לעבוד מול האפליקציה המותקנת - עדכנו את האפליקציה, או התקינו את השרת מקומית והפנו את ה-config ישירות לקובץ ההרצה.</li>
+  <li><b>תיקיית הסשן:</b> האפליקציה מעבירה לשרת את תיקיית הפרויקט של הסשן בתור roots, ושרתי filesystem משרתים אותה במקום התיקייה שבקונפיג - פתחו את הסשן בתוך התיקייה שרוצים לשרת.</li>
  </ul>
- <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch18-mcp.mp4" type="video/mp4"></video></div>
- <div class="video-cap">סרטון דמו 18 - MCP בסביבה נעולה (~3 דקות)</div>
+  <div class="callout"><b>שקיפות ההדגמה:</b> בסרטון מופיעה התווית "Claude Sonnet 4.5", אבל בסביבת ההדגמה הבקשות מנותבות למודל <code>gpt-oss:120b</code> בענן של Ollama דרך שער (Gateway). הממשק, הכלים וזרימת העבודה הם Claude Desktop אמיתי - ואותם עקרונות עובדים גם במנוי בתשלום עם מודלים של Anthropic. בהקלטה הופעל רכיב ביניים מקומי (shim) בשרת ה-proxy של סביבת ההדגמה, המסיר שדה <code>model</code> ריק או לא חוקי שהמודל המנותב מוסיף מדי פעם לקריאות כלים; בלעדיו חלק מההרצות נכשלו טכנית. הוא אינו משנה את תוכן התשובות או את זרימת העבודה - רק מונע כשל תשתית בסביבת ההדגמה. שרת ה-MCP בסרטון מותקן מקומית ונטען בנתיב ישיר לקובץ ההרצה, כמתואר בפרק.</div>
+<div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch18-mcp-demo.mp4" type="video/mp4"></video></div>
+ <div class="video-cap">סרטון דמו 18 - טוענים שרת MCP בעצמכם (~דקה ו-20)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop">Local MCP servers on Claude Desktop</a> · <a href="https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop">Enterprise configuration</a></div>
 </article>
 
