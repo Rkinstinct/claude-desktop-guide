@@ -462,6 +462,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ms-skill-word.mp4" type="video/mp4"></video></div>
  <div class="video-cap">דמו: יצירת מסמך Word (~דקה)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/12512176-what-are-skills">What are skills</a> · <a href="https://support.claude.com/en/articles/12512180-use-skills-in-claude">Use skills in Claude</a> · <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">Create custom skills</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">נציגת מכירות מפיקה דוח חודשי באותו פורמט, וכל חודש היא כותבת לקלוד את כל ההוראות מחדש - מבנה, נוסח, חוקי עיצוב. איך חוסכים לה את זה לצמיתות?</p>
+   <button type="button" class="q-opt">לשמור את ההוראות בקובץ פתק ולהעתיק אותן לכל שיחה חדשה<span class="q-fb" hidden>זה עובד, אבל תלוי בזיכרון ובהעתקה מדויקת בכל חודש - ובדיוק את זה סקיל חוסך. פתק לא נורה לבד כשצריך.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לבנות סקיל אחד עם הפורמט והתהליך - קלוד יפעיל אותו אוטומטית כשמבקשים דוח<span class="q-fb" hidden>נכון. כותבים את ההוראות פעם אחת ב-SKILL.md, והתיאור גורם לקלוד להפעיל את הסקיל בכל פעם שהמשימה מתאימה.</span></button>
+   <button type="button" class="q-opt">להקים סאב-אייג'נט קבוע שיכתוב את הדוחים<span class="q-fb" hidden>סאב-אייג'נט מקבל קונטקסט נקי ומחזיר תוצאה חד-פעמית - הוא לא נושא את תהליך העבודה לתוך השיחה שלכם. להוראות חוזרות בתוך הסשן מתאים סקיל.</span></button>
+   <button type="button" class="q-opt">לבקש מקלוד "לזכור את הפורמט לפעם הבאה"<span class="q-fb" hidden>קיצור מפתה, אבל שיחה חדשה מתחילה בלי זיכרון של הקודמת - ההבטחה לא שורדת. סקיל הוא ה"זיכרון" הקבוע.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם צריכים לסרוק קודבייס של מאות קבצים ולקבל תשובה אחת קצרה - בלי שהשיחה שלכם תתמלא בקריאת קבצים. מה הכלי המתאים?</p>
+   <button type="button" class="q-opt" data-ok="1">סאב-אייג'נט - הסריקה תרוץ בקונטקסט נקי משלו, והשיחה תקבל רק סיכום<span class="q-fb" hidden>נכון (וזה מהפרק על סאב-אייג'נטים). הסריקה הכבדה נשארת בסשן המשני, וחלון ההקשר שלכם נקי.</span></button>
+   <button type="button" class="q-opt">סקיל - כי הוא מופעל אוטומטית כשהמשימה מתאימה<span class="q-fb" hidden>סקיל מזריק תוכן לתוך הסשן שלכם - הוא לא מרחיק את הסריקה מהקונטקסט, אלא מוסיף אליו. להרחקת עבודה כבדה מהשיחה צריך סאב-אייג'נט.</span></button>
+   <button type="button" class="q-opt">להדביק את הקבצים הרלוונטיים ישירות לשיחה ולסכם בעצמכם<span class="q-fb" hidden>עם מאות קבצים זה בדיוק מה שרציתם למנוע - מילוי חלון ההקשר בקריאה גולמית. הסריקה שייכת לסשן משני.</span></button>
+   <button type="button" class="q-opt">לפתוח עשר שיחות נפרדות ולחלק ביניהן את התיקיות ידנית<span class="q-fb" hidden>תזמור ידני מסורבל, ובסוף עוד צריך לאחד עשר תשובות לבד. סאב-אייג'נטים בתוך אותה שיחה עושים את החלוקה והאיחוד.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">העתקתם תיקיית סקיל מהצוות אל .claude/skills בפרויקט - אבל קלוד לא מפעיל אותו כשצריך. מה הדבר הראשון שכדאי לבדוק?</p>
+   <button type="button" class="q-opt">להתקין אותו מחדש, הפעם כ-ZIP דרך Customize<span class="q-fb" hidden>העלאת ZIP רלוונטית ל-Chat בלבד. ב-Claude Code העתקת התיקייה היא כל ההתקנה - הבעיה לא שם.</span></button>
+   <button type="button" class="q-opt">לשנות את שם התיקייה למשהו קצר וזכיר<span class="q-fb" hidden>שם התיקייה פחות משפיע על ההפעלה. קלוד מחליט לפי התיאור שב-SKILL.md, לא לפי שם התיקייה.</span></button>
+   <button type="button" class="q-opt" data-ok="1">את התיאור ב-SKILL.md - לפיו קלוד מחליט מתי להפעיל, ותיאור כללי מדי פשוט לא יורה<span class="q-fb" hidden>נכון. ההתקנה היא רק העתקה, אבל ההפעלה נשענת על תיאור מדויק שמכיל את סוגי המשימות שהסקיל אמור לטפל בהן.</span></button>
+   <button type="button" class="q-opt">כלום - פשוט לקרוא לו ידנית עם / בכל פעם<span class="q-fb" hidden>זה עוקף את הבעיה במקום לפתור אותה: כל הרעיון הוא הפעלה אוטומטית כשרלוונטי. תיאור תקין חוסך את הקריאה הידנית.</span></button>
+  </div>
+ </div>
 </article>
 
 
