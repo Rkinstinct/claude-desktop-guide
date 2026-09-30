@@ -301,6 +301,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch04-artifact-share-v2.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 04 - הורדת PDF והצגת אפשרויות השיתוף בווב (כדקה ו-44 שניות)</div>
  <div class="srcs">מקור: <a href="https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them">What are artifacts and how do I use them</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">אתם צריכים דוח מסכם שתמשיכו לשכלל במהלך השבוע - כל יום עוד תיקון קטן. מה הדרך הנכונה לבקש אותו?</p>
+   <button type="button" class="q-opt">בקשה רגילה בצ'אט - התשובה תישאר שם בזרם השיחה<span class="q-fb" hidden>טקסט בזרם הצ'אט קבור מהר וכל תיקון מייצר גרסה חדשה בלי קשר לקודמת. לתוצר שחוזרים אליו צריך ארטיפקט.</span></button>
+   <button type="button" class="q-opt">להעתיק מיד לוורד ולעבוד שם - ככה שומרים גרסה אחת<span class="q-fb" hidden>קיצור שמנתק אתכם מקלוד: מהרגע שהתוצר בוורד, כל שכלול נעשה ידנית במקום בבקשה אחת בשיחה.</span></button>
+   <button type="button" class="q-opt">ארטיפקטים זה רק לקוד, אז לדוח זה לא רלוונטי<span class="q-fb" hidden>בלבול נפוץ: ארטיפקט הוא כל תוכן שעומד בפני עצמו - מסמך, דוח, מצגת או טבלה, לא רק קוד.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לבקש את הדוח כארטיפקט - הוא נפתח לצד השיחה וכל תיקון מעדכן אותו<span class="q-fb" hidden>נכון. ארטיפקט חי לצד השיחה: "תשנה את הכותרת", "תוסיף סעיף" - אותו תוצר מתעדכן, והוא נשמר בעמוד Artifacts.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">קיבלתם ארטיפקט של דשבורד מהנתונים שלכם, ואתם רוצים להוסיף לו עמודת סה"כ. מה עושים?</p>
+   <button type="button" class="q-opt">פותחים צ'אט חדש ומבקשים דשבורד חדש עם עמודת סה"כ<span class="q-fb" hidden>בצ'אט חדש קלוד לא רואה את הדשבורד הקיים. תבנו הכל מחדש במקום תיקון של שנייה.</span></button>
+   <button type="button" class="q-opt" data-ok="1">כותבים באותה שיחה "תוסיף עמודת סה״כ" - אותו ארטיפקט מתעדכן<span class="q-fb" hidden>נכון. זה הכוח של ארטיפקט: שכלול בשיחה מעדכן את התוצר הקיים, לא מייצר עותק חדש.</span></button>
+   <button type="button" class="q-opt">מורידים את הארטיפקט ומוסיפים את העמודה ידנית<span class="q-fb" hidden>אפשרי, אבל מהנקודה הזו יש לכם שני עותקים: אחד חי בקלוד ואחד מקומי. הבקשה הבאה תעדכן רק את אחד מהם.</span></button>
+   <button type="button" class="q-opt">מוחקים את הארטיפקט ומבקשים מחדש, הפעם עם עמודת סה"כ<span class="q-fb" hidden>מחיקה ויצירה מחדש זורקים את כל השכלולים שכבר עשיתם. תיקון בשיחה מוסיף בלי למחוק כלום.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם רוצים לשלוח למנהלת עותק של הדוח כקובץ, בלי לחשוף את השיחה כולה. מה הדרך הנכונה?</p>
+   <button type="button" class="q-opt">Share chat עם Anyone with the link, ושולחים לה את הקישור<span class="q-fb" hidden>שיתוף שיחה חושף את כל השיחה - כולל הבקשות שלכם והנתונים הגולמיים - והוא לא עותק של התוצר בלבד.</span></button>
+   <button type="button" class="q-opt">מצלמים מסך של הדוח ושולחים תמונה<span class="q-fb" hidden>צילום מסך קופא את התוצר ברזולוציה של המסך, ואי אפשר לערוך או לחפש בו. יש דרך נקייה יותר.</span></button>
+   <button type="button" class="q-opt" data-ok="1">Download as PDF מתפריט ה-⋯ של הארטיפקט, ושולחים את הקובץ<span class="q-fb" hidden>נכון. הורדה כ-PDF נותנת עותק נקי של התוצר בלבד - בלי השיחה, בלי קישור ציבורי, בלי הגדרות גישה.</span></button>
+   <button type="button" class="q-opt">מעתיקים את הטקסט מהארטיפקט ומדביקים במייל<span class="q-fb" hidden>קיצור ששובר עיצוב: טבלאות, כותרות ותצורה הולכים לאיבוד בהדבקה. ה-PDF שומר את התוצר כמו שהוא.</span></button>
+  </div>
+ </div>
 </article>
 
 
