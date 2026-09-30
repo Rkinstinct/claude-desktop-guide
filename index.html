@@ -251,6 +251,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch03-projects.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 03 - פרויקטים (~דקה וחצי)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects">Create and manage projects</a> · <a href="https://support.claude.com/en/articles/10170752-what-are-projects">What are projects</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">כל יום שני אתם מכינים דוח מכירות באותו פורמט, עם אותם מונחים ואותה תבנית. מה הדרך הנכונה לעבוד?</p>
+   <button type="button" class="q-opt" data-ok="1">פותחים פרויקט עם הוראות קבועות ותבנית הדוח כקובץ רקע<span class="q-fb" hidden>נכון. נושא חוזר עם הוראות וחומרים קבועים - זה בדיוק מה שפרויקט נועד לו. כל שיחה בו כבר מכירה את ההקשר.</span></button>
+   <button type="button" class="q-opt">צ'אט חדש כל שני, ולהדביק את ההוראות מהדוח הקודם<span class="q-fb" hidden>עובד, אבל כל שבוע מעתיקים הוראות מחדש ומקווים שלא שיניתם משהו בדרך. פרויקט שומר את כל זה פעם אחת.</span></button>
+   <button type="button" class="q-opt">פרויקט נפרד לכל דוח שבועי - כדי שהכל יהיה מסודר<span class="q-fb" hidden>הפוך: פרויקט הוא בית קבוע לנושא חוזר. דוח שבועי = פרויקט אחד עם שיחות שבועיות בתוכו.</span></button>
+   <button type="button" class="q-opt">להמשיך באותו צ'אט ארוך מהשבוע הראשון<span class="q-fb" hidden>שיחה ארוכה של חודשים תתמלא הקשר ישן שפוגע בדיוק. צ'אט חדש בתוך פרויקט נותן התחלה נקייה עם ההקשר הקבוע.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">פתחתם פרויקט לכתיבת הצעות מחיר, אבל התוצרים יוצאים גנריים ובטון לא נכון. מה כדאי לבדוק קודם?</p>
+   <button type="button" class="q-opt">אולי המודל חלש מדי למשימה - לעבור למודל חכם יותר<span class="q-fb" hidden>בדרך כלל הבעיה לא במודל אלא בהוראות. מודל חכם יותר עם הוראות מעורפלות ייתן אותן תוצאות גנריות.</span></button>
+   <button type="button" class="q-opt">להעלות עוד הרבה קבצי רקע, הכמות תעשה את העבודה<span class="q-fb" hidden>קבצים בלי הוראות שמפנות אליהם הם רק רעש. קודם הוראות מדויקות, ואז קבצים שההוראות מניחות עליהם.</span></button>
+   <button type="button" class="q-opt" data-ok="1">את ההוראות - כנראה שהן ארוכות ומעורפלות. לכתוב קצר וקונקרטי: קהל, טון, פורמט, מה אסור<span class="q-fb" hidden>נכון. הוראות קצרות ומדויקות עובדות טוב יותר מהוראות ארוכות. "טון ענייני, עד 200 מילים, בלי ז'רגון שיווקי" מנצח "כתוב טוב".</span></button>
+   <button type="button" class="q-opt">לתקן כל תוצר ידנית בשיחה - אחרי כמה פעמים זה ילמד<span class="q-fb" hidden>תיקון בשיחה נשאר באותה שיחה. כדי שכל שיחה חדשה תתחיל נכון, התיקון צריך לחזור להוראות הפרויקט.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם עובדים בפרויקט של Chat, וקולגה אומר לכם: "פשוט תוסיפו את זה ל-CLAUDE.md של הפרויקט". מה הבלבול כאן?</p>
+   <button type="button" class="q-opt">אין בלבול - CLAUDE.md הוא שם אחר להוראות הפרויקט ב-Chat<span class="q-fb" hidden>לא. זהו בלבול נפוץ: המילה "פרויקט" קיימת בשני הכלים אבל משמעותה שונה, ו-CLAUDE.md שייך רק ל-Claude Code.</span></button>
+   <button type="button" class="q-opt" data-ok="1">ב-Chat אין CLAUDE.md - ההוראות כותבים בשדה Instructions. CLAUDE.md הוא קובץ של Claude Code בתיקיית עבודה<span class="q-fb" hidden>נכון. ב-Code ה"פרויקט" הוא תיקייה על המחשב עם CLAUDE.md משלה (פרק 17). ב-Chat ההוראות חיות בשדה ה-Instructions של הפרויקט.</span></button>
+   <button type="button" class="q-opt">הקבצים מסונכרנים אוטומטית - שינוי ב-CLAUDE.md ישפיע על פרויקט ה-Chat<span class="q-fb" hidden>אין סנכרון בין שני העולמות. פרויקט Chat ותיקיית Code הם שני דברים נפרדים שלא מדברים ביניהם.</span></button>
+   <button type="button" class="q-opt">לייצא קובץ בשם CLAUDE.md ולהעלות אותו כקובץ רקע לפרויקט ה-Chat<span class="q-fb" hidden>השם לא עושה קסם: ב-Chat זה יהיה סתם עוד קובץ רקע בלי משמעות מיוחדת. ההוראות חיות בשדה הייעודי.</span></button>
+  </div>
+ </div>
 </article>
 
 
