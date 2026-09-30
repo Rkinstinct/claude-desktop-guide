@@ -344,6 +344,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch05-memory-search.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 05 - זיכרון, חיפוש ואינקוגניטו (~דקה ורבע)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context">Chat search and memory</a> · <a href="https://support.claude.com/en/articles/12260368-use-incognito-chats">Incognito chats</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">קלוד פונה אליכם בתפקיד ישן שעזבתם לפני חודשיים. אתם רוצים לתקן את זה אחת ולתמיד. מה עושים?</p>
+   <button type="button" class="q-opt">מתקנים אותו בשיחה - "אני כבר לא שם" - והוא יזכור מעצמו<span class="q-fb" hidden>תיקון בשיחה אחת לא בהכרח מעדכן את רשימת הנושאים השמורה. הדרך הבטוחה היא לערוך את הזיכרון עצמו.</span></button>
+   <button type="button" class="q-opt">פותחים צ'אט אינקוגניטו - שם הוא לא מסתמך על הזיכרון הישן<span class="q-fb" hidden>אינקוגניטו עוקף את הבעיה בשיחה אחת, אבל הזיכרון השגוי נשאר ויחזור בכל שיחה רגילה.</span></button>
+   <button type="button" class="q-opt" data-ok="1">נכנסים ל-Settings ← Memory ועורכים או מוחקים את הפריט ברשימת הנושאים<span class="q-fb" hidden>נכון. שם רואים בדיוק מה קלוד שומר עליכם, ואפשר לערוך או למחוק כל פריט - או את כל הזיכרון.</span></button>
+   <button type="button" class="q-opt">מכבים את "Generate memory from chats" ומתחילים מחדש<span class="q-fb" hidden>קיצור שעובד אבל זורק את כל הזיכרון הטוב שנצבר בגלל פריט אחד שגוי. עריכה נקודתית עדיפה.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם צריכים את שער המטבע של הבוקר לדוח. מה הדרך לקבל מקלוד מידע עדכני עם מקורות?</p>
+   <button type="button" class="q-opt" data-ok="1">מדליקים Web search בתפריט ה-+ באותה שיחה, ואז שואלים<span class="q-fb" hidden>נכון. כשהחיפוש דולק קלוד שולף מידע עדכני מהאינטרנט ומצרף מקורות - פר שיחה, בשליטה שלכם.</span></button>
+   <button type="button" class="q-opt">סתם שואלים - קלוד תמיד מחפש ברשת כשצריך<span class="q-fb" hidden>לא: החיפוש כבוי כברירת מחדל ונדלק לכל שיחה בנפרד. בלי הדלקה תקבלו תשובה מהידע הקיים, שעלול להיות לא עדכני.</span></button>
+   <button type="button" class="q-opt">פותחים צ'אט מסוג "חיפוש" מיוחד<span class="q-fb" hidden>אין סוג צ'אט כזה - החיפוש הוא מתג בתוך כל שיחה רגילה, בתפריט ה-+.</span></button>
+   <button type="button" class="q-opt">מחפשים בגוגל ומדביקים לו את התוצאות<span class="q-fb" hidden>קיצור שעובד אבל מיותר: אתם עושים ידנית את מה שהמתג עושה לבד, כולל צירוף המקורות.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם רוצים לנסות ניסוי חד-פעמי בלי שהשיחה תישמר בהיסטוריה, בזיכרון או בחיפוש. מה הדרך הנכונה?</p>
+   <button type="button" class="q-opt">צ'אט רגיל ואחר כך מוחקים אותו מההיסטוריה<span class="q-fb" hidden>מחיקה מסירה את השיחה מההיסטוריה, אבל היא כבר הספיקה להיות חלק מהמערכת. אינקוגניטו מונע את השמירה מראש.</span></button>
+   <button type="button" class="q-opt" data-ok="1">צ'אט אינקוגניטו מכפתור Use incognito בראש המסך<span class="q-fb" hidden>נכון. שיחת אינקוגניטו נשארת מחוץ להיסטוריה, לזיכרון ולחיפוש, ולא משמשת לאימון המודל.</span></button>
+   <button type="button" class="q-opt">אינקוגניטו - וגם אפשר לעקוף בו את מדיניות הארגון<span class="q-fb" hidden>חצי נכון וחצי מסוכן: אינקוגניטו אכן לא נשמר, אבל ברישיון ארגוני מדיניות הארגון חלה גם על שיחות אינקוגניטו.</span></button>
+   <button type="button" class="q-opt">כותבים בשיחה "אל תשמור את זה" וממשיכים<span class="q-fb" hidden>בקשה בטקסט לא משנה מנגנוני שמירה. הדרך היחידה היא מצב אינקוגניטו עצמו.</span></button>
+  </div>
+ </div>
 </article>
 
 
