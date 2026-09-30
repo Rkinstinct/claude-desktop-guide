@@ -48,7 +48,7 @@
   nodes.forEach(el=>{if(el.tagName==='H4'&&current.length){groups.push(current);current=[]}current.push(el)});
   if(current.length)groups.push(current);
   // Demonstration and sources get their own unhurried final step, rather than sharing a dense text panel.
-  for(let gi=0;gi<groups.length;gi++){const g=groups[gi];const vi=g.findIndex(el=>el.classList.contains('video-box'));if(vi>0){groups.splice(gi+1,0,g.splice(vi));gi++}}
+  for(let gi=groups.length-1;gi>=0;gi--){const g=groups[gi];const vi=g.findIndex(el=>el.classList.contains('video-box'));if(vi>0){groups.splice(gi+1,0,g.splice(vi));break}}
   c.steps=groups.map((group,i)=>{const section=document.createElement('section');section.className='lesson-step';section.setAttribute('aria-label',group[0]?.tagName==='H4'?group[0].textContent.trim():group.some(el=>el.classList.contains('video-box'))?'הדגמה ומקורות':i===0?'היכרות עם הנושא':'הדגמה ומקורות');group[0].before(section);group.forEach(el=>section.append(el));return section});
  }
  function showStep(n,scroll=true){step=Math.max(0,Math.min(n,active.steps.length-1));
