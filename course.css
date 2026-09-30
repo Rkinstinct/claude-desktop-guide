@@ -212,3 +212,10 @@ body.intro-lock{overflow:hidden}
 #intro-overlay video{width:100%;height:100%;object-fit:contain;background:#f8f6f1}
 #intro-skip{position:absolute;bottom:calc(20px + env(safe-area-inset-bottom));inset-inline-start:20px;z-index:2001;background:rgba(255,254,250,.92);border:1px solid var(--line);color:var(--soft);border-radius:999px;padding:10px 22px;font-family:inherit;font-size:15px;cursor:pointer}
 #intro-skip:hover{color:var(--ink);border-color:var(--accent)}
+
+/* mobile footer compression + slim sticky step bar */
+@media(max-width:640px){
+ .course-ready footer{margin:34px 0 22px;font-size:11.5px;line-height:1.7;padding-inline:30px}
+ .course-ready.lesson .step-actions{padding:8px 0;gap:8px}
+ .course-ready.lesson .step-actions button,.course-ready.lesson .step-actions a{padding:8px 10px;font-size:13.5px;border-radius:10px}
+}
