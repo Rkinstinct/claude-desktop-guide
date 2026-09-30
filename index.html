@@ -449,6 +449,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch07-code-intro.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 07 - מה זה Claude Code, התקנה והגדרה (~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://support.claude.com/en/articles/11845131-use-claude-code-with-your-team-or-enterprise-plan">Claude Code with Team or Enterprise</a> · <a href="https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code">Your first day in Claude Code</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">ניסיתם להתקין את Claude Desktop על מחשב העבודה, וההתקנה נחסמת - אין לכם הרשאות אדמין. מה הצעד הנכון?</p>
+   <button type="button" class="q-opt">להתקין עם sudo - ככה עוקפים את החסימה<span class="q-fb" hidden>sudo לא פותר חסימת ארגון - הוא שובר הרשאות קבצים בהמשך, ובסביבה מנוהלת גם עובר על המדיניות.</span></button>
+   <button type="button" class="q-opt">להוריד גרסה ניידת מאתר צד שלישי שלא דורשת התקנה<span class="q-fb" hidden>קיצור מסוכן: תוכנה לא מאושרת על מחשב ארגוני היא בעיית אבטחה, וגם תיתקל באותה מדיניות.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לפנות ל-IT ולבקש התקנה מאושרת - האדמין שולט בזמינות דרך מדיניות<span class="q-fb" hidden>נכון. בסביבה נעולה חסימה היא לא כשל שלכם אלא מדיניות. ה-IT מתקין מאושר, והאדמין מפעיל את Code דרך המדיניות.</span></button>
+   <button type="button" class="q-opt">לוותר - ברישיון ארגוני אין Claude Code בכלל<span class="q-fb" hidden>להפך: ברוב ארגוני ה-Team/Enterprise הזיכיון כולל את Code. החסימה היא טכנית-ארגונית, לא זכאותית.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם מתחילים עם Claude Code בפעם הראשונה ורוצים את הדרך הכי נוחה להתחיל. מה מומלץ?</p>
+   <button type="button" class="q-opt">הטרמינל - ככה עובדים מפתחים אמיתיים<span class="q-fb" hidden>הטרמינל הוא הדרך הקלאסית, אבל להתחלה היא דורשת התקנה והתחברות נפרדות. יש דרך שכבר מחכה לכם.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לשונית Code באפליקציית הדסקטופ - הכל בתוך האפליקציה שכבר מותקנת<span class="q-fb" hidden>נכון. הדרך הכי נוחה להתחיל: אותה התחברות ארגונית, אותו ממשק, בלי התקנה נוספת.</span></button>
+   <button type="button" class="q-opt">קודם חייבים להתקין VS Code - בלעדיו Claude Code לא עובד<span class="q-fb" hidden>בלבול נפוץ: ההרחבה ל-VS Code מומלצת לסקירת דיפים, אבל היא לא חובה. Code עובד גם בדסקטופ ובטרמינל.</span></button>
+   <button type="button" class="q-opt">להישאר ב-Chat - גם שם אפשר לכתוב קוד<span class="q-fb" hidden>Chat מחזיר טקסט של קוד, לא מבצע עבודה על הקבצים. Code הוא הסוכן שקורא, עורך ומריץ בפועל.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">קולגה אומר לכם: "כדי לעבוד עם Claude Code חייבים לעבור ל-VS Code". אתם עובדים נוח בלשונית Code בדסקטופ. מה נכון?</p>
+   <button type="button" class="q-opt">הקולגה צודק - הדסקטופ הוא רק גרסה מוגבלת<span class="q-fb" hidden>לא. לשונית Code בדסקטופ היא סביבת עבודה מלאה, לא גרסה מוגבלת.</span></button>
+   <button type="button" class="q-opt">צריך גם וגם - הם מתסנכרנים לאותו סשן<span class="q-fb" hidden>אין סנכרון סשנים בין הסביבות. כל סביבה היא דרך עצמאית לעבוד עם הסוכן.</span></button>
+   <button type="button" class="q-opt">כדאי לעבור כי בלי ההרחבה אי אפשר לראות מה הסוכן שינה<span class="q-fb" hidden>גם בדסקטופ ובטרמינל רואים את העריכות. ההרחבה פשוט מציגה דיפים בתוך העורך - נוחות, לא תנאי.</span></button>
+   <button type="button" class="q-opt" data-ok="1">VS Code הוא המלצה נוחה לסקירת דיפים, לא חובה - אפשר להמשיך בדסקטופ<span class="q-fb" hidden>נכון. שלוש סביבות לבחירה: דסקטופ, טרמינל, VS Code. ההרחבה משפרת סקירה בעורך, אבל העבודה זהה.</span></button>
+  </div>
+ </div>
 </article>
 
 
