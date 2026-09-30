@@ -1081,6 +1081,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch19-powerbi-yoy.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 19 - סקילי Power BI בפעולה אמיתית: Claude מוסיף מדדי שנה-על-שנה לסמנטיק מודל קיים (עריכת TMDL בפועל, עם קריינות, ~3 דקות)</div>
  <div class="srcs">מקורות: <a href="https://learn.microsoft.com/en-us/fabric/fundamentals/skills-for-fabric-overview">Skills for Fabric overview</a> · <a href="https://github.com/microsoft/skills-for-fabric">microsoft/skills-for-fabric</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">אתם רוצים שקלוד ידע איך בונים סמנטיק מודל נכון ב-Power BI - הדפוסים, המבנה, הכללים. מה נותן את זה?</p>
+   <button type="button" class="q-opt">שרת MCP - הוא מחבר את קלוד ל-Fabric<span class="q-fb" hidden>שרת MCP נותן גישה חיה לדאטה - הוא "עושה", לא "מלמד". הידע על איך בונים נכון מגיע ממקום אחר.</span></button>
+   <button type="button" class="q-opt">הידע המובנה של קלוד - הוא מכיר Power BI מהאימון<span class="q-fb" hidden>בלי הסקילים אין לכלי ה-AI ידע מובנה ב-APIs של Fabric ובפורמטים של Power BI. בדיוק בשביל זה הם קיימים.</span></button>
+   <button type="button" class="q-opt">להדביק את התיעוד של מיקרוסופט לתוך כל שיחה<span class="q-fb" hidden>קיצור שממלא את החלון ומסתמך עליכם בכל פעם. הסקיל הוא אותו ידע - ארוז פעם אחת ונורה אוטומטית.</span></button>
+   <button type="button" class="q-opt" data-ok="1">הסקילים - הם מספקים את הידע והדפוסים; ה-MCP משלים עם גישה חיה<span class="q-fb" hidden>נכון. סקיל = "מה לעשות" (מסמכי Markdown), MCP = "עושה" (שרת חי). הם עובדים הכי טוב ביחד.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם ברישיון נעול בלי Node, ורוצים את סקילי ה-Power BI. מה נתיב ההתקנה?</p>
+   <button type="button" class="q-opt" data-ok="1">Download ZIP מהריפו בגיטהאב ← מעתיקים את שתי תיקיות הסקילים אל .claude/skills בפרויקט<span class="q-fb" hidden>נכון. סקיל הוא תיקיית Markdown בלבד - בלי Node, בלי מרקטפלייס, בלי כלי התקנה. ההעתקה היא כל ההתקנה.</span></button>
+   <button type="button" class="q-opt">/plugin install מהמרקטפלייס, כמו בהוראות הרשמיות<span class="q-fb" hidden>המרקטפלייס לא זמין ברישיון נעול. העתקת התיקיות היא הנתיב המקביל - אותם סקילים, מאותו ריפו.</span></button>
+   <button type="button" class="q-opt">להתקין Node קודם - בלעדיו הסקילים לא עובדים<span class="q-fb" hidden>בלבול נפוץ: Node נדרש רק לשרת ה-MCP החי. הסקילים עצמם עובדים בלעדיו, עם עריכת קבצים ישירה.</span></button>
+   <button type="button" class="q-opt">לחכות ש-IT יתקין APM CLI<span class="q-fb" hidden>קיצור שמחכים לו לחינם: ה-APM CLI הוא עוד כלי התקנה שאינו זמין בסביבה נעולה - והוא גם לא נחוץ לסקילים.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">קולגה בטוח שהסקילים יוציאו לו דוח Power BI גמור ומרונדר בלחיצה אחת. מה נכון להגיד לו?</p>
+   <button type="button" class="q-opt">צודק - רק צריך לבקש יפה<span class="q-fb" hidden>לא. זה גבול מפורש של הסקילים: הם מייצרים הגדרות פריטים וקוד, לא דוחות מרונדרים.</span></button>
+   <button type="button" class="q-opt">יצליח אם יתקין את שרת ה-MCP<span class="q-fb" hidden>שרת ה-MCP נותן אפקט מיידי על המודל החי, אבל גם הוא לא מרנדר דוחות. הרינדור לא מגיע מאף רכיב כאן.</span></button>
+   <button type="button" class="q-opt" data-ok="1">הסקילים כותבים הגדרות וקוד - לוויזואליזציה פותחים את ה-PBIP ב-Power BI Desktop, דשבורד Python או PDF<span class="q-fb" hidden>נכון. עובדתית מהתיעוד: הגדרות וקוד כן, רינדור גמור לא. את התצוגה עושים בכלים הייעודיים.</span></button>
+   <button type="button" class="q-opt">שיצלם מסך של הסמנטיק מודל וישלח כדוח<span class="q-fb" hidden>קיצור שלא מחזיק מים: צילום של קבצי הגדרות הוא לא דוח Power BI. הדשבורד נבנה בכלי תצוגה.</span></button>
+  </div>
+ </div>
 </article>
 
 
