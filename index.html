@@ -945,6 +945,30 @@ footer .heart{color:var(--coral)}
 <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch17-claudemd-demo.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 17 - CLAUDE.md (~דקה וחצי)</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/memory">CLAUDE.md memory documentation</a> · <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">קלוד הריץ פעמיים את פקודת הבדיקה הישנה של הפרויקט. תיקנתם אותו, ושבוע אחר כך - שוב אותה טעות. איך שוברים את המעגל?</p>
+   <button type="button" class="q-opt">מתקנים אותו בכל סשן שוב - בסוף הוא ילמד<span class="q-fb" hidden>כל סשן מתחיל בלי זיכרון של הקודם. תיקון בשיחה לא שורד - רק תיקון שנכתב בקובץ נשאר.</span></button>
+   <button type="button" class="q-opt">מסמנים את ההודעה עם התיקון כמוצמדת לשיחה<span class="q-fb" hidden>אין מוצמדות ששרודות בין סשנים. הקבוע היחיד שהסוכן קורא בכל סשן הוא CLAUDE.md.</span></button>
+   <button type="button" class="q-opt" data-ok="1">כותבים את הפקודה הנכונה כשורה ב-CLAUDE.md - טעות שחזרה הופכת לשורה בקובץ<span class="q-fb" hidden>נכון. זו בדיוק שיטת העבודה: קלוד טעה פעמיים באותה טעות? התיקון הופך לשורה ב-CLAUDE.md ונקרא אוטומטית בכל סשן.</span></button>
+   <button type="button" class="q-opt">מריצים /init מחדש כדי שהקובץ יתעדכן<span class="q-fb" hidden>init בונה טיוטה התחלתית מסריקה. עדכון שוטף נעשה בעריכה ידנית (או דרך /memory) - לא בסריקה מחדש.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם פותחים פרויקט חדש בפעם הראשונה, ואין בו CLAUDE.md. מה הדרך המומלצת להתחיל?</p>
+   <button type="button" class="q-opt" data-ok="1">/init - קלוד סורק את הפרויקט ומציע CLAUDE.md התחלתי, ומכאן עורכים<span class="q-fb" hidden>נכון. הסריקה נותנת בסיס מדויק לפרויקט שלכם - פקודות אמיתיות, מבנה אמיתי - ואתם מלטשים.</span></button>
+   <button type="button" class="q-opt">לכתוב קובץ מלא מאפס, משפט אחר משפט<span class="q-fb" hidden>אפשרי, אבל למה: init עושה את הסריקה בשבילכם ומציע טיוטה. עריכה של טיוטה טובה מהירה מדף חלק.</span></button>
+   <button type="button" class="q-opt">להעתיק את ה-CLAUDE.md של פרויקט אחר ולשנות את השם<span class="q-fb" hidden>קיצור שמייבא פקודות ומוסכמות של פרויקט אחר - גרוע מלא להיות קובץ בכלל. הסוכן יריץ פקודות שלא קיימות אצלכם.</span></button>
+   <button type="button" class="q-opt">לדלג - קלוד מסתדר גם בלי קובץ<span class="q-fb" hidden>בלי הקובץ הסוכן מנחש: פקודות, מוסכמות, אילוצים. זה ההבדל בין סוכן שמניח לבין סוכן שיודע.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">יש לכם העדפת עבודה אישית שאתם רוצים בכל הפרויקטים שלכם - אבל לא לכפות אותה על הצוות. לאן היא הולכת?</p>
+   <button type="button" class="q-opt">לשורש הפרויקט - שם הקובץ המרכזי<span class="q-fb" hidden>שורש הפרויקט נכנס לגיט ומשותף לכל הצוות - ההעדפה האישית שלכם תכפה על כולם.</span></button>
+   <button type="button" class="q-opt">לתת-תיקייה אחת בכל פרויקט<span class="q-fb" hidden>תת-תיקיות מיועדות לכללים על אזור ספציפי בקוד, וגם הן בגיט. לא המקום להעדפה אישית גלובלית.</span></button>
+   <button type="button" class="q-opt">לחזור עליה בפתיחת כל סשן<span class="q-fb" hidden>קיצור שנשכח ביום עמוס. העדפה קבועה כותבים פעם אחת במקום הקבוע.</span></button>
+   <button type="button" class="q-opt" data-ok="1">ל-CLAUDE.md בתיקיית הבית - העדפות אישיות שחלות על כל הפרויקטים שלכם בלבד<span class="q-fb" hidden>נכון. קובץ הבית שלכם נקרא בכל סשן שלכם, לא נכנס לגיט, ולא משפיע על אף אחד אחר.</span></button>
+  </div>
+ </div>
 </article>
 
 
