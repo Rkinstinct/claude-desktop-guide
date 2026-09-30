@@ -97,9 +97,13 @@ footer .heart{color:var(--coral)}
  table.cmp th,table.cmp td{padding:7px 8px}
 }
 </style>
-<link rel="stylesheet" href="course.css?v=6">
+<link rel="stylesheet" href="course.css?v=7">
 </head>
 <body>
+<div id="intro-overlay" role="dialog" aria-label="פתיחת האתר">
+ <video id="intro-video" src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/intro.mp4" autoplay muted playsinline preload="auto"></video>
+ <button id="intro-skip" type="button">דלגו על הפתיחה</button>
+</div>
 <header class="hero"><div class="wrap">
  <div class="pill">מדריך חי • מתעדכן • עברית</div>
  <h1>המדריך המלא ל-<span class="grad-text">Claude Desktop</span><span class="l2">+ Fabric Skills ל-Power BI</span></h1>
@@ -1212,5 +1216,19 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
 }
 </script>
 <script src="course.js?v=6" defer></script>
+<script>
+(function(){
+var ov=document.getElementById('intro-overlay');if(!ov)return;
+function kill(){if(ov.parentNode)ov.parentNode.removeChild(ov);document.body.classList.remove('intro-lock');}
+if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){kill();return;}
+document.body.classList.add('intro-lock');
+var done=false;
+function end(){if(done)return;done=true;ov.classList.add('intro-out');setTimeout(kill,850);}
+var v=document.getElementById('intro-video');
+if(v){v.addEventListener('ended',end);v.addEventListener('error',end);var p=v.play();if(p&&p.catch){p.catch(function(){end();});}}
+var b=document.getElementById('intro-skip');if(b){b.addEventListener('click',end);}
+setTimeout(end,14000);
+})();
+</script>
 </body>
 </html>
