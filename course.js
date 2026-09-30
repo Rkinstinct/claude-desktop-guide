@@ -73,6 +73,6 @@
   }else active=null;
   window.scrollTo({top:0,behavior:'instant'});
  }
- document.addEventListener('click',e=>{const b=e.target.closest('.q-opt');if(!b)return;const q=b.closest('.q');if(!q)return;const ok=b.hasAttribute('data-ok');b.classList.add('tried',ok?'ok':'no');const fb=b.querySelector('.q-fb');if(fb)fb.hidden=false;if(ok)q.classList.add('solved')});
+ document.addEventListener('click',e=>{const b=e.target.closest('.q-opt');if(!b)return;const q=b.closest('.q');if(!q)return;const ok=b.hasAttribute('data-ok');b.classList.add('tried',ok?'ok':'no');const fb=b.querySelector('.q-fb');if(fb)fb.hidden=false;if(ok){q.classList.add('solved');const z=q.closest('.quiz');if(z&&!z.dataset.celebrated&&z.querySelectorAll('.q').length===z.querySelectorAll('.q.solved').length){z.dataset.celebrated='1';const d=document.createElement('div');d.className='video-box cele-box';d.innerHTML='<video autoplay muted playsinline preload="metadata" disablepictureinpicture><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/quiz-celebration.mp4" type="video/mp4"></video>';z.appendChild(d);}}});
  document.body.classList.add('course-ready');window.addEventListener('hashchange',route);route();
 })();
