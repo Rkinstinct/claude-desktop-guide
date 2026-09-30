@@ -97,11 +97,14 @@ footer .heart{color:var(--coral)}
  table.cmp th,table.cmp td{padding:7px 8px}
 }
 </style>
-<link rel="stylesheet" href="course.css?v=8">
+<link rel="stylesheet" href="course.css?v=9">
 </head>
 <body>
 <div id="intro-overlay" role="dialog" aria-label="פתיחת האתר">
- <video id="intro-video" src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/intro-v2.mp4" autoplay muted playsinline preload="auto"></video>
+ <video id="intro-video" autoplay muted playsinline preload="auto">
+  <source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/intro-v2-portrait.mp4" media="(max-aspect-ratio: 3/4)">
+  <source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/intro-v2.mp4">
+ </video>
  <button id="intro-skip" type="button">דלגו על הפתיחה</button>
 </div>
 <header class="hero"><div class="wrap">
