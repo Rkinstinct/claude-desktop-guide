@@ -507,6 +507,30 @@ footer .heart{color:var(--coral)}
  <div class="video-cap">סרטון דמו 08ב - תצוגה מפוצלת: שני סשנים באותו חלון (~45 שניות)</div>
  <div class="callout"><b>שורת יושרה לסביבה נעולה:</b> ישנם גם סשני ענן שממשיכים לרוץ אחרי שהמחשב נסגר - הם חלק מ-Cowork ולא זמינים ברישיון נעול. כל מה שבפרק הזה עובד מקומית, בלי ענן.</div>
  <div class="srcs">מקורות: <a href="https://code.claude.com/docs/en/desktop">Claude Code desktop documentation</a> · <a href="https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code">Your first day in Claude Code</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">פתחתם סשן ראשון בתיקייה עם קובץ אקסל של הוצאות. איזו הנחיה תיתן את התוצאה הטובה ביותר?</p>
+   <button type="button" class="q-opt">"תעשה משהו עם האקסל" - נתן לו חופש יצירתי<span class="q-fb" hidden>הנחיה עמומה מחזירה ניחוש. הסוכן לא יודע מה אתם רוצים לראות, ותבזבזו סבבים על כיוון.</span></button>
+   <button type="button" class="q-opt" data-ok="1">"בנה דשבורד HTML שמסכם את ההוצאות מהקובץ, מחולק לקטגוריות, עם גרף חודשי"<span class="q-fb" hidden>נכון. הנחיה מדויקת: מה לבנות, מאיזה קובץ לקחת נתונים, ואיך התוצאה נראית. אחר כך משכללים באיטרציות קטנות.</span></button>
+   <button type="button" class="q-opt">רשימה מפורטת של כל עמודות האקסל, בלי לציין מה לבנות<span class="q-fb" hidden>הוא יכול לפתוח את הקובץ ולראות את העמודות בעצמו. מה שחסר בהנחיה כזאת הוא דווקא המטרה.</span></button>
+   <button type="button" class="q-opt">"בנה משהו, ונראה אם נצטרך תיקונים אחר כך"<span class="q-fb" hidden>תיקונים תמיד יהיו, אבל איטרציות עובדות על בסיס קרוב למטרה. ניסיון ענק אחד בלי כיוון הוא הדרך האיטית.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם רוצים להריץ שני סשנים במקביל על אותו ריפו, ואתם חוששים שאחד ידרוס את השינויים של השני. מה נכון?</p>
+   <button type="button" class="q-opt">צודק החשש - חייבים לחכות שסשן אחד יסיים לפני שפותחים שני<span class="q-fb" hidden>לא צריך: הסשנים לא חולקים תיקיית עבודה חיה, אז אין דריסה הדדית.</span></button>
+   <button type="button" class="q-opt">להעתיק ידנית את הריפו לשתי תיקיות ולהריץ סשן בכל אחת<span class="q-fb" hidden>קיצור שמייצר ניהול גרסאות ידני - בדיוק מה שהמנגנון המובנה כבר עושה בשבילכם.</span></button>
+   <button type="button" class="q-opt" data-ok="1">אין בעיה - כל סשן עובד על עותק מבודד של הריפו (worktree)<span class="q-fb" hidden>נכון. הבידוד מובנה: שני סשנים רצים במקביל בלי לדרוס אחד את השני, ומתקבלת התראה כשסשן מסיים.</span></button>
+   <button type="button" class="q-opt">שני סשנים באותו ריפו תמיד יוצרים קונפליקטים ב-git<span class="q-fb" hidden>הם עובדים על עותקים מבודדים, כך שהסשנים עצמם לא מתנגשים. מיזוג לענף הראשי זה כבר צעד נפרד ומבוקר.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אמצע סשן עבודה. אתם רוצים לשאול שאלת צד קטנה - "מה הדגל הזה בפקודה עושה?" - בלי לערבב את השיחה הראשית. מה הדרך?</p>
+   <button type="button" class="q-opt">שואלים בשיחה הראשית - שאלה קטנה לא תזיק<span class="q-fb" hidden>כל הודעה נכנסת לחלון ההקשר של הסשן ומסיטה אותו. שאלות צד שולחים בערוץ של צד.</span></button>
+   <button type="button" class="q-opt">פותחים סשן חדש לשאלה<span class="q-fb" hidden>סשן חדש לא רואה על מה אתם עובדים, אז התשובה תהיה כללית במקום בהקשר של הקוד שלכם.</span></button>
+   <button type="button" class="q-opt">מחפשים בגוגל וחוזרים לסשן<span class="q-fb" hidden>קיצור שמנתק את ההקשר: תשובה גנרית מהאינטרנט במקום הסבר על השימוש המדויק בפרויקט שלכם.</span></button>
+   <button type="button" class="q-opt" data-ok="1">Cmd+; - שאלת צד שרואה את ההקשר ולא נוגעת בשיחה הראשית<span class="q-fb" hidden>נכון. שאלת הצד (בטרמינל: /btw) עונה בהקשר של הסשן בלי לטעון את ההיסטוריה הראשית.</span></button>
+  </div>
+ </div>
 </article>
 
 
