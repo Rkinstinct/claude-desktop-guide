@@ -38,18 +38,19 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
 .course-ready.lesson header.hero,.course-ready.lesson .course-home-intro,.course-ready.lesson .curriculum,.course-ready.lesson section.part{display:none}
 .course-ready.lesson article.chapter{display:none}
 .course-ready.lesson article.chapter.current{display:block}
-.course-ready.lesson article.chapter.current{max-width:760px;margin:36px auto 24px;padding:clamp(24px,5vw,62px);border-radius:24px;border:1px solid var(--line);background:var(--paper);box-shadow:0 12px 50px rgba(57,41,28,.035);scroll-margin-top:90px}
+.course-ready.lesson article.chapter.current{max-width:760px;margin:28px auto 20px;padding:clamp(24px,4.5vw,52px);border-radius:22px;border:1px solid var(--line);background:var(--paper);box-shadow:0 12px 50px rgba(57,41,28,.035);scroll-margin-top:90px}
 .course-ready.lesson .lesson-top{max-width:760px;margin:60px auto 0}
 .course-ready .eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.02em;margin-bottom:12px}
 .course-ready .lesson-top h2{font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.28;max-width:760px;letter-spacing:-.02em}
-.course-ready .lesson-top p{color:var(--soft);font-size:15px;margin-top:8px}
+.course-ready .lesson-top p{color:#8a8378;font-size:14px;margin-top:6px}
 .course-ready .chapter .ch-head{display:none}
 .course-ready .chapter .lesson-step{display:none;animation:fade-step .22s var(--ease-out) both}
 .course-ready .chapter .lesson-step.active{display:block}
 @keyframes fade-step{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
 .course-ready .chapter .lesson-step h4{margin:0 0 20px;font-size:clamp(21px,3vw,26px);line-height:1.35;color:#332d27;font-weight:700;letter-spacing:-.01em;position:relative;padding-inline-start:16px}
 .course-ready .chapter .lesson-step h4::before{content:"";position:absolute;inset-inline-start:0;top:.42em;width:8px;height:8px;border-radius:2px;background:var(--accent)}
-.course-ready .chapter .lesson-step p{font-size:17px;line-height:1.85;margin:0 0 18px;color:#3a3732}
+.course-ready .chapter .lesson-step p{font-size:17px;line-height:1.85;margin:0 0 16px;color:#3a3732}
+.course-ready .chapter .lesson-step>:last-child{margin-bottom:0}
 .course-ready .chapter ul,.course-ready .chapter ol{margin:18px 24px 26px 0;color:#3a3732}
 .course-ready .chapter li{margin:0 0 14px;padding-inline-start:5px;line-height:1.75}
 .course-ready .chapter .callout{margin:26px 0;padding:6px 18px;background:transparent;border:none;border-inline-start:3px solid #e3cf9e;color:#4e4638}
@@ -60,16 +61,23 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
 .course-ready .chapter code{max-width:100%;overflow-wrap:anywhere;white-space:normal;vertical-align:baseline}
 .course-ready .chapter .codeblock{max-width:100%;white-space:pre;overflow-x:auto}
 .course-ready .chapter .tbl-scroll{max-width:100%;overflow-x:auto}
-.course-ready .step-shell{max-width:760px;margin:0 auto 76px}
-.course-ready .step-progress{display:flex;align-items:center;gap:14px;margin:0 0 20px;color:var(--soft);font-size:14px}
-.course-ready .progress-track{height:5px;flex:1;background:#e9e3d9;border-radius:5px;overflow:hidden}
+.course-ready .step-shell{max-width:760px;margin:0 auto 56px}
+.course-ready .step-progress{display:flex;align-items:center;gap:12px;margin:0 0 14px;color:#8a8378;font-size:13px}
+.course-ready .progress-track{height:3px;flex:1;background:#eae4d9;border-radius:3px;overflow:hidden}
 .course-ready .progress-fill{height:100%;width:100%;background:var(--coral);border-radius:5px;transform:scaleX(0);transform-origin:right center;transition:transform .3s var(--ease-out)}
-.course-ready .step-picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.course-ready .step-picker button{border:1px solid #e6dfd5;background:transparent;color:#655f57;padding:8px 12px;border-radius:999px;font:500 13px 'Heebo',sans-serif;cursor:pointer;text-align:right}
-.course-ready .step-picker button[aria-current="step"]{background:#f5e4dc;color:#8f422d;border-color:#e9c3b1}
-.course-ready .step-actions{display:flex;justify-content:space-between;gap:14px}
-.course-ready .step-actions button,.course-ready .step-actions a{border:1px solid #d7cfc3;border-radius:12px;padding:12px 22px;background:#fffefa;color:#4b3c34;font:600 15px 'Heebo',sans-serif;cursor:pointer;text-decoration:none;text-align:center}
-.course-ready .step-actions .next{background:#aa563c;color:white;border-color:#aa563c}
+.course-ready .step-picker{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:2px;margin:0 0 18px;border-bottom:1px solid var(--line);scrollbar-width:none;-webkit-mask-image:linear-gradient(to left,transparent,#000 28px);mask-image:linear-gradient(to left,transparent,#000 28px)}
+.course-ready .step-picker::-webkit-scrollbar{display:none}
+.course-ready .step-picker button{border:none;background:transparent;color:#7a736a;padding:9px 10px 11px;border-radius:0;font:500 13px 'Heebo',sans-serif;cursor:pointer;text-align:right;white-space:nowrap;flex:none;position:relative;transition:color .15s ease}
+.course-ready .step-picker button::after{content:"";position:absolute;inset-inline:8px;bottom:-1px;height:2px;border-radius:2px;background:transparent;transition:background .15s ease}
+.course-ready .step-picker button:hover{color:#332d27}
+.course-ready .step-picker .chip-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:#b8afa2;margin-inline-end:6px}
+.course-ready .step-picker button[aria-current="step"]{color:#8f422d;font-weight:600}
+.course-ready .step-picker button[aria-current="step"]::after{background:var(--coral)}
+.course-ready .step-picker button[aria-current="step"] .chip-num{color:var(--accent)}
+.course-ready .step-actions{display:flex;justify-content:space-between;gap:14px;padding-top:20px;border-top:1px solid var(--line)}
+.course-ready .step-actions button,.course-ready .step-actions a{border:1px solid #d7cfc3;border-radius:12px;padding:12px 22px;background:#fffefa;color:#4b3c34;font:600 15px 'Heebo',sans-serif;cursor:pointer;text-decoration:none;text-align:center;transition:transform .15s var(--ease-out),box-shadow .15s ease,border-color .15s ease}
+.course-ready .step-actions .next{background:#aa563c;color:white;border-color:#aa563c;box-shadow:0 8px 20px rgba(170,86,60,.20)}
+@media(hover:hover){.course-ready .step-actions .next:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(170,86,60,.26)}.course-ready .step-actions button:not(.next):hover,.course-ready .step-actions a:not(.next):hover{border-color:#b8afa2}}
 .course-ready .step-actions button:disabled{opacity:.45;cursor:default}
 .course-ready footer{border-top:1px solid var(--line);padding-top:26px;max-width:760px;margin:56px auto 42px;line-height:1.8}
 .course-ready .rv{opacity:1;transform:none;transition:none}
@@ -85,11 +93,9 @@ body.course-ready{background:#f8f6f1;color:var(--ink);line-height:1.75}
  .course-ready .course-bar .wrap{min-height:58px}
  .course-ready .course-brand{font-size:14px}
  .course-ready.lesson .lesson-top{margin-top:36px}
- .course-ready.lesson article.chapter.current{padding:25px 20px;margin:22px -4px 24px;border-radius:17px}
+ .course-ready.lesson article.chapter.current{padding:22px 18px;margin:18px -4px 20px;border-radius:17px}
  .course-ready .chapter .lesson-step p{font-size:16px}
  .course-ready .chapter .callout{padding:16px}
- .course-ready .step-picker{flex-wrap:nowrap;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
- .course-ready .step-picker button{white-space:nowrap;flex:none}
  .course-ready .step-actions button,.course-ready .step-actions a{flex:1;padding:12px 8px}
  .course-ready .chapter table.cmp{min-width:600px}
 }
