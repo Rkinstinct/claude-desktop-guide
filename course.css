@@ -188,3 +188,7 @@ html{-webkit-tap-highlight-color:transparent}
  .course-ready .step-rail{margin:0 -20px 4px;padding:0 20px}
  .course-ready .step-actions .next .act-label{max-width:150px}
 }
+/* v3 alignment: lesson header lives inside the content column */
+.course-ready.lesson .lesson-top{margin:0 0 34px;max-width:none}
+.course-ready.lesson .lesson-top h2{max-width:680px}
+@media(max-width:1023px){.course-ready.lesson .lesson-top{margin-top:26px}}
