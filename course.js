@@ -30,13 +30,17 @@
  });
  wrap.insertBefore(curriculum,parts[0]);
  const top=document.createElement('div');top.className='lesson-top';
+ const layout=document.createElement('div');layout.className='lesson-layout';
+ const rail=document.createElement('nav');rail.className='step-rail';rail.setAttribute('aria-label','שלבי הפרק');
+ const mainCol=document.createElement('div');mainCol.className='step-main';
  const shell=document.createElement('div');shell.className='step-shell';
  const status=document.createElement('div');status.className='step-progress';
  const picker=document.createElement('div');picker.className='step-picker';picker.setAttribute('aria-label','שלבי הפרק');
  const actions=document.createElement('div');actions.className='step-actions';
- const previous=document.createElement('button');previous.type='button';previous.textContent='הקודם';
- const next=document.createElement('button');next.type='button';next.className='next';next.textContent='הצעד הבא ←';
- actions.append(previous,next);shell.append(status,picker,actions);
+ const previous=document.createElement('button');previous.type='button';previous.innerHTML='<span class="act-dir">→</span> הקודם';
+ const next=document.createElement('button');next.type='button';next.className='next';
+ actions.append(previous,next);rail.append(picker);shell.append(actions);layout.append(rail,mainCol);
+ const barProg=document.createElement('div');barProg.className='bar-progress';const barFill=document.createElement('div');barFill.className='bar-progress-fill';barProg.append(barFill);bar.append(barProg);
  let active=null,step=0;
  function prepare(c){if(c.steps)return;
   const nodes=[...c.article.children].filter(el=>!el.classList.contains('ch-head'));
@@ -49,10 +53,12 @@
  }
  function showStep(n,scroll=true){step=Math.max(0,Math.min(n,active.steps.length-1));
   active.steps.forEach((el,i)=>{el.classList.toggle('active',i===step);el.hidden=i!==step});
-  picker.replaceChildren();active.steps.forEach((el,i)=>{const b=document.createElement('button');b.type='button';const num=document.createElement('span');num.className='chip-num';num.textContent=String(i+1).padStart(2,'0');const lbl=document.createElement('span');lbl.textContent=el.querySelector('h4')?.textContent.trim()||(i===active.steps.length-1?'הדגמה ומקורות':'היכרות');b.append(num,lbl);if(i===step)b.setAttribute('aria-current','step');if(i<step)b.classList.add('done');b.onclick=()=>showStep(i);picker.append(b)});
-  const count=document.createElement('span');count.textContent=`צעד ${step+1} מתוך ${active.steps.length}`;
-  const track=document.createElement('div');track.className='progress-track';const fill=document.createElement('div');fill.className='progress-fill';fill.style.transform=`scaleX(${(step+1)/active.steps.length})`;track.append(fill);status.replaceChildren(count,track);
-  previous.disabled=step===0;next.textContent=step===active.steps.length-1?(active.index===all.length-1?'חזרה לכל הפרקים ←':'לפרק הבא ←'):'הצעד הבא ←';
+  const stepName=i=>active.steps[i].querySelector('h4')?.textContent.trim()||(i===active.steps.length-1?'הדגמה ומקורות':'היכרות עם הנושא');
+  picker.replaceChildren();active.steps.forEach((el,i)=>{const b=document.createElement('button');b.type='button';const num=document.createElement('span');num.className='chip-num';num.textContent=String(i+1).padStart(2,'0');const lbl=document.createElement('span');lbl.className='chip-label';lbl.textContent=stepName(i);const chk=document.createElement('span');chk.className='chip-check';chk.setAttribute('aria-hidden','true');chk.textContent='✓';b.append(num,lbl,chk);if(i===step)b.setAttribute('aria-current','step');if(i<step)b.classList.add('done');b.onclick=()=>showStep(i);picker.append(b)});
+  const count=document.createElement('span');count.className='step-count';count.textContent=`צעד ${step+1} מתוך ${active.steps.length}`;const nm=document.createElement('span');nm.className='step-name';nm.textContent=stepName(step);status.replaceChildren(count,nm);
+  barFill.style.transform=`scaleX(${(step+1)/active.steps.length})`;
+  previous.disabled=step===0;
+  next.innerHTML='';const nt=document.createElement('span');nt.className='act-label';nt.textContent=step===active.steps.length-1?(active.index===all.length-1?'חזרה לכל הפרקים':'לפרק הבא'):'הבא: '+stepName(step+1);const nd=document.createElement('span');nd.className='act-dir';nd.textContent='←';next.append(nt,nd);
   if(scroll)top.scrollIntoView({block:'start',behavior:'instant'});
  }
  previous.onclick=()=>showStep(step-1);
@@ -62,8 +68,8 @@
   bar.querySelector('.back-link').hidden=!c;bar.querySelector('.course-bar-meta').textContent=c?`פרק ${c.number} מתוך ${all.length}`:'מדריך מעשי בעברית';
   chapters.forEach(x=>x.classList.toggle('current',x===c?.article));
   if(c){prepare(c);active=c;top.innerHTML='';const eyebrow=document.createElement('div');eyebrow.className='eyebrow';eyebrow.textContent=`פרק ${c.number} · לומדים צעד אחר צעד`;
-   const heading=document.createElement('h2');heading.textContent=c.title;const sub=document.createElement('p');sub.textContent='קראו צעד אחד בכל פעם. אפשר לדלג בין הנושאים למטה.';top.append(eyebrow,heading,sub);
-   c.article.before(top);c.article.after(shell);showStep(0,false);
+   const heading=document.createElement('h2');heading.textContent=c.title;top.append(eyebrow,heading);
+   c.article.before(top);top.after(layout);mainCol.append(status,c.article,shell);showStep(0,false);
   }else active=null;
   window.scrollTo({top:0,behavior:'instant'});
  }
