@@ -227,3 +227,9 @@ body.intro-lock{overflow:hidden}
 @media(max-width:1023px){
  .course-ready .step-rail{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 26px calc(100% - 26px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 26px calc(100% - 26px),transparent 100%)}
 }
+/* lesson page side insets on mobile/tablet; rail keeps edge-to-edge fade with zero page overflow
+   (rail negative inline margins exactly cancel its parent's new padding: rail spans 100% of viewport, no sideways scroll range) */
+@media(max-width:1023px){
+ .course-ready.lesson .lesson-layout{padding-inline:20px}
+ .course-ready.lesson .step-rail{margin-inline:-20px;padding-inline:20px}
+}
