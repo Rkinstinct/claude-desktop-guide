@@ -192,3 +192,15 @@ html{-webkit-tap-highlight-color:transparent}
 .course-ready.lesson .lesson-top{margin:0 0 34px;max-width:none}
 .course-ready.lesson .lesson-top h2{max-width:680px}
 @media(max-width:1023px){.course-ready.lesson .lesson-top{margin-top:26px}}
+
+/* review questions (doctrine: scibly-dev/skills assessment-design) */
+.course-ready .quiz{display:flex;flex-direction:column;gap:22px;margin-top:14px}
+.course-ready .q{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:#fffefa}
+.course-ready .q-stem{font-weight:600;margin:0 0 12px;line-height:1.7}
+.course-ready .q.solved .q-stem::before{content:"✓";color:#1a9e54;margin-inline-end:8px}
+.course-ready .q-opt{display:block;width:100%;text-align:start;font-family:inherit;font-size:14.5px;line-height:1.6;padding:11px 14px;margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--paper);cursor:pointer;color:var(--ink);transition:border-color .15s ease}
+.course-ready .q-opt:hover{border-color:var(--accent)}
+.course-ready .q-opt.ok{border-color:#1a9e54;background:#eefaf2}
+.course-ready .q-opt.no{border-color:#cf5b4e;background:#fdf0ee}
+.course-ready .q-fb{display:block;margin-top:8px;font-size:13px;line-height:1.6;color:var(--soft)}
+.course-ready .q-fb[hidden]{display:none}
