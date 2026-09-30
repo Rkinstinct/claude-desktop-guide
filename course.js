@@ -69,7 +69,7 @@
   chapters.forEach(x=>x.classList.toggle('current',x===c?.article));
   if(c){prepare(c);active=c;top.innerHTML='';const eyebrow=document.createElement('div');eyebrow.className='eyebrow';eyebrow.textContent=`פרק ${c.number} · לומדים צעד אחר צעד`;
    const heading=document.createElement('h2');heading.textContent=c.title;top.append(eyebrow,heading);
-   mainCol.append(top,status,c.article,shell);showStep(0,false);
+   c.article.before(layout);mainCol.append(top,status,c.article,shell);showStep(0,false);
   }else active=null;
   window.scrollTo({top:0,behavior:'instant'});
  }
