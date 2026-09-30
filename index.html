@@ -781,6 +781,30 @@ footer .heart{color:var(--coral)}
  <div class="video-box"><video controls preload="none"><source src="https://github.com/Rkinstinct/claude-desktop-guide/releases/download/videos-v1/ch14-slash-commands-v3.mp4" type="video/mp4"></video></div>
  <div class="video-cap">סרטון דמו 14 - פקודות סלאש (~שתי דקות וחצי)</div>
  <div class="srcs">מקור: <a href="https://support.claude.com/en/articles/14553413-claude-code-cheatsheet">Claude Code cheatsheet</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">הסשן התארך ואתם רוצים לדחוס את הקונטקסט בלי לאבד את מה שחשוב. מה עושים?</p>
+   <button type="button" class="q-opt">כותבים בשיחה "בבקשה תסכם את כל מה שעשינו"<span class="q-fb" hidden>בקשה רגילה מייצרת סיכום כטקסט, אבל לא מפנה את חלון ההקשר - ההיסטוריה המלאה עדיין שם. דחיסה היא פעולה על הסשן, לא בקשה למודל.</span></button>
+   <button type="button" class="q-opt" data-ok="1">/compact - פקודת סשן שדוחסת את הקונטקסט ומפנה מקום<span class="q-fb" hidden>נכון. כל מה שמתחיל ב-/ הוא פעולה על הסשן עצמו. compact דוחס ושומר את החשוב, ואפשר גם עם הוראות מיקוד.</span></button>
+   <button type="button" class="q-opt">/clear - ניקוי ואז ממשיכים מאותה נקודה<span class="q-fb" hidden>clear מוחק את כל ההיסטוריה - אי אפשר להמשיך "מאותה נקודה" אחריו. לדחיסה ששומרת את החשוב משתמשים ב-compact.</span></button>
+   <button type="button" class="q-opt">פותחים סשן חדש ומסבירים לו את כל הרקע מחדש<span class="q-fb" hidden>קיצור שעובד אבל ידני ומסורבל: אתם כותבים מחדש את מה ש-compact שומר אוטומטית.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">לצוות שלכם יש תהליך "בדיקות לפני merge" שכל אחד מריץ קצת אחרת. איך הופכים אותו לפעולה אחידה שכולם מריצים?</p>
+   <button type="button" class="q-opt">לשלוח את הצ'ק-ליסט בערוץ הצוות ולבקש שיעקבו<span class="q-fb" hidden>הודעה בערוץ נשכחת וכל אחד מפרש אותה אחרת. התהליך צריך לחיות אצל קלוד, לא בזיכרון של הצוות.</span></button>
+   <button type="button" class="q-opt">כל אחד יכתוב לעצמו פרומפט אישי לבדיקות<span class="q-fb" hidden>קיצור שמנציח את הבעיה: חמש גרסאות שונות לאותו תהליך. המטרה היא אחידות, לא personalization.</span></button>
+   <button type="button" class="q-opt">זה לא אפשרי - פקודות סלאש הן רק מובנות<span class="q-fb" hidden>בלבול: סקיל שהצוות מגדיר ב-.claude/skills הופך אוטומטית לפקודה עם השם שלו. פקודות מותאמות הן פיצ'ר, לא מגבלה.</span></button>
+   <button type="button" class="q-opt" data-ok="1">מגדירים סקיל ב-.claude/skills בפרויקט - הוא הופך לפקודת סלאש שכולם מריצים אותה אותו דבר<span class="q-fb" hidden>נכון. הסקיל חי בגיט עם הפרויקט, וכל חבר צוות מקבל את אותה פקודה עם אותן בדיקות.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">אתם באמצע סשן ורוצים לבחון שני כיווני פיתוח שונים מאותה נקודה, בלי לאבד אף אחד מהם. איזו פקודה מתאימה?</p>
+   <button type="button" class="q-opt">/rewind - חוזרים אחורה ומנסים כיוון אחר<span class="q-fb" hidden>rewind מחזיר לנקודה קודמת, אבל משאיר סשן אחד: ניסית כיוון אחד, חזרת, ניסית אחר. אין שני כיוונים חיים במקביל.</span></button>
+   <button type="button" class="q-opt">/compact פעמיים - פעם לכל כיוון<span class="q-fb" hidden>compact דוחס קונטקסט, הוא לא מפצל סשנים. זו פקודה לצורך אחר לגמרי.</span></button>
+   <button type="button" class="q-opt" data-ok="1">/fork - פיצול הסשן לשניים מאותה נקודה, ובחינת שני הכיוונים במקביל<span class="q-fb" hidden>נכון. fork משכפל את הסשן מהנקודה הנוכחית - כל ענף ממשיך לכיוון אחר, ושניהם זמינים להשוואה.</span></button>
+   <button type="button" class="q-opt">שני סשנים חדשים, ובכל אחד מסבירים את הרקע מההתחלה<span class="q-fb" hidden>קיצור שזורק את כל ההקשר שהצטבר עד הנקודה הזו. fork שומר אותו בשני הענפים.</span></button>
+  </div>
+ </div>
 </article>
 
 
