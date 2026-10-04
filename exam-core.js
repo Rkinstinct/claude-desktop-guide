@@ -1,6 +1,6 @@
 /* Shared by exam.html and exam-admin.html. No network, no storage of personal data. */
 window.EXAM_CONFIG={
- version:2,
+ version:3,
  passMark:70,        // Part A/B composite needed to pass
  advancedMark:85,    // composite at or above this = advanced
  perChapter:2,       // questions drawn from each chapter's pool
@@ -46,7 +46,9 @@ window.EXAM_CONFIG={
   const bestCat=CATS.slice().sort((a,b)=>(byCat[b].r-byCat[b].c)/byCat[b].r-(byCat[a].r-byCat[a].c)/byCat[a].r)[0];
   const mt=Array(12).fill(0);rows.forEach(x=>mt[+x.date.slice(5,7)-1]+=x.revenue);
   let worst=1,wd=Infinity;for(let m=1;m<12;m++){const d=mt[m]-mt[m-1];if(d<wd){wd=d;worst=m}}
-  const br=brand(id);return {region:reg,q3,bestCat,worstMonth:MONTHS[worst],brandName:br.name,brandColor:br.color};
+  const tr=rows.reduce((a,x)=>a+x.revenue,0),tc=rows.reduce((a,x)=>a+x.cost,0),margin=Math.round((tr-tc)/tr*1000)/10;
+  const byReg={};rows.forEach(x=>byReg[x.region]=(byReg[x.region]||0)+x.revenue);const topRegion=REGIONS.slice().sort((a,b)=>byReg[b]-byReg[a])[0];
+  const br=brand(id);return {region:reg,q3,bestCat,worstMonth:MONTHS[worst],margin,topRegion,brandName:br.name,brandColor:br.color};
  }
  const FOLD={region:'region'};
  // Part A: choose perChapter questions per chapter, deterministic from the id so the admin can rebuild the paper.
@@ -66,61 +68,51 @@ window.EXAM_CONFIG={
  }
  function h(s){return h53(String(s)).slice(0,10)}
  function hexes(t){return new Set((t.match(/#[0-9a-fA-F]{6}\b/g)||[]).map(x=>x.toLowerCase()))}
- // Heuristic structure check, runs in the examinee's browser and again in the admin page on the same files.
+ // Structure check for a Power BI submission. Runs in the examinee's browser and again in the admin page on the same files.
+ // files: [{name,text}] (theme JSON, optionally PBIR report files). shots: hashes of the screenshots.
  function analyze(files,id){
-  const br=brand(id),svg=logoSvg(id),b64=btoa(svg).slice(0,100),uri=encodeURIComponent(svg).slice(0,100);
-  const docs=files.filter(f=>/\.html?$/i.test(f.name)),use=docs.length?docs:files;
-  const hasLogo=t=>t.includes(br.sigD)||t.includes(b64)||t.includes(uri)||t.includes('logo-'+id+'.svg');
-  const logo=use.length>0&&use.every(f=>hasLogo(f.text));
-  let pages=use.length,nav=false;
-  if(use.length>=2){
-   const names=use.map(f=>f.name.split(/[\\/]/).pop());
-   nav=use.every((f,i)=>names.some((n,j)=>j!==i&&f.text.includes(n)));
-  }else if(use.length===1){
-   const t=use[0].text,anch=new Set((t.match(/href=["']#([^"'\s]+)["']/g)||[]).map(x=>x.slice(7,-1))),
-     ids=[...anch].filter(a=>a&&t.includes('id="'+a+'"')||t.includes("id='"+a+"'")),
-     dv=new Set((t.match(/data-(?:page|view|tab|target)=["']([^"']+)["']/g)||[])),
-     tp=(t.match(/role=["']tabpanel["']/g)||[]).length;
-   pages=Math.max(ids.length,dv.size,tp,/useState|setPage|setTab|setView/.test(t)&&/(page|tab|view)/i.test(t)?2:0);
-   nav=ids.length>=2||dv.size>=2||/role=["']tab["']/.test(t)||(/onClick=\{[^}]*(setPage|setTab|setView|setActive)/.test(t));
+  const br=brand(id),col=br.color.toLowerCase();
+  let th=false,thFont='',thName='';
+  for(const f of files){let j;try{j=JSON.parse(f.text.replace(/^\ufeff/,''))}catch(e){continue}
+   if(j&&Array.isArray(j.dataColors)){thName=String(j.name||'');thFont=((f.text.match(/"fontFace"\s*:\s*"([^"]+)"/)||[])[1]||'');
+    if(String(j.dataColors[0]).toLowerCase()===col)th=true;break}}
+  const pb=files.filter(f=>/(^|[\\/])(page|pages|report|visual)\.json$/i.test(f.name)||/pageNavigator|PageNavigation/.test(f.text));
+  let pg=0,nv=false,lg=false;
+  if(pb.length){
+   const pf=pb.filter(f=>/(^|[\\/])page\.json$/i.test(f.name)).length;
+   let po=0;pb.forEach(f=>{if(/pages\.json$/i.test(f.name)){try{po=Math.max(po,(JSON.parse(f.text).pageOrder||[]).length)}catch(e){}}});
+   pg=Math.max(pf,po);
+   nv=pb.some(f=>/pageNavigator|PageNavigation/.test(f.text));
+   lg=pb.some(f=>/"visualType"\s*:\s*"image"/.test(f.text)||/logo/i.test(f.text));
   }
-  let cons=false;
-  const col=br.color.toLowerCase();
-  if(use.length>=2){
-   const hs=use.map(f=>hexes(f.text)),inter=[...hs[0]].filter(x=>hs.every(s=>s.has(x))).length,uni=new Set(hs.flatMap(s=>[...s])).size||1;
-   const ff=use.map(f=>((f.text.match(/font-family:\s*([^;}{]+)/i)||[])[1]||'').split(',')[0].trim().toLowerCase());
-   const sheets=use.map(f=>(f.text.match(/<link[^>]+rel=["']stylesheet["'][^>]*href=["']([^"']+)["']/gi)||[]).join('|'));
-   const sharedSheet=sheets[0]&&sheets.every(x=>x===sheets[0]);
-   cons=use.every(f=>f.text.toLowerCase().includes(col))&&(sharedSheet||inter/uni>=0.6)&&ff.every(x=>x===ff[0]);
-  }else if(use.length===1){cons=use[0].text.toLowerCase().includes(col)&&pages>=2}
-  return {n:use.length,logo,pages,nav,cons,hs:use.map(f=>h(f.text))};
+  return {n:files.length,th,thFont,thName,pbir:pb.length>0,pg,nv,lg,hs:files.map(f=>h(f.text))};
  }
  function scoreB(id,b){
   const ex=checks(id,dataset(id)),res=[],v=b.v||[];
   res.push(Math.round(+v[0])===ex.q3);
   res.push(v[1]===ex.bestCat);
   res.push(v[2]===ex.worstMonth);
-  res.push(String(v[3]||'').trim().toLowerCase()===ex.brandName.toLowerCase());
-  res.push(String(v[4]||'').trim().toLowerCase().replace(/^#?/,'#')===ex.brandColor.toLowerCase());
+  res.push(Math.abs(parseFloat(String(v[3]).replace(',','.').replace('%',''))-ex.margin)<=0.15);
+  res.push(v[4]===ex.topRegion);
   const a=(b.f&&b.f.a)||{};
-  res.push(!!a.logo);res.push(!!(a.pages>=2&&a.nav));res.push(!!a.cons);
+  res.push(!!a.th);
   const ok=res.filter(Boolean).length;
-  return {res,ok,total:8,pct:Math.round(ok/8*100),expected:ex};
+  return {res,ok,total:6,pct:Math.round(ok/6*100),expected:ex};
  }
 
  // Part C: agent-building scenarios. Tools are auto-checked; the free text is for human review.
  const TOOLS=['Read','Grep','Glob','Edit','Write','Bash','WebFetch'];
  const SCEN=[
-  {id:'docs',title:'docs-auditor: בודק תיעוד',brief:'צוות הפיתוח רוצה סוכן שעובר על ה-README והמדריכים של הפרויקט ומחזיר רשימה של פקודות והוראות שהתיישנו. הוא לעולם לא משנה קבצים.',allow:['Read','Grep','Glob'],deny:['Edit','Write','Bash','WebFetch']},
-  {id:'pr',title:'pr-reviewer: סוקר שינויים לפני merge',brief:'רוצים סוכן שסוקר את השינויים לפני merge: מוצא באגים, בעיות אבטחה וחוסר בבדיקות, ומחזיר סיכום קצר עם חומרה לכל ממצא. הוא עובד בקונטקסט נקי ומחזיר לשיחה רק את התוצאה.',allow:['Read','Grep','Glob','Bash'],deny:['Edit','Write','WebFetch']},
-  {id:'log',title:'log-triager: מיון לוגים',brief:'יש קבצי לוג של מאות מגה. רוצים סוכן שסורק אותם ומחזיר חמש שורות: מה נכשל, מתי, ומה ההמלצה הראשונה. הוא לא אמור לגעת בקבצים או לצאת לאינטרנט.',allow:['Read','Grep','Glob'],deny:['Edit','Write','WebFetch']}
+  {id:'design',title:'design-reviewer: בודק עיצוב ואחידות',brief:'צוות השיווק בונה אתר ממספר עמודי HTML ו-CSS. רוצים סוכן שעובר על העמודים ומחזיר רשימה של סטיות מהעיצוב: צבעים, פונטים ומרווחים שלא תואמים למדריך המותג. הוא רק מדווח ולעולם לא משנה קבצים.',allow:['Read','Grep','Glob'],deny:['Edit','Write','Bash','WebFetch']},
+  {id:'landing',title:'landing-builder: בונה דפי נחיתה',brief:'רוצים סוכן שמקבל בריף קצר (מוצר, קהל, הצעה) ובונה דף נחיתה: קובץ HTML וקובץ CSS בתיקיית האתר, בהתאם לצבעים ולפונט שכבר קיימים באתר. הוא לא מריץ פקודות ולא יוצא לאינטרנט.',allow:['Read','Glob','Write','Edit'],deny:['Bash','WebFetch','Grep']},
+  {id:'a11y',title:'copy-and-a11y-checker: בודק טקסט ונגישות',brief:'לפני עלייה לאוויר רוצים סוכן שעובר על עמודי האתר ומחזיר רשימה קצרה: שגיאות כתיב וניסוח, תמונות בלי טקסט חלופי, ותקלות בסדר הכותרות. הוא רק מדווח ולא נוגע בקבצים.',allow:['Read','Grep','Glob'],deny:['Edit','Write','Bash','WebFetch']}
  ];
  const CQ=[
   {q:'איך תכתבו את התיאור (description) כך שקלוד יפעיל את הסוכן בזמן הנכון?',r:'תיאור שמפרט מתי להפעיל (טריגר) ולא רק שם כללי',kw:['מתי','כאשר','כש','טריגר','description','תיאור']},
   {q:'אילו הוראות תכתבו לסוכן? (תפקיד, קלט, פורמט פלט)',r:'תפקיד ממוקד, מה הוא מקבל, ופורמט פלט ברור וקצר',kw:['תפקיד','פורמט','פלט','קלט','הוראות','שורות']},
   {q:'אילו כלים תאפשרו ולמה, ואילו תחסמו?',r:'הגבלת כלים כשכבת הרשאות אמיתית (least privilege), עם נימוק',kw:['Read','Grep','tools','כלים','הרשאות','חסום','Edit']},
-  {q:'איפה תשמרו אותו, ואיך הוא יפעל מול הקונטקסט של השיחה הראשית?',r:'.claude/agents/ בפרויקט (משותף בגיט) או ~/.claude/agents/; קונטקסט נקי משלו, מחזיר רק תוצאה',kw:['.claude/agents','agents','גיט','קונטקסט','נקי','סיכום','תוצאה']},
-  {q:'איך תבדקו שהוא עובד ושלא חורג מהגבולות?',r:'ניסוי על דוגמה אמיתית, בדיקה שלא נערכו קבצים, כוונון התיאור, וקריאת קובץ הסוכן לפני שימוש',kw:['בדיק','ניסוי','דוגמה','כוונ','לקרוא','קראתי','git']}
+  {q:'איפה תשמרו אותו, ואיך הוא יפעל מול הקונטקסט של השיחה הראשית?',r:'.claude/agents/ בפרויקט (משותף לצוות) או ~/.claude/agents/ (אישי); קונטקסט נקי משלו, מחזיר רק תוצאה',kw:['.claude/agents','agents','צוות','קונטקסט','נקי','סיכום','תוצאה']},
+  {q:'איך תבדקו שהוא עובד ושלא חורג מהגבולות?',r:'ניסוי על דוגמה אמיתית (למשל עמוד אחד), בדיקה שלא נערכו קבצים, כוונון התיאור, וקריאת קובץ הסוכן לפני שימוש',kw:['בדיק','ניסוי','דוגמה','כוונ','לקרוא','קראתי']}
  ];
  function scenario(id){return SCEN[seedNum('c:'+id)%SCEN.length]}
  function scoreC(id,c){

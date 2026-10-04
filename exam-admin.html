@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>מנהל המבחן: פענוח קודי תוצאה</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="exam.css?v=2">
+<link rel="stylesheet" href="exam.css?v=3">
 <style>
 .wrap.wide{max-width:1100px}
 .tbl{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
@@ -30,11 +30,11 @@
  <textarea id="codes" class="code" rows="6" dir="ltr" placeholder="EX1...." style="background:#fff;color:#141413;border:1px solid #d9d2c5"></textarea>
  <div class="nav" style="margin-top:10px"><button id="go" class="btn">פענוח</button><button id="csv" class="btn ghost" disabled>ייצוא ל-CSV</button></div>
  <div id="stats" class="stats" hidden></div>
- <div class="tw"><table class="tbl" id="tbl" hidden><thead><tr><th>שם</th><th>תאריך</th><th>חלק א׳</th><th>חלק ב׳ (מתוך 8)</th><th>זמן ב׳</th><th>ציון</th><th>רמה</th><th>מסלול</th><th>תקינות</th></tr></thead><tbody></tbody></table></div>
+ <div class="tw"><table class="tbl" id="tbl" hidden><thead><tr><th>שם</th><th>תאריך</th><th>חלק א׳</th><th>חלק ב׳ (מתוך 6)</th><th>זמן ב׳</th><th>ציון</th><th>רמה</th><th>מסלול</th><th>תקינות</th></tr></thead><tbody></tbody></table></div>
  <p class="muted">"תקינות" בודקת שהקוד לא נחתך או שונה בהעתקה. זו לא חתימה: בלי שרת אי אפשר להוכיח שהזמן לא נערך. תשובות הנתונים והמותג בחלק ב׳ נבדקות מול הנתונים של אותו נבחן, כך שאי אפשר להעתיק מאחר. בדיקות הלוגו, העמודים והניווט הן בדיקה גסה שרצה אצל הנבחן: בקשו ממנו את הקבצים ואמתו אותם בלחיצה על שורתו. חלק ג׳ לא נבדק אוטומטית, חוץ מבחירת הכלים.</p>
 </main>
-<script src="exam-data.js?v=2"></script>
-<script src="exam-core.js?v=2"></script>
+<script src="exam-data.js?v=3"></script>
+<script src="exam-core.js?v=3"></script>
 <script>
 (()=>{
  const E=ExamCore,C=EXAM_CONFIG,$=id=>document.getElementById(id);
@@ -54,7 +54,7 @@
   rows.forEach((r,i)=>{
    const tr=document.createElement('tr');tr.className='row';
    const cls=r.lv.level==='מתקדם'?'t-adv':r.lv.level==='בינוני'?'t-mid':'t-beg';
-   const cells=[r.p.n,new Date(r.p.z).toLocaleDateString('he-IL'),r.sa.pct,r.sb.ok+'/8',fmt(r.p.b.t),r.lv.total];
+   const cells=[r.p.n,new Date(r.p.z).toLocaleDateString('he-IL'),r.sa.pct,r.sb.ok+'/6',fmt(r.p.b.t),r.lv.total];
    cells.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});
    let td=document.createElement('td');td.innerHTML='<span class="tag '+cls+'"></span>';td.firstChild.textContent=r.lv.level;tr.append(td);
    td=document.createElement('td');td.textContent=TR[r.p.b.k]||r.p.b.k;tr.append(td);
@@ -71,15 +71,20 @@
    L('הכנסות רבעון 3, '+ex.region,'ענה '+v[0]+', נכון '+ex.q3+mk(0));
    L('קטגוריה עם הרווח הגולמי הגבוה','ענה '+v[1]+', נכון '+ex.bestCat+mk(1));
    L('ירידה חודשית חדה','ענה '+v[2]+', נכון '+ex.worstMonth+mk(2));
-   L('שם החברה בלוגו','ענה '+v[3]+', נכון '+ex.brandName+mk(3));
-   L('צבע המותג','ענה '+v[4]+', נכון '+ex.brandColor+mk(4));
-   H('חלק ב׳: בדיקת קבצים (דיווח הדפדפן של הנבחן, לא מאומת)');
-   L('לוגו בכל עמוד',(fa.logo?'כן':'לא')+mk(5));L('עמודים / ניווט',(fa.pages||0)+' עמודים, ניווט '+(fa.nav?'כן':'לא')+mk(6));L('מראה אחיד',(fa.cons?'כן':'לא')+mk(7));
-   L('קבצים שהועלו',(fa.n||0)+' (חתימות: '+((fa.hs||[]).join(', ')||'-')+')');
-   const vf=document.createElement('div');vf.className='card';vf.style.margin='8px 0';vf.innerHTML='<b>אימות הקבצים:</b> בקשו מהנבחן את קובצי ה-HTML וגררו אותם לכאן. הכלי מריץ את אותה בדיקה ומשווה לחתימות. <input type="file" multiple accept=".html,.htm,.txt" style="display:block;margin-top:6px"><div class="vres muted"></div>';
-   vf.querySelector('input').onchange=async e=>{const fl=await Promise.all([...e.target.files].map(f=>new Promise(res=>{const fr=new FileReader();fr.onload=()=>res({name:f.name,text:String(fr.result)});fr.readAsText(f)})));
-    const a=E.analyze(fl,r.p.id),same=JSON.stringify(a.hs.slice().sort())===JSON.stringify((fa.hs||[]).slice().sort());
-    vf.querySelector('.vres').textContent='לוגו: '+(a.logo?'כן':'לא')+' | עמודים: '+a.pages+' | ניווט: '+(a.nav?'כן':'לא')+' | אחידות: '+(a.cons?'כן':'לא')+' | הקבצים זהים לאלה שנבדקו אצל הנבחן: '+(same?'כן':'לא (נערכו, או קבצים אחרים)');};
+   L('אחוז רווח גולמי כולל','ענה '+v[3]+', נכון '+ex.margin+mk(3));
+   L('האזור עם ההכנסות הגבוהות','ענה '+v[4]+', נכון '+ex.topRegion+mk(4));
+   H('חלק ב׳: קבצים (דיווח הדפדפן של הנבחן, לא מאומת)');
+   L('ערכת נושא: צבע המותג ראשון ב-dataColors ('+ex.brandColor+')',(fa.th?'כן':'לא')+mk(5));
+   L('קובצי דוח PBIP (אם צורפו, לא נכנס לציון)',fa.pg||fa.nv||fa.lg?(fa.pg||0)+' עמודים, ניווט '+(fa.nv?'כן':'לא')+', לוגו '+(fa.lg?'כן':'לא'):'לא צורפו');
+   L('קבצים שנבדקו',(fa.n||0)+' (חתימות: '+((fa.hs||[]).join(', ')||'-')+')');L('צילומי מסך שדווחו',(fa.sh||[]).length+' (חתימות: '+((fa.sh||[]).join(', ')||'-')+')');
+   L('נוסחת DAX שהודבקה',r.p.b.dax||'-');
+   const vf=document.createElement('div');vf.className='card';vf.style.margin='8px 0';vf.innerHTML='<b>הבדיקה העינית שלכם:</b> בקשו מהנבחן את צילומי המסך וגררו אותם לכאן: הם יוצגו, וייבדק שהם אותם קבצים שהנבחן דיווח עליהם. בדקו בעצמכם: שני עמודים, הלוגו בכל עמוד, כפתורי ניווט, מראה אחיד. אפשר גם לגרור את ערכת הנושא (JSON) לבדיקה חוזרת.<input type="file" multiple accept="image/*,.json,.txt" style="display:block;margin-top:6px"><div class="vres muted"></div><div class="vimgs" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"></div>';
+   vf.querySelector('input').onchange=async e=>{const all=[...e.target.files],im=all.filter(f=>f.type.startsWith('image/')),tx=all.filter(f=>!f.type.startsWith('image/'));
+    const fl=await Promise.all(tx.map(f=>new Promise(res=>{const fr=new FileReader();fr.onload=()=>res({name:f.name,text:String(fr.result)});fr.readAsText(f)})));
+    const sh=await Promise.all(im.map(async f=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',await f.arrayBuffer()))].slice(0,5).map(x=>x.toString(16).padStart(2,'0')).join('')));
+    const a=E.analyze(fl,r.p.id),sameS=sh.length>0&&JSON.stringify(sh.slice().sort())===JSON.stringify((fa.sh||[]).slice().sort()),sameF=!fl.length||JSON.stringify(a.hs.slice().sort())===JSON.stringify((fa.hs||[]).slice().sort());
+    vf.querySelector('.vres').textContent=(fl.length?'ערכת נושא עם צבע המותג: '+(a.th?'כן':'לא')+' | ':'')+'צילומים: '+sh.length+' | זהים למה שדווח: '+(im.length?(sameS?'כן':'לא'):'לא נבדק')+(fl.length?' | קבצי JSON זהים: '+(sameF?'כן':'לא'):'');
+    const box=vf.querySelector('.vimgs');box.innerHTML='';im.forEach(f=>{const i=document.createElement('img');i.src=URL.createObjectURL(f);i.style.cssText='max-width:100%;width:420px;border:1px solid #ccc;border-radius:8px';box.append(i)})};
    dd.append(vf);
    L('מה ביקש מ-Claude',r.p.b.note||'-');
    if(r.p.c){const sc=E.scoreC(r.p.id,r.p.c);H('חלק ג׳: בניית סוכן - '+sc.sc.title);
@@ -102,8 +107,8 @@
  }
  $('csv').onclick=()=>{
   const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const head=['name','email','date','partA_pct','partB_correct_of_8','partB_seconds','total','level','track','integrity','note','agent_tools_ok','agent_answers'];
-  const lines=rows.map(r=>[r.p.n,r.p.e,r.p.z,r.sa.pct,r.sb.ok,r.p.b.t,r.lv.total,r.lv.level,r.p.b.k,r.ok?'ok':'changed',r.p.b.note,r.p.c?(E.scoreC(r.p.id,r.p.c).toolsOk?'ok':'no'):'',r.p.c?(r.p.c.a||[]).join(' | '):''].map(q).join(','));
+  const head=['name','email','date','partA_pct','partB_correct_of_6','partB_seconds','total','level','track','integrity','note','agent_tools_ok','agent_answers'];
+  const lines=rows.map(r=>[r.p.n,r.p.e,r.p.z,r.sa.pct,r.sb.ok,r.p.b.t,r.lv.total,r.lv.level,r.p.b.k,r.ok?'ok':'changed',r.p.b.note,r.p.b.dax,r.p.c?(E.scoreC(r.p.id,r.p.c).toolsOk?'ok':'no'):'',r.p.c?(r.p.c.a||[]).join(' | '):''].map(q).join(','));
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+head.join(',')+'\n'+lines.join('\n')],{type:'text/csv;charset=utf-8'}));a.download='exam-results.csv';document.body.append(a);a.click();a.remove();
  };
 })();

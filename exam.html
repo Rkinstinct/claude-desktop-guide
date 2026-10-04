@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="exam.css?v=2">
+<link rel="stylesheet" href="exam.css?v=3">
 </head>
 <body>
 <div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><a class="back" href="index.html">← למדריך</a></div></div>
@@ -18,10 +18,10 @@
 <section id="s-start" class="screen">
  <span class="pill">מבחן מסכם, רמה גבוהה</span>
  <h1>כמה אתם באמת שולטים ב-Claude בארגון?</h1>
- <p class="lead">שלושה חלקים מעשיים: 40 שאלות תרחיש שבוחנות מה הייתם עושים בפועל, בניית דשבורד בן שני עמודים מנתונים שתקבלו (כשהשעון רץ), והסבר איך הייתם בונים סוכן.</p>
+ <p class="lead">שלושה חלקים מעשיים: 40 שאלות תרחיש שבוחנות מה הייתם עושים בפועל, בניית דוח Power BI בן שני עמודים מנתונים שתקבלו (כשהשעון רץ), והסבר איך הייתם בונים סוכן.</p>
  <div class="facts">
   <div><b>חלק א׳</b><span>40 שאלות תרחיש: פקודות, הגדרות, באגים, החלטות</span></div>
-  <div><b>חלק ב׳</b><span>דשבורד של 2 עמודים עם לוגו, זמן יעד 60 דקות</span></div>
+  <div><b>חלק ב׳</b><span>דוח Power BI של 2 עמודים עם לוגו, זמן יעד 60 דקות</span></div>
   <div><b>חלק ג׳</b><span>איך בונים סוכן: 5 תשובות קצרות</span></div>
  </div>
  <form id="f-start" class="card" autocomplete="off">
@@ -45,25 +45,27 @@
 
 <section id="s-bintro" class="screen" hidden>
  <span class="pill">חלק ב׳: משימה מעשית</span>
- <h1>בונים דשבורד של שני עמודים</h1>
- <p class="lead">סיימתם את חלק א׳. השעון של חלק ב׳ מתחיל כשתלחצו על הכפתור למטה, ואז יורדים אליכם שני קבצים אישיים: נתוני מכירות ולוגו של החברה.</p>
+ <h1>בונים דוח Power BI של שני עמודים</h1>
+ <p class="lead">סיימתם את חלק א׳. השעון של חלק ב׳ מתחיל כשתלחצו על הכפתור למטה, ואז יורדים אליכם קבצים אישיים: נתוני מכירות (CSV) ולוגו של החברה (SVG ו-PNG).</p>
  <div class="card">
   <h3>המשימה</h3>
-  <p>בנו באמצעות Claude דשבורד של חברה אחת, בשני עמודים:</p>
+  <p>בנו ב-Power BI Desktop, בעזרת Claude, דוח של חברה אחת בשני עמודי דוח:</p>
   <ul>
-   <li><b>עמוד 1, סקירה:</b> סך הכנסות, אחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות), מגמה חודשית והכנסות לפי אזור</li>
-   <li><b>עמוד 2, קטגוריות:</b> הכנסות ואחוז רווח גולמי לכל קטגוריה, עם סינון לפי אזור</li>
-   <li><b>לוגו:</b> הלוגו שקיבלתם מופיע בראש כל עמוד</li>
-   <li><b>ניווט:</b> תפריט שמעביר בין העמודים ומראה באיזה עמוד אתם נמצאים</li>
-   <li><b>אחידות:</b> אותם צבעים (צבע המותג מהלוגו), אותו פונט ואותה כותרת בשני העמודים</li>
+   <li><b>מודל:</b> טוענים את ה-CSV, ויוצרים מדדי DAX: סך הכנסות, אחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות) והכנסות לרבעון</li>
+   <li><b>עמוד 1, סקירה:</b> כרטיסי KPI, מגמה חודשית והכנסות לפי אזור</li>
+   <li><b>עמוד 2, קטגוריות:</b> הכנסות ואחוז רווח גולמי לפי קטגוריה, עם סלייסר לאזור</li>
+   <li><b>לוגו:</b> הלוגו שקיבלתם בראש כל עמוד</li>
+   <li><b>ניווט:</b> כפתורי ניווט (Page navigation) בין העמודים, שמראים באיזה עמוד אתם נמצאים</li>
+   <li><b>אחידות:</b> ערכת נושא (Theme JSON) אחת שצבע המותג מהלוגו הוא הצבע הראשון בה, אותו פונט, אותו מיקום לוגו וניווט בשני העמודים</li>
   </ul>
-  <p>אפשר לבנות קובץ HTML אחד עם שני עמודים, או שני קבצי HTML. בסוף מעלים את הקבצים לבדיקה אוטומטית ראשונית בדפדפן שלכם (הקבצים לא נשלחים לשום מקום), ועונים על חמש שאלות מהנתונים.</p>
+  <p>איך Claude עוזר: מבקשים ממנו לנסח את מדדי ה-DAX, לכתוב את קובץ ערכת הנושא, ולתכנן את פריסת העמודים. מי שעובד עם פרויקט PBIP (פורמט תיקיות של Power BI) יכול לתת ל-Claude Code לערוך ישירות את קובצי TMDL ואת הגדרות הדוח.</p>
+  <p>בסוף מעלים צילומי מסך של כל עמוד, את קובץ ערכת הנושא, ועונים על חמש שאלות מהנתונים. שום קובץ לא נשלח לשום מקום, ואין צורך להעלות קובץ pbix.</p>
  </div>
  <div class="card">
   <h3>באיזה מסלול אתם עובדים?</h3>
-  <label class="radio"><input type="radio" name="track" value="chat" checked><span><b>Chat</b> - מצרפים את ה-CSV והלוגו, מבקשים ארטיפקט, ושומרים את הקוד כקובץ HTML</span></label>
-  <label class="radio"><input type="radio" name="track" value="code"><span><b>Claude Code</b> - מניחים את הקבצים בתיקייה ובונים קבצי HTML</span></label>
-  <label class="radio"><input type="radio" name="track" value="mcp"><span><b>MCP (לא חובה)</b> - מחברים שרת MCP לקבצים וקוראים את הנתונים דרכו. רק למי שיש לו את זה בסביבה</span></label>
+  <label class="radio"><input type="radio" name="track" value="chat" checked><span><b>Chat</b> - מצרפים את ה-CSV והלוגו, מבקשים מ-Claude מדדי DAX, ערכת נושא ופריסה, ובונים ב-Power BI Desktop</span></label>
+  <label class="radio"><input type="radio" name="track" value="code"><span><b>Claude Code</b> - פרויקט PBIP בתיקייה: Claude עורך את קובצי TMDL ואת קובצי הדוח</span></label>
+  <label class="radio"><input type="radio" name="track" value="mcp"><span><b>MCP (לא חובה)</b> - חיבור שרת MCP שהארגון מאשר למודל הנתונים. רק למי שיש לו את זה בסביבה</span></label>
  </div>
  <button id="b-start" class="btn big" type="button">הורדת הקבצים והתחלת השעון</button>
 </section>
@@ -71,19 +73,22 @@
 <section id="s-b" class="screen" hidden>
  <div class="prog"><div class="prog-top"><span>חלק ב׳ רץ</span><span id="b-time" class="big-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div><p class="hint">זמן יעד: 60 דקות. אפשר לעבור את הזמן, והוא פשוט נרשם.</p></div>
  <div class="card">
-  <p>הקבצים שלכם: <button id="b-dl" class="linkbtn" type="button">נתוני CSV</button> · <button id="b-dl2" class="linkbtn" type="button">לוגו SVG</button></p>
-  <p class="muted">עמוד סקירה, עמוד קטגוריות, לוגו בכל עמוד, ניווט, ומראה אחיד.</p>
+  <p>הקבצים שלכם: <button id="b-dl" class="linkbtn" type="button">נתוני CSV</button> · <button id="b-dl2" class="linkbtn" type="button">לוגו SVG</button> · <button id="b-dl3" class="linkbtn" type="button">לוגו PNG</button></p>
+  <p class="muted">שני עמודי דוח, לוגו בכל עמוד, כפתורי ניווט, וערכת נושא אחידה.</p>
  </div>
  <form id="f-b" class="card" autocomplete="off">
-  <h3>1. הקבצים של הדשבורד</h3>
-  <label>בחרו את קובצי ה-HTML (אחד או שניים)<input id="b-files" type="file" accept=".html,.htm,.txt" multiple></label>
+  <h3>1. הקבצים</h3>
+  <label>צילומי מסך של שני העמודים (לפחות שניים)<input id="b-shots" type="file" accept="image/*" multiple></label>
+  <label>קובץ ערכת הנושא (Theme JSON)<input id="b-files" type="file" accept=".json,.txt" multiple></label>
+  <p class="muted">אופציונלי, למי שעובד עם PBIP: אפשר לצרף גם את קובצי JSON של הדוח (report.json, pages.json, page.json) באותו שדה.</p>
   <div id="b-find" class="finds muted">עוד לא נבחרו קבצים.</div>
-  <h3>2. תשובות מהנתונים</h3>
+  <h3>2. תשובות מהנתונים (DAX)</h3>
   <label><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>איזו קטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה?<select id="b-v2" required><option value="">בחרו</option></select></label>
   <label>באיזה חודש הייתה הירידה החדה ביותר בהכנסות לעומת החודש שלפניו?<select id="b-v3" required><option value="">בחרו</option></select></label>
-  <label>מה שם החברה שמופיע בלוגו?<input id="b-v4" required dir="ltr" maxlength="40"></label>
-  <label>מה צבע המותג בלוגו (קוד hex, למשל #1a2b3c)?<input id="b-v5" required dir="ltr" maxlength="9"></label>
+  <label>מה אחוז הרווח הגולמי הכולל של השנה? <small>(אחוזים עם ספרה אחת אחרי הנקודה, למשל 41.3)</small><input id="b-v4" inputmode="decimal" required dir="ltr" maxlength="7"></label>
+  <label>איזה אזור עם ההכנסות הגבוהות ביותר על פני השנה?<select id="b-v5" required><option value="">בחרו</option></select></label>
+  <label>הדביקו את נוסחת ה-DAX של אחוז הרווח הגולמי <small>(עד 300 תווים)</small><textarea id="b-dax" maxlength="300" rows="2" dir="ltr"></textarea></label>
   <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
   <button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button>
  </form>
@@ -123,8 +128,8 @@
  <div class="card"><h3>מה כדאי לחזור עליו</h3><div id="r-review"></div></div>
 </section>
 </main>
-<script src="exam-data.js?v=2"></script>
-<script src="exam-core.js?v=2"></script>
-<script src="exam.js?v=2"></script>
+<script src="exam-data.js?v=3"></script>
+<script src="exam-core.js?v=3"></script>
+<script src="exam.js?v=3"></script>
 </body>
 </html>
