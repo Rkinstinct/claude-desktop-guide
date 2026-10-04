@@ -1,9 +1,8 @@
 /* Public exam page code. No answers here: the key, the expected Part B answers and the scoring live only in the private admin file. */
 window.EXAM_CONFIG={
- version:4,
+ version:5,
  passMark:70,        // Part A/B composite needed to pass
  advancedMark:85,    // composite at or above this = advanced
- perChapter:2,       // questions drawn from each chapter's pool
  weightA:0.45, weightB:0.40, weightC:0.15,
  targetMinutesB:60,  // reference time shown to examinees and in the admin table
  // Later: set to a Cloudflare Worker URL and results are also POSTed there (see submitResult in exam.js).
@@ -42,15 +41,11 @@ window.EXAM_CONFIG={
 
  // What the Part B questions ask about. The expected answers are NOT here: they live in the admin file only.
  function spec(id){const r=seedNum('r:'+id)%4;return {region:REGIONS[r],ytdRegion:REGIONS[(r+1+seedNum('y:'+id)%3)%4],ytdMonth:5+seedNum('m:'+id)%6}}
- // Part A: choose perChapter questions per chapter, deterministic from the id so the admin can rebuild the paper.
- function paper(id){
-  const r=mulberry(seedNum('paper:'+id)),by={};
-  window.EXAM_BANK.forEach(q=>(by[q[1]]=by[q[1]]||[]).push(q));
-  const out=[];Object.keys(by).map(Number).sort((a,b)=>a-b).forEach(ch=>{
-   const a=by[ch].slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
-   out.push(...a.slice(0,C.perChapter))});
-  for(let i=out.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[out[i],out[j]]=[out[j],out[i]]}
-  return out;
+ // Part A: the order of the items is deterministic from the id, so the admin can rebuild what the examinee saw.
+ function paperA(id){
+  const r=mulberry(seedNum('paperA:'+id)),A=window.EXAM_A;
+  const sh=l=>{const a=l.map(x=>x.id);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+  return {cmds:sh(A.cmds),tools:sh(A.tools),writes:sh(A.writes)};
  }
 
  // Part C: agent-building scenarios (public part: titles, briefs, questions). Tool rules and the rubric are in the admin file.
@@ -80,5 +75,5 @@ window.EXAM_CONFIG={
   const checkOk=h53('x1'+m[1]).slice(0,8)===m[2];
   try{return {data:JSON.parse(unb64u(m[1])),checkOk}}catch(e){return {error:'הקוד פגום'}}
  }
- window.ExamCore={TOOLS,SCEN,CQ,scenario,spec,brand,logoSvg,h,REGIONS,CATS,MONTHS,dataset,csv,paper,encode,decode,mulberry,seedNum,h53};
+ window.ExamCore={TOOLS,SCEN,CQ,scenario,spec,brand,logoSvg,h,REGIONS,CATS,MONTHS,dataset,csv,paperA,encode,decode,mulberry,seedNum,h53};
 })();

@@ -1,5 +1,5 @@
 (()=>{
- const E=window.ExamCore,C=window.EXAM_CONFIG,KEY='claude-exam-v4';
+ const E=window.ExamCore,C=window.EXAM_CONFIG,KEY='claude-exam-v5';
  const $=id=>document.getElementById(id);
  let S=null,proj=null,shots=[];
  const load=()=>{try{return JSON.parse(sessionStorage.getItem(KEY))}catch(e){return null}};
@@ -12,29 +12,25 @@
   if(S&&S.phase==='a')$('a-time').textContent=fmt((Date.now()-S.tA0)/1000);
   if(S&&S.phase==='b'){const t=(Date.now()-S.tB0)/1000;$('b-time').textContent=fmt(t);$('b-bar').style.width=Math.min(100,t/(C.targetMinutesB*60)*100)+'%'}
  },500)};
- const order=(id,qid)=>{const r=E.mulberry(E.seedNum('o:'+id+qid)),a=[0,1,2,3];for(let i=3;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
- function fillStem(el,text){
-  el.textContent='';
-  text.split('```').forEach((part,i)=>{
-   if(i%2){const p=document.createElement('pre');p.textContent=part.replace(/^\n|\n$/g,'');el.append(p)}
-   else if(part.trim()){const s=document.createElement('span');s.className='tx';s.textContent=part.replace(/^\n|\n$/g,'');el.append(s)}
-  });
+ const A=window.EXAM_A,byId=l=>Object.fromEntries(l.map(x=>[x.id,x]));
+ function renderA(){
+  const P=E.paperA(S.id),d=S.da||(S.da={c:{},k:{},kr:{},w:{}});
+  const mk=(host,ids,list,fn)=>{const box=$(host);box.innerHTML='';ids.forEach((id,n)=>box.append(fn(byId(list)[id],n)))};
+  const sel=(opts,cur,on)=>{const s=document.createElement('select');s.required=true;if(opts[0].startsWith('/'))s.dir='ltr';s.innerHTML='<option value="">בחרו</option>'+opts.map((o,i)=>'<option value="'+i+'">'+o.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</option>').join('');if(cur!=null)s.value=String(cur);s.onchange=()=>on(s.value===''?null:+s.value);return s};
+  const ta=(max,rows,cur,on)=>{const t=document.createElement('textarea');t.maxLength=max;t.rows=rows;t.value=cur||'';t.oninput=()=>on(t.value);return t};
+  mk('a-cmds',P.cmds,A.cmds,(q,n)=>{const l=document.createElement('label');l.className='qa';l.dataset.k='c:'+q.id;l.append((n+1)+'. '+q.q);l.append(sel(A.cmdOpts,d.c[q.id],v=>{d.c[q.id]=v;save()}));return l});
+  mk('a-tools',P.tools,A.tools,(q,n)=>{const l=document.createElement('label');l.className='qa';l.dataset.k='k:'+q.id;l.append((n+1)+'. '+q.q);l.append(sel(A.toolOpts,d.k[q.id],v=>{d.k[q.id]=v;save()}));const w=ta(140,2,d.kr[q.id],v=>{d.kr[q.id]=v;save()});w.className='why';w.placeholder='למה? משפט אחד';l.append(w);return l});
+  mk('a-writes',P.writes,A.writes,(q,n)=>{const l=document.createElement('label');l.className='qa';l.dataset.k='w:'+q.id;l.append((n+1)+'. '+q.q);l.append(ta(320,5,d.w[q.id],v=>{d.w[q.id]=v;save()}));return l});
  }
- let picked=null;
- function renderQ(){
-  const p=E.paper(S.id),i=S.i,q=p[i];
-  $('a-count').textContent='שאלה '+(i+1)+' מתוך '+p.length;
-  $('a-bar').style.width=(i/p.length*100)+'%';
-  fillStem($('a-stem'),q[2]);
-  const box=$('a-opts');box.innerHTML='';picked=null;$('a-next').disabled=true;
-  $('a-next').textContent=i===p.length-1?'סיום חלק א׳':'הבא';
-  order(S.id,q[0]).forEach(oi=>{const b=document.createElement('button');b.type='button';b.className='opt';b.setAttribute('role','radio');b.setAttribute('aria-checked','false');b.textContent=q[3][oi];
-   b.onclick=()=>{picked=oi;box.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-checked','false'));b.setAttribute('aria-checked','true');$('a-next').disabled=false};box.append(b)});
- }
- function answer(v){
-  S.r[S.i]=v;S.i++;
-  if(S.i>=E.paper(S.id).length){S.tAsec=Math.round((Date.now()-S.tA0)/1000);S.phase='bintro';save();show('s-bintro');return}
-  save();renderQ();
+ function finishA(){
+  const P=E.paperA(S.id),d=S.da||{c:{},k:{},kr:{},w:{}};
+  const miss=[];P.cmds.forEach(i=>{if(d.c[i]==null)miss.push('c:'+i)});P.tools.forEach(i=>{if(d.k[i]==null)miss.push('k:'+i)});
+  document.querySelectorAll('.qa').forEach(x=>x.classList.toggle('bad',miss.includes(x.dataset.k)));
+  if(miss.length){const f=document.querySelector('.qa.bad');f.scrollIntoView({block:'center'});alert('נשארו '+miss.length+' בחירות ריקות. תשובות הבחירה חובה; בשאלות הכתובות אפשר להשאיר ריק, וזה נחשב אפס.');return}
+  const emptyW=P.writes.filter(i=>!(d.w[i]||'').trim()).length;
+  if(emptyW&&!confirm(emptyW+' שאלות כתובות ריקות ויקבלו אפס. להמשיך?'))return;
+  S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
+  S.tAsec=S.a.t;S.phase='bintro';save();show('s-bintro');
  }
  function fillSelects(){
   $('b-v2').innerHTML='<option value="">בחרו</option>'+E.CATS.map(c=>'<option>'+c+'</option>').join('');
@@ -80,7 +76,7 @@
  }
  function result(){
   const id=S.id;
-  const payload={v:C.version,id,n:S.name,e:S.email||'',s:new Date(S.tA0).toISOString(),z:new Date(S.tEnd).toISOString(),a:{r:S.r,t:S.tAsec},b:S.b,c:S.c};
+  const payload={v:C.version,id,n:S.name,e:S.email||'',s:new Date(S.tA0).toISOString(),z:new Date(S.tEnd).toISOString(),a:S.a,b:S.b,c:S.c};
   const code=E.encode(payload);
   show('s-res');
   $('r-ta').textContent=fmt(S.tAsec||0);$('r-tb').textContent=fmt(S.b.t);$('r-tc').textContent=fmt(S.c.t||0);
@@ -92,9 +88,8 @@
  }
  function submitResult(payload,code){if(!C.resultsEndpoint)return;fetch(C.resultsEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})}).catch(()=>{})}
  $('f-start').addEventListener('submit',e=>{e.preventDefault();
-  const given=($('in-id').value||'').trim().toUpperCase();S={id:/^[A-HJKMNP-Z2-9]{6}$/.test(given)?given:newId(),name:$('in-name').value.trim(),email:$('in-mail').value.trim(),phase:'a',i:0,r:[],tA0:Date.now()};save();show('s-a');renderQ();tick()});
- $('a-next').onclick=()=>{if(picked!==null)answer(picked)};
- $('a-skip').onclick=()=>{if(confirm('דילוג נחשב לתשובה שגויה, ואי אפשר לחזור אליה. לדלג?'))answer(-1)};
+  const given=($('in-id').value||'').trim().toUpperCase();S={id:/^[A-HJKMNP-Z2-9]{6}$/.test(given)?given:newId(),name:$('in-name').value.trim(),email:$('in-mail').value.trim(),phase:'a',tA0:Date.now()};save();show('s-a');renderA();tick()});
+ $('f-a').addEventListener('submit',e=>{e.preventDefault();finishA()});
  $('env-check').onclick=()=>dl('sample-check.csv','text/csv;charset=utf-8','\ufeffdate,region,category,units,revenue,cost\n2025-01-15,צפון,תוכנה,10,9000,2500\n2025-02-15,מרכז,חומרה,8,11000,7200\n2025-03-15,דרום,שירות,12,8400,3800\n');
  $('b-start').onclick=()=>{S.track=(document.querySelector('input[name=track]:checked')||{}).value||'chat';S.phase='b';S.tB0=Date.now();save();fillSelects();dlCsv();setTimeout(dlLogo,500);show('s-b');tick()};
  $('b-dl').onclick=dlCsv;$('b-dl2').onclick=dlLogo;$('b-dl3').onclick=dlPng;
@@ -105,7 +100,7 @@
  S=load();
  if(S){
   if(S.fa){proj=S.fa.z||null;shots=S.fa.sh||[]}
-  if(S.phase==='a'){show('s-a');renderQ();tick()}
+  if(S.phase==='a'){show('s-a');renderA();tick()}
   else if(S.phase==='bintro')show('s-bintro');
   else if(S.phase==='b'){fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}
   else if(S.phase==='c')showC();

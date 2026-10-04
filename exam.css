@@ -68,3 +68,8 @@ textarea{resize:vertical}
 @media(max-width:560px){.score-row{grid-template-columns:repeat(2,1fr)}}
 .rv{overflow-wrap:anywhere}.rv pre{max-width:100%;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
 .opt,.stem{overflow-wrap:anywhere}
+.partA .sec{font-size:20px;margin:26px 0 4px}
+.qa{display:block;margin:14px 0;font-weight:600;line-height:1.55}
+.qa select,.qa textarea,.qa input{font-weight:400;margin-top:8px}
+.qa .why{margin-top:8px}
+.qa.bad select,.qa.bad textarea{border-color:#b9402a}
