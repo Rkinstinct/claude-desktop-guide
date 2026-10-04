@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="exam.css?v=3">
+<link rel="stylesheet" href="exam.css?v=4">
 </head>
 <body>
 <div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><a class="back" href="index.html">← למדריך</a></div></div>
@@ -18,21 +18,32 @@
 <section id="s-start" class="screen">
  <span class="pill">מבחן מסכם, רמה גבוהה</span>
  <h1>כמה אתם באמת שולטים ב-Claude בארגון?</h1>
- <p class="lead">שלושה חלקים מעשיים: 40 שאלות תרחיש שבוחנות מה הייתם עושים בפועל, בניית דוח Power BI בן שני עמודים מנתונים שתקבלו (כשהשעון רץ), והסבר איך הייתם בונים סוכן.</p>
+ <p class="lead">מבחן בשלושה חלקים: 40 שאלות תרחיש שבוחנות מה הייתם עושים בפועל, משימה מעשית של בניית דוח Power BI בן שני עמודים מנתונים שתקבלו (כשהשעון רץ), ותכנון סוכן.</p>
  <div class="facts">
   <div><b>חלק א׳</b><span>40 שאלות תרחיש: פקודות, הגדרות, באגים, החלטות</span></div>
   <div><b>חלק ב׳</b><span>דוח Power BI של 2 עמודים עם לוגו, זמן יעד 60 דקות</span></div>
-  <div><b>חלק ג׳</b><span>איך בונים סוכן: 5 תשובות קצרות</span></div>
+  <div><b>חלק ג׳</b><span>תכנון סוכן: 5 תשובות קצרות</span></div>
+ </div>
+ <div class="card">
+  <h3>לפני שמתחילים</h3>
+  <ul>
+   <li><b>סביבה:</b> חלק ב׳ דורש Power BI Desktop, שרץ על Windows בלבד. אי אפשר לבצע אותו מנייד.</li>
+   <li><b>קבצים:</b> תצטרכו לשמור את הדוח כפרויקט PBIP ולכווץ אותו ל-ZIP (או לצרף קובץ pbix אם PBIP לא זמין לכם), ולצלם מסך של כל עמוד.</li>
+   <li><b>דילוג:</b> שאלה שמדלגים עליה נחשבת תשובה שגויה, ואי אפשר לחזור אליה.</li>
+   <li><b>לשונית:</b> סגירת הלשונית מוחקת את ההתקדמות. אל תסגרו אותה באמצע.</li>
+  </ul>
+  <p><button id="env-check" class="linkbtn" type="button">בדיקת סביבה: הורדת קובץ דוגמה</button> <span class="muted">פתחו אותו ב-Power BI Desktop (קבל נתונים ← טקסט/CSV) לפני שמתחילים, כדי לוודא שהכל עובד.</span></p>
  </div>
  <form id="f-start" class="card" autocomplete="off">
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל עבודה <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום אקבל קוד תוצאה עם הציונים והזמנים שלי, ושאשלח אותו בעצמי למנהל המבחן. שום דבר לא נשלח אוטומטית.</span></label>
+  <label>קוד נבחן <small>(רק אם קיבלתם ממנהל המבחן)</small><input id="in-id" maxlength="6" dir="ltr" pattern="[A-Za-z2-9]{6}" placeholder="6 תווים" style="text-transform:uppercase"></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום אקבל קוד תוצאה ושאשלח אותו בעצמי למנהל המבחן, יחד עם קובץ הפרויקט וצילומי המסך. הציון נקבע אצל מנהל המבחן. שום דבר לא נשלח אוטומטית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
   <p>הזמנים נמדדים בדפדפן שלכם, מרגע הלחיצה על "התחל" ועד ההגשה. הם נכללים בקוד התוצאה. המבחן עצמו לא שומר שום מידע על שרת: ההתקדמות נשמרת רק בלשונית הזאת, כדי שרענון לא יאבד אותה.</p>
-  <p>בחלק ב׳ אתם עובדים עם Claude שלכם (Chat או Claude Code), ומזינים כאן את התוצאות שיצאו לכם. המערכת בודקת אותן מול הנתונים האישיים שלכם.</p>
+  <p>בחלק ב׳ אתם עובדים עם Claude שלכם (Chat או Claude Code) ובונים דוח ב-Power BI Desktop. את התשובות מזינים כאן, ואת הדוח עצמו שולחים למנהל המבחן. הציון לא מוצג לכם: הוא מחושב אצל מנהל המבחן.</p>
  </details>
 </section>
 
@@ -51,15 +62,15 @@
   <h3>המשימה</h3>
   <p>בנו ב-Power BI Desktop, בעזרת Claude, דוח של חברה אחת בשני עמודי דוח:</p>
   <ul>
-   <li><b>מודל:</b> טוענים את ה-CSV, ויוצרים מדדי DAX: סך הכנסות, אחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות) והכנסות לרבעון</li>
+   <li><b>מודל:</b> טוענים את ה-CSV ויוצרים לפחות שלושה מדדי DAX: סך הכנסות, אחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות, עם DIVIDE) והכנסות לרבעון</li>
    <li><b>עמוד 1, סקירה:</b> כרטיסי KPI, מגמה חודשית והכנסות לפי אזור</li>
    <li><b>עמוד 2, קטגוריות:</b> הכנסות ואחוז רווח גולמי לפי קטגוריה, עם סלייסר לאזור</li>
-   <li><b>לוגו:</b> הלוגו שקיבלתם בראש כל עמוד</li>
+   <li><b>לוגו:</b> הלוגו שקיבלתם בראש כל עמוד, כחזותית תמונה (Image)</li>
    <li><b>ניווט:</b> כפתורי ניווט (Page navigation) בין העמודים, שמראים באיזה עמוד אתם נמצאים</li>
-   <li><b>אחידות:</b> ערכת נושא (Theme JSON) אחת שצבע המותג מהלוגו הוא הצבע הראשון בה, אותו פונט, אותו מיקום לוגו וניווט בשני העמודים</li>
+   <li><b>אחידות:</b> ערכת נושא (Theme JSON) אחת, שמיובאת לדוח, וצבע המותג מהלוגו הוא הצבע הראשון בה. אותו פונט, אותו מיקום לוגו ואותו ניווט בשני העמודים</li>
   </ul>
   <p>איך Claude עוזר: מבקשים ממנו לנסח את מדדי ה-DAX, לכתוב את קובץ ערכת הנושא, ולתכנן את פריסת העמודים. מי שעובד עם פרויקט PBIP (פורמט תיקיות של Power BI) יכול לתת ל-Claude Code לערוך ישירות את קובצי TMDL ואת הגדרות הדוח.</p>
-  <p>בסוף מעלים צילומי מסך של כל עמוד, את קובץ ערכת הנושא, ועונים על חמש שאלות מהנתונים. שום קובץ לא נשלח לשום מקום, ואין צורך להעלות קובץ pbix.</p>
+  <p>בסוף בוחרים כאן את קובץ הפרויקט (ZIP של תיקיית ה-PBIP, או קובץ pbix) ואת צילומי המסך, כדי שהמערכת תחשב להם חתימה, ועונים על שש שאלות מהנתונים. הקבצים עצמם לא נשלחים לשום מקום: את קובץ הפרויקט, את צילומי המסך ואת קוד התוצאה שולחים בעצמכם למנהל המבחן. הוא בודק את מבנה הדוח מהקובץ ואת המראה מצילומי המסך.</p>
  </div>
  <div class="card">
   <h3>באיזה מסלול אתם עובדים?</h3>
@@ -78,17 +89,16 @@
  </div>
  <form id="f-b" class="card" autocomplete="off">
   <h3>1. הקבצים</h3>
+  <label>קובץ הפרויקט: ZIP של תיקיית ה-PBIP, או קובץ pbix<input id="b-proj" type="file" accept=".zip,.pbix"></label>
   <label>צילומי מסך של שני העמודים (לפחות שניים)<input id="b-shots" type="file" accept="image/*" multiple></label>
-  <label>קובץ ערכת הנושא (Theme JSON)<input id="b-files" type="file" accept=".json,.txt" multiple></label>
-  <p class="muted">אופציונלי, למי שעובד עם PBIP: אפשר לצרף גם את קובצי JSON של הדוח (report.json, pages.json, page.json) באותו שדה.</p>
   <div id="b-find" class="finds muted">עוד לא נבחרו קבצים.</div>
   <h3>2. תשובות מהנתונים (DAX)</h3>
   <label><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>איזו קטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה?<select id="b-v2" required><option value="">בחרו</option></select></label>
   <label>באיזה חודש הייתה הירידה החדה ביותר בהכנסות לעומת החודש שלפניו?<select id="b-v3" required><option value="">בחרו</option></select></label>
-  <label>מה אחוז הרווח הגולמי הכולל של השנה? <small>(אחוזים עם ספרה אחת אחרי הנקודה, למשל 41.3)</small><input id="b-v4" inputmode="decimal" required dir="ltr" maxlength="7"></label>
+  <label>מה אחוז הרווח הגולמי הכולל של השנה? <small>(אחוזים עם ספרה אחת אחרי הנקודה, מעוגל, למשל 41.3)</small><input id="b-v4" inputmode="decimal" required dir="ltr" maxlength="7"></label>
   <label>איזה אזור עם ההכנסות הגבוהות ביותר על פני השנה?<select id="b-v5" required><option value="">בחרו</option></select></label>
-  <label>הדביקו את נוסחת ה-DAX של אחוז הרווח הגולמי <small>(עד 300 תווים)</small><textarea id="b-dax" maxlength="300" rows="2" dir="ltr"></textarea></label>
+  <label><span id="b-q6"></span><input id="b-v6" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
   <button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button>
  </form>
@@ -107,29 +117,25 @@
 </section>
 
 <section id="s-res" class="screen" hidden>
- <span class="pill" id="r-pill"></span>
- <h1 id="r-title"></h1>
+ <span class="pill">המבחן הושלם</span>
+ <h1>סיימתם. נשאר לשלוח למנהל המבחן</h1>
+ <p class="lead">הציון לא מחושב כאן. הוא נקבע אצל מנהל המבחן, מהקוד ומהקבצים שתשלחו.</p>
  <div class="score-row">
-  <div class="score"><b id="r-total"></b><span>ציון משוקלל</span></div>
-  <div class="score"><b id="r-a"></b><span>חלק א׳</span></div>
-  <div class="score"><b id="r-b"></b><span>חלק ב׳</span></div>
+  <div class="score"><b id="r-ta" dir="ltr"></b><span>זמן חלק א׳</span></div>
   <div class="score"><b id="r-tb" dir="ltr"></b><span>זמן חלק ב׳</span></div>
-  <div class="score"><b id="r-c"></b><span>חלק ג׳ (כלים)</span></div>
+  <div class="score"><b id="r-tc" dir="ltr"></b><span>זמן חלק ג׳</span></div>
  </div>
  <div class="card">
-  <h3>קוד התוצאה שלכם</h3>
-  <p>זה מה ששולחים למנהל המבחן (במייל, בווטסאפ או בהודעה). מעתיקים את כולו.</p>
+  <h3>1. קוד התוצאה שלכם</h3>
   <textarea id="r-code" class="code" readonly rows="4" dir="ltr"></textarea>
   <div class="nav"><button id="r-copy" class="btn" type="button">העתקת הקוד</button><button id="r-file" class="btn ghost" type="button">שמירה כקובץ</button></div>
   <p id="r-sent" class="muted"></p>
  </div>
- <div class="card"><h3>לפי פרקים</h3><div id="r-chapters" class="chapters"></div></div>
- <div class="card"><h3>חלק ב׳ וחלק ג׳</h3><div id="r-bc"></div></div>
- <div class="card"><h3>מה כדאי לחזור עליו</h3><div id="r-review"></div></div>
+ <div class="card"><h3>2. מה לשלוח, ביחד</h3><div id="r-bc"></div></div>
 </section>
 </main>
-<script src="exam-data.js?v=3"></script>
-<script src="exam-core.js?v=3"></script>
-<script src="exam.js?v=3"></script>
+<script src="exam-data.js?v=4"></script>
+<script src="exam-core.js?v=4"></script>
+<script src="exam.js?v=4"></script>
 </body>
 </html>
