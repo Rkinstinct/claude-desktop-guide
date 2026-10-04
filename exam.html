@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="exam.css?v=1">
+<link rel="stylesheet" href="exam.css?v=2">
 </head>
 <body>
 <div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><a class="back" href="index.html">← למדריך</a></div></div>
@@ -18,11 +18,11 @@
 <section id="s-start" class="screen">
  <span class="pill">מבחן מסכם, רמה גבוהה</span>
  <h1>כמה אתם באמת שולטים ב-Claude בארגון?</h1>
- <p class="lead">שני חלקים: 40 שאלות תרחיש על כל פרקי המדריך, ומשימה מעשית אחת - לבנות דשבורד מנתונים שתקבלו, כשהשעון רץ.</p>
+ <p class="lead">שלושה חלקים מעשיים: 40 שאלות תרחיש שבוחנות מה הייתם עושים בפועל, בניית דשבורד בן שני עמודים מנתונים שתקבלו (כשהשעון רץ), והסבר איך הייתם בונים סוכן.</p>
  <div class="facts">
-  <div><b>חלק א׳</b><span>40 שאלות, 2 מכל פרק, בסדר אקראי</span></div>
-  <div><b>חלק ב׳</b><span>דשבורד מנתונים, זמן יעד 45 דקות</span></div>
-  <div><b>ציון עובר</b><span>70, מתוך שילוב של שני החלקים</span></div>
+  <div><b>חלק א׳</b><span>40 שאלות תרחיש: פקודות, הגדרות, באגים, החלטות</span></div>
+  <div><b>חלק ב׳</b><span>דשבורד של 2 עמודים עם לוגו, זמן יעד 60 דקות</span></div>
+  <div><b>חלק ג׳</b><span>איך בונים סוכן: 5 תשובות קצרות</span></div>
  </div>
  <form id="f-start" class="card" autocomplete="off">
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
@@ -45,41 +45,59 @@
 
 <section id="s-bintro" class="screen" hidden>
  <span class="pill">חלק ב׳: משימה מעשית</span>
- <h1>בונים דשבורד</h1>
- <p class="lead">סיימתם את חלק א׳. עכשיו המשימה המעשית. השעון מתחיל כשתלחצו על הכפתור למטה, ואז יורד אליכם קובץ הנתונים האישי שלכם.</p>
+ <h1>בונים דשבורד של שני עמודים</h1>
+ <p class="lead">סיימתם את חלק א׳. השעון של חלק ב׳ מתחיל כשתלחצו על הכפתור למטה, ואז יורדים אליכם שני קבצים אישיים: נתוני מכירות ולוגו של החברה.</p>
  <div class="card">
   <h3>המשימה</h3>
-  <p>קובץ CSV של מכירות לשנת 2025 (תאריך, אזור, קטגוריה, יחידות, הכנסות, עלות). בנו באמצעות Claude דשבורד שמציג:</p>
+  <p>בנו באמצעות Claude דשבורד של חברה אחת, בשני עמודים:</p>
   <ul>
-   <li>סך הכנסות ואחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות)</li>
-   <li>מגמה חודשית של ההכנסות</li>
-   <li>הכנסות לפי אזור</li>
-   <li>סינון לפי קטגוריה</li>
+   <li><b>עמוד 1, סקירה:</b> סך הכנסות, אחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות), מגמה חודשית והכנסות לפי אזור</li>
+   <li><b>עמוד 2, קטגוריות:</b> הכנסות ואחוז רווח גולמי לכל קטגוריה, עם סינון לפי אזור</li>
+   <li><b>לוגו:</b> הלוגו שקיבלתם מופיע בראש כל עמוד</li>
+   <li><b>ניווט:</b> תפריט שמעביר בין העמודים ומראה באיזה עמוד אתם נמצאים</li>
+   <li><b>אחידות:</b> אותם צבעים (צבע המותג מהלוגו), אותו פונט ואותה כותרת בשני העמודים</li>
   </ul>
-  <p>בסוף תזינו שלוש תשובות מספריות מהדשבורד שלכם, ותכתבו בקצרה מה ביקשתם מ-Claude.</p>
+  <p>אפשר לבנות קובץ HTML אחד עם שני עמודים, או שני קבצי HTML. בסוף מעלים את הקבצים לבדיקה אוטומטית ראשונית בדפדפן שלכם (הקבצים לא נשלחים לשום מקום), ועונים על חמש שאלות מהנתונים.</p>
  </div>
  <div class="card">
   <h3>באיזה מסלול אתם עובדים?</h3>
-  <label class="radio"><input type="radio" name="track" value="chat" checked><span><b>Chat</b> - מצרפים את ה-CSV ומבקשים ארטיפקט של דשבורד</span></label>
-  <label class="radio"><input type="radio" name="track" value="code"><span><b>Claude Code</b> - מניחים את הקובץ בתיקייה ובונים דשבורד HTML</span></label>
+  <label class="radio"><input type="radio" name="track" value="chat" checked><span><b>Chat</b> - מצרפים את ה-CSV והלוגו, מבקשים ארטיפקט, ושומרים את הקוד כקובץ HTML</span></label>
+  <label class="radio"><input type="radio" name="track" value="code"><span><b>Claude Code</b> - מניחים את הקבצים בתיקייה ובונים קבצי HTML</span></label>
   <label class="radio"><input type="radio" name="track" value="mcp"><span><b>MCP (לא חובה)</b> - מחברים שרת MCP לקבצים וקוראים את הנתונים דרכו. רק למי שיש לו את זה בסביבה</span></label>
  </div>
- <button id="b-start" class="btn big" type="button">הורדת הנתונים והתחלת השעון</button>
+ <button id="b-start" class="btn big" type="button">הורדת הקבצים והתחלת השעון</button>
 </section>
 
 <section id="s-b" class="screen" hidden>
- <div class="prog"><div class="prog-top"><span>חלק ב׳ רץ</span><span id="b-time" class="big-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div><p class="hint">זמן יעד: 45 דקות. אפשר לעבור את הזמן, והוא פשוט נרשם.</p></div>
+ <div class="prog"><div class="prog-top"><span>חלק ב׳ רץ</span><span id="b-time" class="big-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div><p class="hint">זמן יעד: 60 דקות. אפשר לעבור את הזמן, והוא פשוט נרשם.</p></div>
  <div class="card">
-  <p>הנתונים שלכם: <button id="b-dl" class="linkbtn" type="button">הורדה מחדש של הקובץ</button></p>
-  <p class="muted">הדשבורד: סך הכנסות, אחוז רווח גולמי, מגמה חודשית, הכנסות לפי אזור, סינון לפי קטגוריה.</p>
+  <p>הקבצים שלכם: <button id="b-dl" class="linkbtn" type="button">נתוני CSV</button> · <button id="b-dl2" class="linkbtn" type="button">לוגו SVG</button></p>
+  <p class="muted">עמוד סקירה, עמוד קטגוריות, לוגו בכל עמוד, ניווט, ומראה אחיד.</p>
  </div>
  <form id="f-b" class="card" autocomplete="off">
-  <h3>התשובות מהדשבורד שלכם</h3>
+  <h3>1. הקבצים של הדשבורד</h3>
+  <label>בחרו את קובצי ה-HTML (אחד או שניים)<input id="b-files" type="file" accept=".html,.htm,.txt" multiple></label>
+  <div id="b-find" class="finds muted">עוד לא נבחרו קבצים.</div>
+  <h3>2. תשובות מהנתונים</h3>
   <label><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>איזו קטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה?<select id="b-v2" required><option value="">בחרו</option></select></label>
   <label>באיזה חודש הייתה הירידה החדה ביותר בהכנסות לעומת החודש שלפניו?<select id="b-v3" required><option value="">בחרו</option></select></label>
+  <label>מה שם החברה שמופיע בלוגו?<input id="b-v4" required dir="ltr" maxlength="40"></label>
+  <label>מה צבע המותג בלוגו (קוד hex, למשל #1a2b3c)?<input id="b-v5" required dir="ltr" maxlength="9"></label>
   <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
-  <button class="btn big" type="submit">סיום והגשה</button>
+  <button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button>
+ </form>
+</section>
+
+<section id="s-c" class="screen" hidden>
+ <span class="pill">חלק ג׳: בניית סוכן</span>
+ <h1 id="c-title"></h1>
+ <p class="lead" id="c-brief"></p>
+ <form id="f-c" class="card" autocomplete="off">
+  <p class="muted">ענו בקצרה ובמדויק, עד 350 תווים לכל תשובה. אין צורך לכתוב קוד.</p>
+  <div id="c-qs"></div>
+  <fieldset class="tools"><legend>אילו כלים תאפשרו לסוכן? (סמנו רק מה שצריך)</legend><div id="c-tools"></div></fieldset>
+  <button class="btn big" type="submit">סיום וקבלת התוצאה</button>
  </form>
 </section>
 
@@ -91,6 +109,7 @@
   <div class="score"><b id="r-a"></b><span>חלק א׳</span></div>
   <div class="score"><b id="r-b"></b><span>חלק ב׳</span></div>
   <div class="score"><b id="r-tb" dir="ltr"></b><span>זמן חלק ב׳</span></div>
+  <div class="score"><b id="r-c"></b><span>חלק ג׳ (כלים)</span></div>
  </div>
  <div class="card">
   <h3>קוד התוצאה שלכם</h3>
@@ -100,11 +119,12 @@
   <p id="r-sent" class="muted"></p>
  </div>
  <div class="card"><h3>לפי פרקים</h3><div id="r-chapters" class="chapters"></div></div>
+ <div class="card"><h3>חלק ב׳ וחלק ג׳</h3><div id="r-bc"></div></div>
  <div class="card"><h3>מה כדאי לחזור עליו</h3><div id="r-review"></div></div>
 </section>
 </main>
-<script src="exam-data.js?v=1"></script>
-<script src="exam-core.js?v=1"></script>
-<script src="exam.js?v=1"></script>
+<script src="exam-data.js?v=2"></script>
+<script src="exam-core.js?v=2"></script>
+<script src="exam.js?v=2"></script>
 </body>
 </html>

@@ -58,3 +58,13 @@ textarea{resize:vertical}
 .rv{padding:12px 0;border-top:1px solid var(--line);font-size:15px}.rv:first-child{border-top:0}
 .rv b{display:block;margin-bottom:4px}.rv .ok{color:var(--green)}.rv .bad{color:var(--red)}
 @media(max-width:560px){.facts{grid-template-columns:1fr}.score-row{grid-template-columns:repeat(2,1fr)}.brand{font-size:14px}main{padding-top:24px}.card{padding:16px}}
+
+.stem pre,.codeblock{font-family:'JetBrains Mono',monospace;background:#141413;color:#e8e6dc;border-radius:12px;padding:12px 14px;font-size:12.5px;line-height:1.6;direction:ltr;text-align:left;white-space:pre-wrap;overflow-x:auto;margin:10px 0;font-weight:400}
+.stem .tx{white-space:pre-wrap}
+.finds{font-size:14px;margin:-4px 0 16px;line-height:1.7}.finds .y{color:var(--green)}.finds .n{color:var(--red)}
+.tools{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:16px}.tools legend{font-weight:600;font-size:15px;padding:0 6px}
+.tools label{display:inline-flex;gap:6px;align-items:center;margin:4px 12px 4px 0;font-weight:400;direction:ltr}.tools input{accent-color:var(--coral)}
+.score-row{grid-template-columns:repeat(5,1fr)}
+@media(max-width:560px){.score-row{grid-template-columns:repeat(2,1fr)}}
+.rv{overflow-wrap:anywhere}.rv pre{max-width:100%;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.opt,.stem{overflow-wrap:anywhere}
