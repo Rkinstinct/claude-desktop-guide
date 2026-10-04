@@ -12,6 +12,7 @@ import {ConceptParallel} from './ConceptParallel';
 import {Recap} from './Recap';
 import {GuideComplete} from './GuideComplete';
 import {PreviewLoop} from './PreviewLoop';
+import {GuideOpening} from './GuideOpening';
 export const Root: React.FC = () => (
   <>
     <Composition
@@ -49,5 +50,6 @@ export const Root: React.FC = () => (
       <Composition id="ConceptCtx" component={ConceptCtx} durationInFrames={660} fps={30} width={1080} height={608} />
     <Composition id="ConceptPerms" component={ConceptPerms} durationInFrames={660} fps={30} width={1080} height={608} />
     <Composition id="ConceptMcp" component={ConceptMcp} durationInFrames={660} fps={30} width={1080} height={608} />
+    <Composition id="GuideOpeningDesktop" component={GuideOpening} durationInFrames={300} fps={30} width={1280} height={720} />
   </>
 );

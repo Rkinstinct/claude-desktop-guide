@@ -233,3 +233,7 @@ body.intro-lock{overflow:hidden}
  .course-ready.lesson .lesson-layout{padding-inline:20px}
  .course-ready.lesson .step-rail{margin-inline:-20px;padding-inline:20px}
 }
+
+/* desktop opening: 16:9 video, fill screens up to 16:9 with cover; ultrawide keeps contain */
+@media(min-aspect-ratio:3/2){#intro-overlay,#intro-overlay video{background:#f3e7dc}}
+@media(min-aspect-ratio:3/2) and (max-aspect-ratio:17/9){#intro-overlay video{object-fit:cover}}
