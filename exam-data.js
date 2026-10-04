@@ -1,6 +1,6 @@
 /* Part A (public): understanding check. Situations and prompts only. The expected answers and rubric live in the private admin file. */
 window.EXAM_A={
- cmdOpts:['/clear','/compact','/context','/effort','/hooks','/init','/mcp','/memory','/model','/permissions','/plan','/rewind','/usage'],
+ cmdOpts:['/clear','/compact','/context','/effort','/init','/mcp','/memory','/model','/permissions','/plan','/rewind','/usage'],
  cmds:[
   {id:'c1',q:'סיימתם משימה והתחלתם משימה שלא קשורה אליה. השיחה הישנה רק מוסיפה טוקנים לכל הודעה. איזו פקודה מתאימה?'},
   {id:'c2',q:'אותה משימה עדיין נמשכת, השיחה ארוכה, ואתם רוצים לשמור את העיקר ולפנות מקום בהקשר. איזו פקודה?'},
@@ -10,7 +10,7 @@ window.EXAM_A={
   {id:'c6',q:'רוצים לראות כמה הסשן עלה ומה צרך את מכסת השימוש, כולל פירוט לפי skill, subagent ושרת MCP. איזו פקודה?'},
   {id:'c7',q:'פרויקט חדש בלי הנחיות קבועות. רוצים ש-Claude ינתח אותו וייצור קובץ CLAUDE.md ראשוני. איזו פקודה?'},
   {id:'c8',q:'שרת MCP שאתם לא משתמשים בו מוסיף רעש להקשר. רוצים לראות את השרתים ולכבות אותו. איזו פקודה?'},
-  {id:'c9',q:'רוצים לראות אילו hooks מוגדרים כרגע ולאילו אירועים. איזו פקודה?'}
+  {id:'c9',q:'המשימה המשותפת ממשיכה, ואתם רוצים להחליף ל-Sonnet, מודל זול יותר, לשאר העבודה. איזו פקודה?'}
  ],
  toolOpts:['CLAUDE.md','Skill','שרת MCP','Subagent','Hook','כלי שורת פקודה רגיל (כמו gh)'],
  tools:[

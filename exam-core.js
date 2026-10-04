@@ -1,6 +1,6 @@
 /* Public exam page code. No answers here: the key, the expected Part B answers and the scoring live only in the private admin file. */
 window.EXAM_CONFIG={
- version:5,
+ version:5.1,
  passMark:70,        // Part A/B composite needed to pass
  advancedMark:85,    // composite at or above this = advanced
  weightA:0.45, weightB:0.40, weightC:0.15,
