@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>מנהל המבחן: פענוח קודי תוצאה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="exam.css?v=1">
+<style>
+.wrap.wide{max-width:1100px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tw{overflow-x:auto;margin:16px 0}
+.tbl th,.tbl td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl th{background:#f3efe6;font-size:13px;color:var(--soft)}
+.tbl tr.row{cursor:pointer}.tbl tr.row:hover{background:#faf5ee}
+.tag{display:inline-block;border-radius:99px;padding:1px 10px;font-size:12.5px;font-weight:700}
+.t-adv{background:#e6eddc;color:#566a3c}.t-mid{background:#f7eae3;color:#93472f}.t-beg{background:#f2dcd6;color:#8f3427}
+.det td{white-space:normal;background:#fdfbf7}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.bad{color:var(--red)}.ok{color:var(--green)}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="wrap wide"><span class="brand">מנהל המבחן ✦ פענוח קודי תוצאה</span><a class="back" href="exam.html">למבחן</a></div></div>
+<main class="wrap wide">
+ <h1>קודי תוצאה</h1>
+ <p class="lead">הדביקו קוד אחד בכל שורה. הפענוח קורה בדפדפן שלכם בלבד: שום דבר לא נשלח ולא נשמר. הציונים מחושבים מחדש מהתשובות הגולמיות שבקוד.</p>
+ <textarea id="codes" class="code" rows="6" dir="ltr" placeholder="EX1...." style="background:#fff;color:#141413;border:1px solid #d9d2c5"></textarea>
+ <div class="nav" style="margin-top:10px"><button id="go" class="btn">פענוח</button><button id="csv" class="btn ghost" disabled>ייצוא ל-CSV</button></div>
+ <div id="stats" class="stats" hidden></div>
+ <div class="tw"><table class="tbl" id="tbl" hidden><thead><tr><th>שם</th><th>תאריך</th><th>חלק א׳</th><th>חלק ב׳</th><th>זמן ב׳</th><th>ציון</th><th>רמה</th><th>מסלול</th><th>תקינות</th></tr></thead><tbody></tbody></table></div>
+ <p class="muted">"תקינות" בודקת שהקוד לא נחתך או שונה בהעתקה. זו לא חתימה: בלי שרת אי אפשר להוכיח שהזמן לא נערך. החלק המעשי נבדק מול הנתונים של אותו נבחן, כך שאי אפשר להעתיק תשובות מאחר.</p>
+</main>
+<script src="exam-data.js?v=1"></script>
+<script src="exam-core.js?v=1"></script>
+<script>
+(()=>{
+ const E=ExamCore,C=EXAM_CONFIG,$=id=>document.getElementById(id);
+ const fmt=s=>{s=Math.round(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+ const TR={chat:'Chat',code:'Claude Code',mcp:'MCP'};
+ let rows=[];
+ $('go').onclick=()=>{
+  rows=[];const bad=[];
+  $('codes').value.split(/\n+/).map(x=>x.trim()).filter(Boolean).forEach(c=>{
+   const d=E.decode(c);if(d.error){bad.push(c.slice(0,24)+'... '+d.error);return}
+   const p=d.data,sa=E.scoreA(p.id,p.a.r),sb=E.scoreB(p.id,p.b),lv=E.level(sa.pct,sb.pct);
+   rows.push({p,sa,sb,lv,ok:d.checkOk})});
+  render(bad);
+ };
+ function render(bad){
+  const tb=document.querySelector('#tbl tbody');tb.innerHTML='';
+  rows.forEach((r,i)=>{
+   const tr=document.createElement('tr');tr.className='row';
+   const cls=r.lv.level==='מתקדם'?'t-adv':r.lv.level==='בינוני'?'t-mid':'t-beg';
+   const cells=[r.p.n,new Date(r.p.z).toLocaleDateString('he-IL'),r.sa.pct,r.sb.ok+'/3',fmt(r.p.b.t),r.lv.total];
+   cells.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});
+   let td=document.createElement('td');td.innerHTML='<span class="tag '+cls+'"></span>';td.firstChild.textContent=r.lv.level;tr.append(td);
+   td=document.createElement('td');td.textContent=TR[r.p.b.k]||r.p.b.k;tr.append(td);
+   td=document.createElement('td');td.textContent=r.ok?'תקין':'שונה/פגום';td.className=r.ok?'ok':'bad';tr.append(td);
+   const dt=document.createElement('tr');dt.className='det';dt.hidden=true;const dd=document.createElement('td');dd.colSpan=9;
+   const weak=Object.keys(r.sa.per).map(Number).sort((a,b)=>a-b).filter(k=>r.sa.per[k].ok<r.sa.per[k].n).map(k=>'פרק '+k+' ('+r.sa.per[k].ok+'/'+r.sa.per[k].n+')');
+   const ex=r.sb.expected,v=r.p.b.v;
+   const L=(t,v)=>{const d=document.createElement('div');d.textContent=t+': '+v;dd.append(d)};
+   L('מייל',r.p.e||'לא צוין');L('קוד נבחן',r.p.id);L('התחיל',new Date(r.p.s).toLocaleString('he-IL'));L('זמן חלק א׳',fmt(r.p.a.t));
+   L('פרקים עם טעויות',weak.join(', ')||'אין');
+   L('בדיקה 1 (הכנסות רבעון 3, '+ex.region+')','ענה '+v[0]+', נכון '+ex.q3+(r.sb.res[0]?' ✓':' ✗'));
+   L('בדיקה 2 (קטגוריה עם רווח גולמי הכי גבוה)','ענה '+v[1]+', נכון '+ex.bestCat+(r.sb.res[1]?' ✓':' ✗'));
+   L('בדיקה 3 (ירידה חודשית חדה)','ענה '+v[2]+', נכון '+ex.worstMonth+(r.sb.res[2]?' ✓':' ✗'));
+   L('מה ביקש מ-Claude',r.p.b.note||'-');
+   dt.append(dd);tr.onclick=()=>dt.hidden=!dt.hidden;tb.append(tr,dt)});
+  $('tbl').hidden=!rows.length;
+  const st=$('stats');st.hidden=!rows.length&&!bad.length;st.innerHTML='';
+  const n=rows.length,avg=k=>n?Math.round(rows.reduce((a,r)=>a+k(r),0)/n):0;
+  const med=n?[...rows.map(r=>r.p.b.t)].sort((a,b)=>a-b)[Math.floor(n/2)]:0;
+  [['נבחנים',n],['ממוצע ציון',avg(r=>r.lv.total)],['עברו',rows.filter(r=>r.lv.pass).length+'/'+n],['זמן חלק ב׳ חציוני',n?fmt(med):'-']].forEach(([l,v])=>{const d=document.createElement('div');d.className='score';d.innerHTML='<b></b><span></span>';d.firstChild.textContent=v;d.lastChild.textContent=l;st.append(d)});
+  if(bad.length){const d=document.createElement('div');d.className='card bad';d.style.gridColumn='1/-1';d.textContent='לא פוענחו: '+bad.join(' | ');st.append(d)}
+  $('csv').disabled=!rows.length;
+ }
+ $('csv').onclick=()=>{
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const head=['name','email','date','partA_pct','partB_correct','partB_seconds','total','level','track','integrity','note'];
+  const lines=rows.map(r=>[r.p.n,r.p.e,r.p.z,r.sa.pct,r.sb.ok,r.p.b.t,r.lv.total,r.lv.level,r.p.b.k,r.ok?'ok':'changed',r.p.b.note].map(q).join(','));
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+head.join(',')+'\n'+lines.join('\n')],{type:'text/csv;charset=utf-8'}));a.download='exam-results.csv';document.body.append(a);a.click();a.remove();
+ };
+})();
+</script>
+</body>
+</html>

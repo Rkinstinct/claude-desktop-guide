@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f6f1">
+<meta name="robots" content="noindex">
+<title>מבחן מסכם: Claude בארגון</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="exam.css?v=1">
+</head>
+<body>
+<div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><a class="back" href="index.html">← למדריך</a></div></div>
+<main class="wrap">
+
+<section id="s-start" class="screen">
+ <span class="pill">מבחן מסכם, רמה גבוהה</span>
+ <h1>כמה אתם באמת שולטים ב-Claude בארגון?</h1>
+ <p class="lead">שני חלקים: 40 שאלות תרחיש על כל פרקי המדריך, ומשימה מעשית אחת - לבנות דשבורד מנתונים שתקבלו, כשהשעון רץ.</p>
+ <div class="facts">
+  <div><b>חלק א׳</b><span>40 שאלות, 2 מכל פרק, בסדר אקראי</span></div>
+  <div><b>חלק ב׳</b><span>דשבורד מנתונים, זמן יעד 45 דקות</span></div>
+  <div><b>ציון עובר</b><span>70, מתוך שילוב של שני החלקים</span></div>
+ </div>
+ <form id="f-start" class="card" autocomplete="off">
+  <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
+  <label>מייל עבודה <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום אקבל קוד תוצאה עם הציונים והזמנים שלי, ושאשלח אותו בעצמי למנהל המבחן. שום דבר לא נשלח אוטומטית.</span></label>
+  <button class="btn" type="submit">מתחילים</button>
+ </form>
+ <details class="note"><summary>איך זה עובד ומה נמדד</summary>
+  <p>הזמנים נמדדים בדפדפן שלכם, מרגע הלחיצה על "התחל" ועד ההגשה. הם נכללים בקוד התוצאה. המבחן עצמו לא שומר שום מידע על שרת: ההתקדמות נשמרת רק בלשונית הזאת, כדי שרענון לא יאבד אותה.</p>
+  <p>בחלק ב׳ אתם עובדים עם Claude שלכם (Chat או Claude Code), ומזינים כאן את התוצאות שיצאו לכם. המערכת בודקת אותן מול הנתונים האישיים שלכם.</p>
+ </details>
+</section>
+
+<section id="s-a" class="screen" hidden>
+ <div class="prog"><div class="prog-top"><span id="a-count">שאלה 1 מתוך 40</span><span id="a-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="a-bar"></i></div></div>
+ <h2 id="a-stem" class="stem"></h2>
+ <div id="a-opts" class="opts" role="radiogroup"></div>
+ <div class="nav"><button id="a-skip" class="btn ghost" type="button">דלג</button><button id="a-next" class="btn" type="button" disabled>הבא</button></div>
+</section>
+
+<section id="s-bintro" class="screen" hidden>
+ <span class="pill">חלק ב׳: משימה מעשית</span>
+ <h1>בונים דשבורד</h1>
+ <p class="lead">סיימתם את חלק א׳. עכשיו המשימה המעשית. השעון מתחיל כשתלחצו על הכפתור למטה, ואז יורד אליכם קובץ הנתונים האישי שלכם.</p>
+ <div class="card">
+  <h3>המשימה</h3>
+  <p>קובץ CSV של מכירות לשנת 2025 (תאריך, אזור, קטגוריה, יחידות, הכנסות, עלות). בנו באמצעות Claude דשבורד שמציג:</p>
+  <ul>
+   <li>סך הכנסות ואחוז רווח גולמי ((הכנסות פחות עלות) חלקי הכנסות)</li>
+   <li>מגמה חודשית של ההכנסות</li>
+   <li>הכנסות לפי אזור</li>
+   <li>סינון לפי קטגוריה</li>
+  </ul>
+  <p>בסוף תזינו שלוש תשובות מספריות מהדשבורד שלכם, ותכתבו בקצרה מה ביקשתם מ-Claude.</p>
+ </div>
+ <div class="card">
+  <h3>באיזה מסלול אתם עובדים?</h3>
+  <label class="radio"><input type="radio" name="track" value="chat" checked><span><b>Chat</b> - מצרפים את ה-CSV ומבקשים ארטיפקט של דשבורד</span></label>
+  <label class="radio"><input type="radio" name="track" value="code"><span><b>Claude Code</b> - מניחים את הקובץ בתיקייה ובונים דשבורד HTML</span></label>
+  <label class="radio"><input type="radio" name="track" value="mcp"><span><b>MCP (לא חובה)</b> - מחברים שרת MCP לקבצים וקוראים את הנתונים דרכו. רק למי שיש לו את זה בסביבה</span></label>
+ </div>
+ <button id="b-start" class="btn big" type="button">הורדת הנתונים והתחלת השעון</button>
+</section>
+
+<section id="s-b" class="screen" hidden>
+ <div class="prog"><div class="prog-top"><span>חלק ב׳ רץ</span><span id="b-time" class="big-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div><p class="hint">זמן יעד: 45 דקות. אפשר לעבור את הזמן, והוא פשוט נרשם.</p></div>
+ <div class="card">
+  <p>הנתונים שלכם: <button id="b-dl" class="linkbtn" type="button">הורדה מחדש של הקובץ</button></p>
+  <p class="muted">הדשבורד: סך הכנסות, אחוז רווח גולמי, מגמה חודשית, הכנסות לפי אזור, סינון לפי קטגוריה.</p>
+ </div>
+ <form id="f-b" class="card" autocomplete="off">
+  <h3>התשובות מהדשבורד שלכם</h3>
+  <label><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
+  <label>איזו קטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה?<select id="b-v2" required><option value="">בחרו</option></select></label>
+  <label>באיזה חודש הייתה הירידה החדה ביותר בהכנסות לעומת החודש שלפניו?<select id="b-v3" required><option value="">בחרו</option></select></label>
+  <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
+  <button class="btn big" type="submit">סיום והגשה</button>
+ </form>
+</section>
+
+<section id="s-res" class="screen" hidden>
+ <span class="pill" id="r-pill"></span>
+ <h1 id="r-title"></h1>
+ <div class="score-row">
+  <div class="score"><b id="r-total"></b><span>ציון משוקלל</span></div>
+  <div class="score"><b id="r-a"></b><span>חלק א׳</span></div>
+  <div class="score"><b id="r-b"></b><span>חלק ב׳</span></div>
+  <div class="score"><b id="r-tb" dir="ltr"></b><span>זמן חלק ב׳</span></div>
+ </div>
+ <div class="card">
+  <h3>קוד התוצאה שלכם</h3>
+  <p>זה מה ששולחים למנהל המבחן (במייל, בווטסאפ או בהודעה). מעתיקים את כולו.</p>
+  <textarea id="r-code" class="code" readonly rows="4" dir="ltr"></textarea>
+  <div class="nav"><button id="r-copy" class="btn" type="button">העתקת הקוד</button><button id="r-file" class="btn ghost" type="button">שמירה כקובץ</button></div>
+  <p id="r-sent" class="muted"></p>
+ </div>
+ <div class="card"><h3>לפי פרקים</h3><div id="r-chapters" class="chapters"></div></div>
+ <div class="card"><h3>מה כדאי לחזור עליו</h3><div id="r-review"></div></div>
+</section>
+</main>
+<script src="exam-data.js?v=1"></script>
+<script src="exam-core.js?v=1"></script>
+<script src="exam.js?v=1"></script>
+</body>
+</html>

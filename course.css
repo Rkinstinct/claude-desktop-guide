@@ -237,3 +237,6 @@ body.intro-lock{overflow:hidden}
 /* desktop opening: 16:9 video, fill screens up to 16:9 with cover; ultrawide keeps contain */
 @media(min-aspect-ratio:3/2){#intro-overlay,#intro-overlay video{background:#f3e7dc}}
 @media(min-aspect-ratio:3/2) and (max-aspect-ratio:17/9){#intro-overlay video{object-fit:cover}}
+
+.course-ready .exam-banner{display:flex;align-items:center;gap:14px;max-width:760px;margin:-44px 0 76px;padding:16px 22px;border:1px solid #ecc9b8;border-radius:16px;background:#fbf1ec;color:var(--ink);text-decoration:none;flex-wrap:wrap}
+.course-ready .exam-banner b{color:#93472f;font-size:16px}.course-ready .exam-banner span:nth-child(2){flex:1 1 220px;font-size:14.5px;color:#5c574f}.course-ready .exam-banner:hover{text-decoration:none;border-color:var(--accent)}

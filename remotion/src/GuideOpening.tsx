@@ -39,7 +39,7 @@ export const GuideOpening: React.FC = () => {
   const arrive = spring({frame: f - 6, fps, config: {damping: 14, stiffness: 70}});
   const ring = rise(f, 4, 40);
   const cx = w / 2, size = 190, top = 34, cy = top + size / 2;
-  const chips = ['21 פרקים', 'סרטוני דמו מהממשק', 'שאלות חזרה'];
+  const chips = ['20 פרקים', 'סרטוני דמו מהממשק', 'שאלות חזרה'];
   const out = interpolate(f, [284, 299], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{background: '#f3e7dc', fontFamily, direction: 'rtl', color: INK, opacity: 1}}>
