@@ -6,7 +6,7 @@
 <title>מבחן יסודות Power BI</title>
 <meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="pbi-exam.css?v=1">
+<link rel="stylesheet" href="pbi-exam.css?v=2">
 </head>
 <body>
 <div class="bar"><div class="wrap"><span class="brand"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>מבחן יסודות Power BI</span></div></div>
@@ -15,10 +15,10 @@
 <section id="s-start">
  <span class="pill">רמה בסיסית</span>
  <h1>מבחן יסודות Power BI</h1>
- <p class="lead">למי שסיימו קורס יסודות ב-Power BI. שלושה חלקים: 28 שאלות מעשיות, תרגיל קצר על נתונים שתקבלו, וחלק קצר על שימוש בסיסי ב-AI.</p>
+ <p class="lead">למי שסיימו קורס יסודות ב-Power BI. שלושה חלקים: 21 שאלות הבנה, תרגיל קצר על נתונים שתקבלו, וחלק קצר על שימוש בסיסי ב-AI.</p>
  <div class="facts">
-  <div><b>חלק א׳: 28 שאלות</b><span>Power Query, מודל וקשרים, מדדי DAX, ויזואלים, מסננים, Service ו-AI בסיסי. כל שאלה היא מצב מהעבודה, לא הגדרה.</span></div>
-  <div><b>חלק ב׳: תרגיל על נתונים</b><span>קובץ נתונים אישי. 6 תשובות מספריות ומדד DAX אחד. זמן יעד 25 דקות.</span></div>
+  <div><b>חלק א׳: 21 שאלות הבנה</b><span>מה Power BI נותן, הכנת נתונים, מודל, מדדים, בחירת ויזואל, מסננים ושיתוף, ו-AI בסיסי. שואלים למה ומתי, לא איך מקישים.</span></div>
+  <div><b>חלק ב׳: תרגיל על נתונים</b><span>קובץ נתונים אישי. 4 תשובות קצרות ומסקנה אחת במילים שלכם. זמן יעד 15 דקות.</span></div>
   <div><b>חלק ג׳: AI בסיסי</b><span>3 תשובות קצרות במילים שלכם.</span></div>
  </div>
  <div class="card">
@@ -38,12 +38,12 @@
  </form>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
   <p>הזמנים נמדדים בדפדפן שלכם ונכללים בקוד התוצאה. המבחן לא שומר שום מידע בשרת. את התשובות הנכונות והציון אתם לא רואים: הם נקבעים אצל מנהל המבחן.</p>
-  <p>חלק א׳ ותשובות המספרים בחלק ב׳ נבדקים אוטומטית. מדד ה-DAX וחלק ג׳ נבדקים ידנית. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
+  <p>חלק א׳ ותשובות המספרים בחלק ב׳ נבדקים אוטומטית. המסקנה בחלק ב׳ וחלק ג׳ נבדקים ידנית. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
  </details>
 </section>
 
 <section id="s-a" hidden>
- <div class="prog-top"><span id="a-count">שאלה 1 מתוך 28</span><span id="a-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="a-bar"></i></div>
+ <div class="prog-top"><span id="a-count">שאלה 1 מתוך 21</span><span id="a-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="a-bar"></i></div>
  <div class="topic" id="a-topic"></div>
  <h2 id="a-stem" class="stem"></h2>
  <div id="a-opts" class="opts" role="radiogroup"></div>
@@ -54,7 +54,7 @@
  <span class="pill">חלק ב׳: תרגיל על נתונים</span>
  <h1>מחשבים מספרים מהנתונים</h1>
  <p class="lead">סיימתם את חלק א׳. כשתלחצו על הכפתור יורד אליכם קובץ CSV אישי של הזמנות 2025 והשעון של חלק ב׳ מתחיל. טענו אותו ל-Power BI Desktop (קבל נתונים ← טקסט/CSV) ופתרו.</p>
- <div class="card"><b>מה בקובץ:</b> שורה לכל פריט בהזמנה: OrderID, OrderDate, CustomerID, Region, Product, Quantity, UnitPrice. הכנסה של שורה = Quantity כפול UnitPrice. להזמנה אחת יכולות להיות כמה שורות.</div>
+ <div class="card"><b>מה בקובץ:</b> שורה לכל פריט בהזמנה: OrderID, OrderDate, CustomerID, Region, Product, Quantity ו-Revenue (ההכנסה של השורה). להזמנה אחת יכולות להיות כמה שורות.</div>
  <p><button id="b-start" class="btn">התחלת חלק ב׳ והורדת הנתונים</button></p>
 </section>
 
@@ -62,13 +62,11 @@
  <div class="prog-top"><span>חלק ב׳: תרגיל</span><span id="b-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div>
  <div class="card"><div class="dl"><button id="b-dl" class="btn ghost" type="button">הורדה חוזרת של הנתונים (CSV)</button></div><span class="muted">הקובץ מכיל את כל הנתונים, ולא צריך לשנות בו כלום.</span></div>
  <form id="f-b" class="card q-b">
-  <label><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required></label>
-  <label>כמה לקוחות שונים (CustomerID) ביצעו הזמנה בשנה כולה?<input id="b-v2" inputmode="numeric" required></label>
+  <label>מה סך ההכנסות (Revenue) של כל השנה?<input id="b-v1" inputmode="numeric" required></label>
+  <label>איזה אזור הניב את ההכנסה הגבוהה ביותר בשנה?<select id="b-v2" required></select></label>
   <label><span id="b-q3"></span><input id="b-v3" inputmode="numeric" required></label>
-  <label>איזה מוצר הניב את ההכנסה הגבוהה ביותר בשנה?<select id="b-v4" required></select></label>
-  <label>מה ההכנסה הממוצעת להזמנה (סך ההכנסות חלקי מספר ההזמנות השונות)? <small>(עגלו למספר שלם)</small><input id="b-v5" inputmode="numeric" required></label>
-  <label><span id="b-q6"></span> <small>(באחוזים, ספרה אחת אחרי הנקודה)</small><input id="b-v6" inputmode="decimal" required></label>
-  <label>כתבו את מדד ה-DAX שחישב את ההכנסה הממוצעת להזמנה. <small>(אפשר גם מדדים נוספים שהשתמשתם בהם)</small><textarea id="b-dax" rows="5" maxlength="500" dir="ltr" required style="font-family:'JetBrains Mono',monospace;font-size:14px"></textarea></label>
+  <label>כמה הזמנות שונות (OrderID) היו בשנה? <small>(להזמנה אחת יכולות להיות כמה שורות)</small><input id="b-v4" inputmode="numeric" required></label>
+  <label>אם הייתם מציגים למנהל דוח אחד על הנתונים האלה, איזה מסר מרכזי הייתם מדגישים, ובאיזה ויזואל? <small>(2 עד 3 משפטים)</small><textarea id="b-note" rows="4" maxlength="320" required></textarea></label>
   <button class="btn" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button>
  </form>
 </section>
@@ -90,8 +88,8 @@
   <p class="muted" id="r-sent"></p></div>
 </section>
 </main>
-<script src="pbi-exam-data.js?v=1"></script>
-<script src="pbi-exam-core.js?v=1"></script>
-<script src="pbi-exam.js?v=1"></script>
+<script src="pbi-exam-data.js?v=2"></script>
+<script src="pbi-exam-core.js?v=2"></script>
+<script src="pbi-exam.js?v=2"></script>
 </body>
 </html>

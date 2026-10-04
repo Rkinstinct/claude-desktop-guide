@@ -1,5 +1,5 @@
 (()=>{
- const E=window.PbiCore,C=window.PBI_CONFIG,KEY='pbi-exam-v1',T=window.PBI_TOPICS;
+ const E=window.PbiCore,C=window.PBI_CONFIG,KEY='pbi-exam-v2',T=window.PBI_TOPICS;
  const $=id=>document.getElementById(id);
  let S=null;
  const load=()=>{try{return JSON.parse(sessionStorage.getItem(KEY))}catch(e){return null}};
@@ -33,16 +33,12 @@
  function dl(name,type,content){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
  const dlCsv=()=>dl('orders-2025-'+S.id+'.csv','text/csv;charset=utf-8','\ufeff'+E.csv(E.dataset(S.id)));
  function fillB(){
-  $('b-v4').innerHTML='<option value="">בחרו</option>'+E.PRODUCTS.map(c=>'<option>'+c+'</option>').join('');
-  const sp=E.spec(S.id);
-  $('b-q1').textContent='מה סך ההכנסות (Quantity כפול UnitPrice, מסוכם) של המוצר "'+sp.product+'" באזור '+sp.region+'?';
-  $('b-q3').textContent='מה סך ההכנסות של כל השנה, בכל האזורים והמוצרים?';
-  $('b-q6').textContent='איזה אחוז מסך ההכנסות של השנה מגיע מאזור '+sp.shareRegion+'?';
-  // keep question order stable with the form: 1 product+region, 2 customers, 3 total
+  $('b-v2').innerHTML='<option value="">בחרו</option>'+E.REGIONS.map(c=>'<option>'+c+'</option>').join('');
+  $('b-q3').textContent='מה סך ההכנסות (Revenue) של המוצר "'+E.spec(S.id).product+'" בשנה כולה?';
  }
  function finishB(){
   const g=id=>$(id).value.trim();
-  S.b={t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),g('b-v2').replace(/[^\d]/g,''),g('b-v3').replace(/[^\d]/g,''),$('b-v4').value,g('b-v5').replace(/[^\d]/g,''),g('b-v6')],dax:g('b-dax').slice(0,500)};
+  S.b={t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,g('b-v3').replace(/[^\d]/g,''),g('b-v4').replace(/[^\d]/g,'')],note:g('b-note').slice(0,320)};
   S.phase='c';S.tC0=Date.now();save();showC();
  }
  function showC(){
