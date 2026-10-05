@@ -87,12 +87,18 @@
   show('s-res');
   $('r-ta').textContent=fmt(S.tAsec||0);$('r-tb').textContent=fmt(S.b.t);$('r-tc').textContent=fmt(S.c.t||0);
   $('r-code').value=code;
-  $('r-sent').textContent='קוד נבחן: '+id+'. הקוד מכיל את התשובות והזמנים שלכם, לא את הציון.';
   const bc=$('r-bc');bc.innerHTML='';
-  ['הקוד שלמעלה (העתקה או שמירה כקובץ)','קובץ הפרויקט: '+(S.b.z?S.b.z.n:'')+' (חתימה '+(S.b.z?S.b.z.h:'')+'). חייב להיות אותו קובץ שבחרתם, בלי עריכה אחריה','צילומי המסך של שני העמודים, אותם קבצים שבחרתם ('+(S.b.sh||[]).length+')'].forEach(t=>{const d=document.createElement('div');d.className='rv';d.textContent='• '+t;bc.append(d)});
+  ['קובץ הפרויקט: '+(S.b.z?S.b.z.n:'')+' (חתימה '+(S.b.z?S.b.z.h:'')+'). חייב להיות אותו קובץ שבחרתם, בלי עריכה אחריה','צילומי המסך של שני העמודים, אותם קבצים שבחרתם ('+(S.b.sh||[]).length+')'].forEach(t=>{const d=document.createElement('div');d.className='rv';d.textContent='• '+t;bc.append(d)});
   submitResult(payload,code);
  }
- function submitResult(payload,code){if(!C.resultsEndpoint)return;fetch(C.resultsEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})}).catch(()=>{})}
+ function submitResult(payload,code){
+  const card=$('r-card'),ok=$('r-ok'),wait=$('r-wait');
+  if(S.sent){card.hidden=true;ok.hidden=false;return}
+  card.hidden=true;ok.hidden=true;wait.hidden=false;
+  fetch(C.resultsEndpoint+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exam:'claude',code,id:S.id,name:S.name,email:S.email||''})})
+   .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;save();wait.hidden=true;ok.hidden=false})
+   .catch(()=>{wait.hidden=true;card.hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן, יחד עם הקבצים.'});
+ }
  $('f-start').addEventListener('submit',e=>{e.preventDefault();
   const given=($('in-id').value||'').trim().toUpperCase();S={id:/^[A-HJKMNP-Z2-9]{6}$/.test(given)?given:newId(),name:$('in-name').value.trim(),email:$('in-mail').value.trim(),phase:'a',tA0:Date.now()};save();show('s-a');renderA();tick()});
  $('f-a').addEventListener('submit',e=>{e.preventDefault();finishA()});
