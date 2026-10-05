@@ -32,7 +32,7 @@
  <form id="f-start" class="card" autocomplete="off">
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
-  <label>קוד נבחן <small>(רק אם קיבלתם ממנהל המבחן)</small><input id="in-id" maxlength="6" dir="ltr" pattern="[A-Za-z2-9]{6}" placeholder="6 תווים" style="text-transform:uppercase"></label>
+  <input id="in-id" type="hidden">
   <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הזמנים, ומספר הפעמים שיצאתי מהמסך בחלק ג׳. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
