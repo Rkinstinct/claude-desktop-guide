@@ -18,13 +18,13 @@
  <p class="lead">למי שסיימו קורס יסודות ב-Power BI. שלושה חלקים: 15 שאלות הבנה, תרגיל קצר על נתונים שתקבלו, וחלק קצר על תכנון עוזר AI.</p>
  <div class="facts">
   <div><b>חלק א׳: 15 שאלות הבנה</b><span>מה Power BI נותן, הכנת נתונים, מודל, מדדים, בחירת ויזואל, מסננים ושיתוף, ו-AI בסיסי, כולל מושגי MCP וסקילס. שואלים למה ומתי, לא איך מקישים.</span></div>
-  <div><b>חלק ב׳: תרגיל על נתונים</b><span>קובץ נתונים אישי. 4 תשובות קצרות ומסקנה אחת במילים שלכם. זמן יעד 15 דקות.</span></div>
+  <div><b>חלק ב׳: דשבורד בסיסי</b><span>קובץ נתונים אישי קטן. בונים דשבורד פשוט: כרטיס אחד ושני ויזואלים, מעלים צילום מסך וכותבים הסבר קצר. זמן יעד 15 דקות.</span></div>
   <div><b>חלק ג׳: בונים עוזר AI</b><span>מתארים לכם צורך, ואתם עונים איך הייתם בונים עוזר שיענה עליו: 3 תשובות קצרות במילים שלכם.</span></div>
  </div>
  <div class="card">
   <h3>לפני שמתחילים</h3>
   <ul>
-   <li><b>חלק ב׳:</b> מומלץ לעבוד ב-Power BI Desktop (Windows). אפשר לחשב גם בכלי אחר, אבל המבחן בודק את המספרים.</li>
+   <li><b>חלק ב׳:</b> מומלץ לעבוד ב-Power BI Desktop (Windows). בסוף מעלים צילום מסך של הדשבורד.</li>
    <li><b>חלק א׳:</b> אפשר לדלג, לחזור אחורה ולשנות תשובה עד סיום חלק א׳. שאלה שנשארה בלי תשובה נחשבת שגויה.</li>
    <li><b>לשונית:</b> ההתקדמות נשמרת בלשונית הזאת בלבד. אל תסגרו אותה באמצע.</li>
   </ul>
@@ -33,13 +33,13 @@
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
   <input id="in-id" type="hidden">
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הזמנים, ומספר הפעמים שיצאתי מהמסך בחלק ג׳. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, צילום המסך של הדשבורד, הזמנים, ומספר הפעמים שיצאתי מהמסך בחלק ג׳. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <p class="muted" style="text-align:center"><a href="admin.html">כניסת מנהל</a></p>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
   <p>הזמנים נמדדים בדפדפן שלכם ונכללים בקוד התוצאה. בסיום התשובות והזמנים נשלחים למנהל המבחן ונשמרים אצלו, ולא נשמר שום דבר אחר. את התשובות הנכונות והציון אתם לא רואים: הם נקבעים אצל מנהל המבחן.</p>
-  <p>חלק א׳ ותשובות המספרים בחלק ב׳ נבדקים אוטומטית. המסקנה בחלק ב׳ וחלק ג׳ נבדקים ידנית. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
+  <p>חלק א׳ והמספר בכרטיס בחלק ב׳ נבדקים אוטומטית. הדשבורד עצמו (צילום המסך וההסבר) וחלק ג׳ נבדקים ידנית. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
  </details>
 </section>
 
@@ -52,9 +52,10 @@
 </section>
 
 <section id="s-bintro" hidden>
- <span class="pill">חלק ב׳: תרגיל על נתונים</span>
- <h1>מחשבים מספרים מהנתונים</h1>
- <p class="lead">סיימתם את חלק א׳. כשתלחצו על הכפתור יורד אליכם קובץ CSV אישי של הזמנות 2025 והשעון של חלק ב׳ מתחיל. טענו אותו ל-Power BI Desktop (קבל נתונים ← טקסט/CSV) ופתרו.</p>
+ <span class="pill">חלק ב׳: דשבורד בסיסי</span>
+ <h1>בונים דשבורד פשוט</h1>
+ <p class="lead">סיימתם את חלק א׳. כשתלחצו על הכפתור יורד אליכם קובץ CSV אישי של הזמנות 2025 והשעון של חלק ב׳ מתחיל. טענו אותו ל-Power BI Desktop (קבל נתונים ← טקסט/CSV) ובנו דשבורד בסיסי בעמוד אחד:</p>
+ <div class="card"><ul><li><b>כרטיס אחד:</b> סך ההכנסות (Revenue) של כל השנה.</li><li><b>ויזואל אחד:</b> הכנסות לפי מוצר.</li><li><b>ויזואל נוסף:</b> הכנסות לפי אזור או לפי חודש, לבחירתכם.</li></ul>לא צריך לעצב. מספיק דשבורד נקי וקריא, עם כותרות ברורות.</div>
  <div class="card"><b>מה בקובץ:</b> שורה לכל פריט בהזמנה: OrderID, OrderDate, CustomerID, Region, Product, Quantity ו-Revenue (ההכנסה של השורה). להזמנה אחת יכולות להיות כמה שורות.</div>
  <p><button id="b-start" class="btn">התחלת חלק ב׳ והורדת הנתונים</button></p>
 </section>
@@ -63,11 +64,10 @@
  <div class="prog-top"><span>חלק ב׳: תרגיל</span><span id="b-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div>
  <div class="card"><div class="dl"><button id="b-dl" class="btn ghost" type="button">הורדה חוזרת של הנתונים (CSV)</button></div><span class="muted">הקובץ מכיל את כל הנתונים, ולא צריך לשנות בו כלום.</span></div>
  <form id="f-b" class="card q-b">
-  <label>מה סך ההכנסות (Revenue) של כל השנה?<input id="b-v1" inputmode="numeric" required></label>
-  <label>איזה אזור הניב את ההכנסה הגבוהה ביותר בשנה?<select id="b-v2" required></select></label>
-  <label><span id="b-q3"></span><input id="b-v3" inputmode="numeric" required></label>
-  <label>כמה הזמנות שונות (OrderID) היו בשנה? <small>(להזמנה אחת יכולות להיות כמה שורות)</small><input id="b-v4" inputmode="numeric" required></label>
-  <label>אם הייתם מציגים למנהל דוח אחד על הנתונים האלה, איזה מסר מרכזי הייתם מדגישים, ובאיזה ויזואל? <small>(2 עד 3 משפטים)</small><textarea id="b-note" rows="4" maxlength="320" required></textarea></label>
+  <label>מה המספר שמופיע בכרטיס? (סך ההכנסות של השנה, ללא סימנים) <input id="b-v1" inputmode="numeric" required></label>
+  <label>צילום מסך של הדשבורד (תמונה בלבד: PNG או JPG)<input id="b-file" type="file" accept="image/png,image/jpeg" required></label>
+  <p class="muted" id="b-fileinfo"></p>
+  <label>מה הדשבורד מראה, ומה המסר המרכזי שהייתם מדגישים למנהל? <small>(2 עד 3 משפטים)</small><textarea id="b-note" rows="4" maxlength="320" required></textarea></label>
   <button class="btn" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button>
  </form>
 </section>
@@ -91,7 +91,7 @@
 </section>
 </main>
 <script src="pbi-exam-data.js?v=4"></script>
-<script src="pbi-exam-core.js?v=5"></script>
-<script src="pbi-exam.js?v=5"></script>
+<script src="pbi-exam-core.js?v=6"></script>
+<script src="pbi-exam.js?v=7"></script>
 </body>
 </html>
