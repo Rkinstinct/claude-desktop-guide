@@ -41,13 +41,19 @@
   S.b={t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,g('b-v3').replace(/[^\d]/g,''),g('b-v4').replace(/[^\d]/g,'')],note:g('b-note').slice(0,320)};
   S.phase='c';S.tC0=Date.now();save();showC();
  }
+ // Part C focus guard: counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
+ let away=0,awayAt=0;
+ function onAway(){if(!S||S.phase!=='c'||$('s-c').hidden||awayAt)return;awayAt=Date.now()}
+ function onBack(){if(!awayAt)return;const sec=Math.round((Date.now()-awayAt)/1000);awayAt=0;if(!S||S.phase!=='c')return;S.co=(S.co||0)+1;S.cs=(S.cs||0)+sec;save();$('c-warn').hidden=false;$('c-warn-n').textContent=S.co}
+ document.addEventListener('visibilitychange',()=>{document.hidden?onAway():onBack()});
+ window.addEventListener('blur',onAway);window.addEventListener('focus',onBack);
  function showC(){
-  show('s-c');tick();const q=$('c-qs');q.innerHTML='';
+  show('s-c');tick();$('c-warn').hidden=!(S.co>0);$('c-warn-n').textContent=S.co||0;const sc=E.scenario(S.id);$('c-title').textContent=sc.title;$('c-brief').textContent=sc.brief;const q=$('c-qs');q.innerHTML='';
   E.CQ.forEach((x,i)=>{const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=320;t.rows=5;t.required=true;t.value=(S.cd&&S.cd[i])||'';t.oninput=()=>{(S.cd=S.cd||[])[i]=t.value;save()};l.append(t);q.append(l)});
  }
  function finish(){
   const a=[...document.querySelectorAll('#c-qs textarea')].map(t=>t.value.trim().slice(0,320));
-  S.c={a,t:Math.round((Date.now()-S.tC0)/1000)};S.phase='done';S.tEnd=Date.now();save();result();
+  S.c={s:E.scenario(S.id).id,o:S.co||0,w:S.cs||0,a,t:Math.round((Date.now()-S.tC0)/1000)};S.phase='done';S.tEnd=Date.now();save();result();
  }
  function result(){
   const payload={v:C.version,id:S.id,n:S.name,e:S.email||'',s:new Date(S.tA0).toISOString(),z:new Date(S.tEnd).toISOString(),a:{r:S.r,t:S.tAsec},b:S.b,c:S.c};
