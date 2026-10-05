@@ -1,5 +1,5 @@
 /* Public code of the Power BI basics exam. No answers here: the key, the expected numbers and the scoring live only in the private admin file. */
-window.PBI_CONFIG={version:4,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4:3,5:1,6:2,7:2,8:1},weightA:0.5,weightB:0.35,weightC:0.15,targetMinutesB:15,resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev'};
+window.PBI_CONFIG={version:5,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4:3,5:1,6:2,7:2,8:1},weightA:0.5,weightB:0.35,weightC:0.15,targetMinutesB:15,resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev'};
 (function(){
  function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
  function seedNum(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
