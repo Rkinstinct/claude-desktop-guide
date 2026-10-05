@@ -38,11 +38,11 @@
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל עבודה <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
   <label>קוד נבחן <small>(רק אם קיבלתם ממנהל המבחן)</small><input id="in-id" maxlength="6" dir="ltr" pattern="[A-Za-z2-9]{6}" placeholder="6 תווים" style="text-transform:uppercase"></label>
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום אקבל קוד תוצאה ושאשלח אותו בעצמי למנהל המבחן, יחד עם קובץ הפרויקט וצילומי המסך. הציון נקבע אצל מנהל המבחן. שום דבר לא נשלח אוטומטית.</span></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הזמנים ומספר הפעמים שיצאתי מהמסך בחלק ג׳. את קובץ הפרויקט וצילומי המסך אשלח בעצמי. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
-  <p>הזמנים נמדדים בדפדפן שלכם, מרגע הלחיצה על "התחל" ועד ההגשה. הם נכללים בקוד התוצאה. המבחן עצמו לא שומר שום מידע על שרת: ההתקדמות נשמרת רק בלשונית הזאת, כדי שרענון לא יאבד אותה.</p>
+  <p>הזמנים נמדדים בדפדפן שלכם, מרגע הלחיצה על "התחל" ועד ההגשה. בסיום הם נשלחים למנהל המבחן יחד עם התשובות. במהלך המבחן ההתקדמות נשמרת רק בלשונית הזאת, כדי שרענון לא יאבד אותה.</p>
   <p>בחלק ב׳ אתם עובדים עם Claude שלכם (Chat או Claude Code) ובונים דוח ב-Power BI Desktop. את התשובות מזינים כאן, ואת הדוח עצמו שולחים למנהל המבחן. הציון לא מוצג לכם: הוא מחושב אצל מנהל המבחן.</p>
  </details>
 </section>
@@ -127,23 +127,24 @@
 <section id="s-res" class="screen" hidden>
  <span class="pill">המבחן הושלם</span>
  <h1>סיימתם. נשאר לשלוח למנהל המבחן</h1>
- <p class="lead">הציון לא מחושב כאן. הוא נקבע אצל מנהל המבחן, מהקוד ומהקבצים שתשלחו.</p>
+ <p class="lead">הציון לא מחושב כאן. הוא נקבע אצל מנהל המבחן.</p>
+ <p id="r-wait" class="muted" hidden>שולח את התשובות…</p><p id="r-ok" class="muted" hidden>התשובות והזמנים נשלחו בהצלחה למנהל המבחן. נשארו הקבצים: שלחו אותם בנפרד, כמפורט למטה.</p>
  <div class="score-row">
   <div class="score"><b id="r-ta" dir="ltr"></b><span>זמן חלק א׳</span></div>
   <div class="score"><b id="r-tb" dir="ltr"></b><span>זמן חלק ב׳</span></div>
   <div class="score"><b id="r-tc" dir="ltr"></b><span>זמן חלק ג׳</span></div>
  </div>
- <div class="card">
-  <h3>1. קוד התוצאה שלכם</h3>
+ <div class="card" id="r-card" hidden>
+  <h3>קוד התוצאה שלכם (גיבוי)</h3>
   <textarea id="r-code" class="code" readonly rows="4" dir="ltr"></textarea>
   <div class="nav"><button id="r-copy" class="btn" type="button">העתקת הקוד</button><button id="r-file" class="btn ghost" type="button">שמירה כקובץ</button></div>
   <p id="r-sent" class="muted"></p>
  </div>
- <div class="card"><h3>2. מה לשלוח, ביחד</h3><div id="r-bc"></div></div>
+ <div class="card"><h3>מה עוד לשלוח למנהל המבחן</h3><div id="r-bc"></div></div>
 </section>
 </main>
 <script src="exam-data.js?v=5.1"></script>
-<script src="exam-core.js?v=5.1"></script>
-<script src="exam.js?v=5.2"></script>
+<script src="exam-core.js?v=5.3"></script>
+<script src="exam.js?v=5.3"></script>
 </body>
 </html>
