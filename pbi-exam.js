@@ -20,14 +20,14 @@
   const p=E.paperA(S.id),i=S.i,q=p[i];
   $('a-count').textContent='שאלה '+(i+1)+' מתוך '+p.length;$('a-bar').style.width=(i/p.length*100)+'%';
   $('a-topic').textContent=T[q[1]];$('a-stem').textContent=q[2];
-  const box=$('a-opts');box.innerHTML='';picked=null;$('a-next').disabled=true;
+  const box=$('a-opts');box.innerHTML='';const prev=S.r[i];picked=(prev!==undefined&&prev>=0)?prev:null;$('a-next').disabled=picked===null;$('a-prev').hidden=i===0;
   $('a-next').textContent=i===p.length-1?'סיום חלק א׳':'הבא';
-  order(S.id,q[0]).forEach(oi=>{const b=document.createElement('button');b.type='button';b.className='opt';b.setAttribute('role','radio');b.setAttribute('aria-checked','false');b.textContent=q[3][oi];
+  order(S.id,q[0]).forEach(oi=>{const b=document.createElement('button');b.type='button';b.className='opt';b.setAttribute('role','radio');b.setAttribute('aria-checked',picked===oi?'true':'false');b.textContent=q[3][oi];
    b.onclick=()=>{picked=oi;box.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-checked','false'));b.setAttribute('aria-checked','true');$('a-next').disabled=false};box.append(b)});
  }
  function answer(v){
   S.r[S.i]=v;S.i++;
-  if(S.i>=E.paperA(S.id).length){S.tAsec=Math.round((Date.now()-S.tA0)/1000);S.phase='bintro';save();show('s-bintro');return}
+  if(S.i>=E.paperA(S.id).length){S.r=Array.from({length:E.paperA(S.id).length},(_,k)=>S.r[k]===undefined?-1:S.r[k]);S.tAsec=Math.round((Date.now()-S.tA0)/1000);S.phase='bintro';save();show('s-bintro');return}
   save();renderQ();
  }
  function dl(name,type,content){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
@@ -59,14 +59,19 @@
   const payload={v:C.version,id:S.id,n:S.name,e:S.email||'',s:new Date(S.tA0).toISOString(),z:new Date(S.tEnd).toISOString(),a:{r:S.r,t:S.tAsec},b:S.b,c:S.c};
   const code=E.encode(payload);show('s-res');
   $('r-ta').textContent=fmt(S.tAsec||0);$('r-tb').textContent=fmt(S.b.t);$('r-tc').textContent=fmt(S.c.t||0);$('r-code').value=code;
-  $('r-sent').textContent='קוד נבחן: '+S.id+'. הקוד מכיל את התשובות והזמנים, לא את הציון. שלחו אותו למנהל המבחן.';
-  if(C.resultsEndpoint)fetch(C.resultsEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})}).catch(()=>{});
+  const showCode=()=>{$('r-card').hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן.'};
+  if(S.sent){$('r-card').hidden=true;$('r-ok').hidden=false;return}
+  $('r-ok').hidden=true;$('r-card').hidden=true;$('r-wait').hidden=false;
+  fetch(C.resultsEndpoint+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exam:'pbi',code,id:S.id,name:S.name,email:S.email||''})})
+   .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;save();$('r-wait').hidden=true;$('r-ok').hidden=false})
+   .catch(()=>{$('r-wait').hidden=true;showCode()});
  }
  $('f-start').addEventListener('submit',e=>{e.preventDefault();
   const given=($('in-id').value||'').trim().toUpperCase();
   S={id:/^[A-HJKMNP-Z2-9]{6}$/.test(given)?given:newId(),name:$('in-name').value.trim(),email:$('in-mail').value.trim(),phase:'a',i:0,r:[],tA0:Date.now()};save();show('s-a');renderQ();tick()});
  $('a-next').onclick=()=>{if(picked!==null)answer(picked)};
- $('a-skip').onclick=()=>{if(confirm('דילוג נחשב לתשובה שגויה, ואי אפשר לחזור אליה. לדלג?'))answer(-1)};
+ $('a-skip').onclick=()=>{if(S.r[S.i]===undefined)S.r[S.i]=-1;answer(S.r[S.i]);};
+ $('a-prev').onclick=()=>{if(S.i>0){S.i--;save();renderQ()}};
  $('b-start').onclick=()=>{S.phase='b';S.tB0=Date.now();save();fillB();dlCsv();show('s-b');tick()};
  $('b-dl').onclick=dlCsv;
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB()});
