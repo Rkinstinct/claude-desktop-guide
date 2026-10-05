@@ -32,13 +32,16 @@
  }
  function dl(name,type,content){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
  const dlCsv=()=>dl('orders-2025-'+S.id+'.csv','text/csv;charset=utf-8','\ufeff'+E.csv(E.dataset(S.id)));
- function fillB(){
-  $('b-v2').innerHTML='<option value="">בחרו</option>'+E.REGIONS.map(c=>'<option>'+c+'</option>').join('');
-  $('b-q3').textContent='מה סך ההכנסות (Revenue) של המוצר "'+E.spec(S.id).product+'" בשנה כולה?';
- }
+ function fillB(){}
+ // Compress the dashboard screenshot in the browser so it stays small (JPEG, max 1400px wide).
+ function shrink(file){return new Promise((res,rej)=>{const im=new Image(),u=URL.createObjectURL(file);im.onload=()=>{const w=Math.min(1400,im.width),h=Math.round(im.height*w/im.width),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);URL.revokeObjectURL(u);let q=.8,d=c.toDataURL('image/jpeg',q);while(d.length>900000&&q>.3){q-=.1;d=c.toDataURL('image/jpeg',q)}d.length>900000?rej():res(d)};im.onerror=()=>rej();im.src=u})}
+ let shot=null;
+ async function pickShot(){const f=$('b-file').files[0];shot=null;$('b-fileinfo').textContent='';if(!f)return;if(!/^image\/(png|jpeg)$/.test(f.type)){$('b-fileinfo').textContent='בחרו תמונה בפורמט PNG או JPG.';$('b-file').value='';return}
+  try{const d=await shrink(f);shot={name:f.name.slice(0,60),data:d};$('b-fileinfo').textContent='הצילום מוכן: '+f.name+' ('+Math.round(d.length/1024)+' KB)'}catch(e){$('b-fileinfo').textContent='לא הצלחנו לעבד את התמונה. נסו צילום קטן יותר.';$('b-file').value=''}}
  function finishB(){
   const g=id=>$(id).value.trim();
-  S.b={t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,g('b-v3').replace(/[^\d]/g,''),g('b-v4').replace(/[^\d]/g,'')],note:g('b-note').slice(0,320)};
+  if(!shot){$('b-fileinfo').textContent='צריך להעלות צילום מסך של הדשבורד.';return}
+  S.b={t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,'')],note:g('b-note').slice(0,320),f:shot.name};S.file=shot;
   S.phase='c';S.tC0=Date.now();save();showC();
  }
  // Part C focus guard: counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
@@ -59,11 +62,11 @@
   const payload={v:C.version,id:S.id,n:S.name,e:S.email||'',s:new Date(S.tA0).toISOString(),z:new Date(S.tEnd).toISOString(),a:{r:S.r,t:S.tAsec},b:S.b,c:S.c};
   const code=E.encode(payload);show('s-res');
   $('r-ta').textContent=fmt(S.tAsec||0);$('r-tb').textContent=fmt(S.b.t);$('r-tc').textContent=fmt(S.c.t||0);$('r-code').value=code;
-  const showCode=()=>{$('r-card').hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן.'};
+  const showCode=()=>{$('r-card').hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן, יחד עם צילום המסך של הדשבורד.'};
   if(S.sent){$('r-card').hidden=true;$('r-ok').hidden=false;return}
   $('r-ok').hidden=true;$('r-card').hidden=true;$('r-wait').hidden=false;
-  fetch(C.resultsEndpoint+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exam:'pbi',code,id:S.id,name:S.name,email:S.email||''})})
-   .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;save();$('r-wait').hidden=true;$('r-ok').hidden=false})
+  fetch(C.resultsEndpoint+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exam:'pbi',code,id:S.id,name:S.name,email:S.email||'',file:S.file||null})})
+   .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;S.file=null;save();$('r-wait').hidden=true;$('r-ok').hidden=false})
    .catch(()=>{$('r-wait').hidden=true;showCode()});
  }
  $('f-start').addEventListener('submit',e=>{e.preventDefault();
@@ -73,7 +76,7 @@
  $('a-skip').onclick=()=>{if(S.r[S.i]===undefined)S.r[S.i]=-1;answer(S.r[S.i]);};
  $('a-prev').onclick=()=>{if(S.i>0){S.i--;save();renderQ()}};
  $('b-start').onclick=()=>{S.phase='b';S.tB0=Date.now();save();fillB();dlCsv();show('s-b');tick()};
- $('b-dl').onclick=dlCsv;
+ $('b-dl').onclick=dlCsv;$('b-file').addEventListener('change',pickShot);
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB()});
  $('f-c').addEventListener('submit',e=>{e.preventDefault();finish()});
  $('r-copy').onclick=async()=>{const t=$('r-code').value;try{await navigator.clipboard.writeText(t)}catch(e){$('r-code').select();document.execCommand('copy')}$('r-copy').textContent='הועתק';setTimeout(()=>$('r-copy').textContent='העתקת הקוד',2000)};
