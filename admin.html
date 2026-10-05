@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>תצוגת מנהל, מבחנים</title>
+<style>
+body{margin:0;background:#f3f2f1;color:#1b1a19;font-family:Heebo,system-ui,sans-serif;line-height:1.5}
+.bar{background:#1b1a19;color:#fff;padding:12px 16px;font-weight:700;border-bottom:3px solid #f2c811}
+main{max-width:980px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:10px;padding:14px;margin:12px 0;box-shadow:0 1px 3px #0002}
+input,select,button{font:inherit;padding:10px;border-radius:8px;border:1px solid #bbb}
+button{background:#1b1a19;color:#fff;border:0;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.muted{color:#666;font-size:.9rem}.err{color:#b00020}
+.res b{font-size:1.05rem}.tag{display:inline-block;background:#f2c811;border-radius:20px;padding:0 9px;font-size:.8rem;margin-inline-end:6px}
+.warn{color:#b00020;font-weight:600}
+pre{white-space:pre-wrap;word-break:break-word;background:#f3f2f1;padding:8px;border-radius:6px;font-size:.85rem}
+details{margin-top:6px}
+</style></head><body>
+<div class="bar">תצוגת מנהל: תוצאות מבחנים</div>
+<main>
+<form id="f" class="card row"><input id="pw" type="password" placeholder="סיסמת מנהל" autocomplete="current-password" required>
+<select id="ex"><option value="">שני המבחנים</option><option value="pbi">Power BI</option><option value="claude">Claude</option></select>
+<button type="submit">כניסה</button><span id="msg" class="muted"></span></form>
+<p class="muted">הסיסמה לא נשמרת בדפדפן. הציון של חלק א׳ אינו מחושב כאן (מפתח התשובות פרטי); מוצגים התשובות, הזמנים והיציאות מהמסך. יציאה מהמסך היא סימן לבדיקה ידנית, לא הוכחה.</p>
+<div id="out"></div>
+</main>
+<script>
+const API='https://exam-results-api.ariel-crm.workers.dev/admin/list';
+const $=id=>document.getElementById(id);
+const fmt=s=>{s=Math.max(0,Math.floor(+s||0));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const dec=c=>{try{let p=c.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');while(p.length%4)p+='=';return JSON.parse(decodeURIComponent(escape(atob(p))))}catch(e){return null}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+$('f').onsubmit=async e=>{e.preventDefault();$('msg').textContent='טוען…';$('msg').className='muted';
+ try{const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:$('pw').value,exam:$('ex').value||undefined})});
+  if(r.status===401){$('msg').textContent='סיסמה שגויה';$('msg').className='err';return}
+  const j=await r.json();$('msg').textContent=j.rows.length+' תוצאות';
+  $('out').innerHTML=j.rows.map(x=>{const d=dec(x.code)||{};const c=d.c||{},b=d.b||{},a=d.a||{};
+   const nA=Array.isArray(a.r)?a.r.filter(v=>v>=0).length+' מתוך '+a.r.length+' נענו':'';
+   const ta=a.t!=null?a.t:'',away=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך';
+   return '<div class="card res"><span class="tag">'+(x.exam==='pbi'?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span><br>'
+   +'זמנים: א׳ '+fmt(ta)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+(nA?' · חלק א׳: '+nA:'')+'<br>'+away
+   +'<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details>'
+   +'<details><summary>חלק ב׳ ונתונים גולמיים</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details></div>'}).join('')||'<p>אין תוצאות עדיין.</p>';
+ }catch(err){$('msg').textContent='שגיאת תקשורת';$('msg').className='err'}};
+</script></body></html>
