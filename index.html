@@ -1088,6 +1088,79 @@ footer .heart{color:var(--coral)}
 </article>
 
 
+<article class="chapter" id="ch18b">
+ <div class="ch-head"><span class="ch-num">18ב</span><h3>Mods: לשנות את Claude Code מבפנים</h3></div>
+ <p><b>Mod</b> הוא פונקציית TypeScript או JavaScript קטנה שרצה בתוך Claude Code עצמו ומגיבה לאירועים: קריאת כלי, שליחת פרומפט, בקשת הרשאה, ציור חלק מהמסך. היא יכולה לראות את האירוע, לשנות אותו, או להחליף אותו. Anthropic הכריזה על Mods ב-1 באוקטובר 2026, והם זמינים מגרסה 2.1.287 של Claude Code, ב-CLI וב-Code tab של אפליקציית הדסקטופ.</p>
+ <div class="callout"><b>איך זה שונה ממה שכבר למדתם:</b> הוק (פרק 16) הוא פקודת מעטפת שמוגדרת בקובץ הגדרות, רצה מחוץ ל-Claude Code ויכולה בעיקר להגיב. Mod רץ בתוך התהליך, ולכן יכול גם לשכתב פרומפט לפני שהוא מגיע למודל, לצייר חלונית וכפתורים, ולהחליף חלקים מהממשק. סקיל נותן לקלוד הוראות, ו-MCP נותן לו כלים. Mod משנה את Claude Code עצמו.</div>
+ <h4>מה אפשר לעשות עם Mod</h4>
+ <ul>
+  <li><b>שער בטיחות:</b> לעצור פקודה מסוכנת (כמו <code>rm -rf</code> או force push), להציג מה היא תשנה, ולתת כפתורי "המשך" ו"בטל".</li>
+  <li><b>הסתרת סודות:</b> לנקות מפתחות וסיסמאות מפלט של כלי לפני שקלוד קורא אותו.</li>
+  <li><b>אישור או דחייה של הרשאות</b> לפי כללים שלכם, ושכתוב או ניסיון חוזר של קריאת כלי.</li>
+  <li><b>ממשק משלכם:</b> חלונית ליד השיחה, למשל מצב צינור הבנייה, או תחזית של מילוי חלון ההקשר.</li>
+  <li><b>פקודת / משלכם</b> שמריצה פונקציה מיד, בלי תור של קלוד.</li>
+ </ul>
+ <h4>איך משתמשים בפועל</h4>
+ <ol>
+  <li><b>בודקים גרסה:</b> <code>claude --version</code> חייב להראות 2.1.287 ומעלה. Mods פעילים כברירת מחדל.</li>
+  <li><b>מתקינים:</b> Mod מגיע בתוך plugin. מתקינים עם <code>/plugin install שם@marketplace</code> בתוך הסשן, או <code>claude plugin install שם@marketplace</code> במעטפת. אחרי התקנה מהמעטפת בסשן פתוח: <code>/reload-plugins</code>.</li>
+  <li><b>מנסים בלי להתקין:</b> טוענים תיקייה לסשן אחד עם <code>claude --plugin-dir ./שם-התיקייה</code>. לדוגמה, Anthropic מפרסמת דוגמאות (<code>blast-radius</code>, <code>token-weather</code>, <code>replay-theater</code>) בריפו <code>claude-code-playground</code>, בלי תמיכה.</li>
+  <li><b>בודקים שנטען:</b> מריצים <code>/plugin</code>. שורה עמומה מתחת ללשוניות מציגה, למשל, "1 mod active".</li>
+  <li><b>לפני שסומכים על Mod של מישהו אחר:</b> מורידים את הקבצים ומריצים <code>claude plugin validate ./תיקייה</code>. השורות <code>hooks:</code> ו-<code>calls:</code> בפלט מפרטות על אילו אירועים הוא מגיב ומה הוא מבקש לעשות.</li>
+ </ol>
+ <h4>פרומפטים להעתקה</h4>
+ <p>אפשר לבקש מקלוד לכתוב Mod: הוא כותב את הקוד, מתקין אותו וטוען אותו מחדש בסשן.</p>
+ <p><code>כתוב לי mod ל-Claude Code שמציג ליד הספינר כמה קריאות כלי בוצעו בתור הנוכחי. תסביר לי בשפה פשוטה אילו אירועים הוא מאזין להם ומה הוא ניגש אליו.</code></p>
+ <p><code>כתוב mod שמחזיק כל פקודת Bash שמכילה rm -rf או git push --force, ומציג לי כפתורי המשך וביטול לפני שהיא רצה.</code></p>
+ <p><code>לפני שאני מתקין את ה-mod הזה: הרץ claude plugin validate על התיקייה והסבר לי מה ה-hooks וה-calls אומרים, ומה ה-mod הזה יכול לראות ולעשות במחשב שלי.</code></p>
+ <h4>פלט צפוי</h4>
+ <ul>
+  <li>אחרי הפרומפט הראשון: קלוד יוצר בדרך כלל תיקייה עם שלושה קבצים (<code>.claude-plugin/plugin.json</code>, <code>hooks/hooks.json</code>, <code>hooks/register.js</code>), טוען אותה, ובספינר מופיע טקסט דומה ל- <code>Thinking · tool calls: 3…</code>.</li>
+  <li>אחרי השני: פקודה מסוכנת נעצרת, ואתם רואים מה היא תשנה לפני שמאשרים.</li>
+  <li>אחרי השלישי: רשימת האירועים והקריאות של ה-mod, וסיכום של מה הוא יכול לגעת בו.</li>
+ </ul>
+ <h4>תרגיל</h4>
+ <ol>
+  <li>בתיקיית ניסוי (לא בפרויקט אמיתי), בקשו מקלוד את ה-mod הראשון, וודאו ב-<code>/plugin</code> שהוא נטען.</li>
+  <li>בקשו מקלוד לקרוא כמה קבצים בתיקייה, ובדקו שהמונה בספינר עולה.</li>
+  <li>כבו אותו: בלשונית Installed ב-<code>/plugin</code>. מה קרה לספינר? בדקו גם שבהפעלה עם <code>--safe-mode</code> הוא לא נטען.</li>
+ </ol>
+ <div class="callout warn"><b>בטיחות:</b> Mod רץ עם אותן הרשאות כמו Claude Code: הוא יכול לקרוא ולכתוב קבצים, להפעיל תוכנות, לגשת לרשת, לקרוא משתני סביבה וקבצי הגדרות (כולל מפתח API), לראות כל פרומפט וכל קריאת כלי, ואפילו לאשר קריאת כלי לפני שנשאלתם. הוא לא בארגז חול. התקינו Mods רק ממקורות שאתם סומכים עליהם, כמו כל קוד אחר.</div>
+ <h4>בסביבה נעולה (ארגון)</h4>
+ <p>Mods מגיעים בתוך plugins, ובארגון שלכם אין פלאגינים. לכן כרגע <b>אי אפשר להניח שהפיצ׳ר זמין לכם</b>. מה שאומר התיעוד הרשמי, ומה שלא נבדק:</p>
+ <ul>
+  <li><b>מה שהתיעוד אומר:</b> אדמין שולט ב-Mods דרך אותן בקרות של plugins ודרך הגדרות מנוהלות. ב-Team וב-Enterprise נטען ראשון mod מובנה בשם <code>sec-default</code> שמונע מ-Mods של משתמשים לעקוף כללי deny של הארגון או לשנות הוקס מנוהלים. עם האפשרות <code>allowManagedModsOnly</code> הארגון יכול לחסום לגמרי Mods שהמשתמשים מביאים, כולל כאלה שנטענו עם <code>--plugin-dir</code>.</li>
+  <li><b>מה שלא נבדק אצלכם:</b> אם מדיניות הארגון חוסמת רק את חנות הפלאגינים, או גם טעינה מקומית עם <code>--plugin-dir</code>. אל תנסו לעקוף את זה. שאלו את ה-IT: "האם Mods של Claude Code מותרים אצלנו, ובאיזה מסלול?"</li>
+  <li><b>אם מותר:</b> Mods יכולים לתת לצוות שלכם דברים כמו חלונית סטטוס, אישור לפני פקודות על קונפיגורציית ייצור, ו-audit log של כל מה ש-Mods אחרים עושים.</li>
+ </ul>
+ <div class="srcs">מקורות: <a href="https://claude.com/blog/claude-code-mods">Customize Claude Code with mods (Anthropic)</a> · <a href="https://code.claude.com/docs/en/plugins/mods/overview">Mods overview</a> · <a href="https://code.claude.com/docs/en/plugins/mods/admin">Manage mods for your organization</a></div>
+ <h4>בדקו את עצמכם</h4>
+ <div class="quiz">
+  <div class="q">
+   <p class="q-stem">אתם רוצים שכל פרומפט יעבור שכתוב קטן לפני שהוא מגיע למודל, וגם שיופיע מונה בספינר. מה מתאים?</p>
+   <button type="button" class="q-opt">הוק PostToolUse בקובץ ההגדרות<span class="q-fb" hidden>הוק בהגדרות הוא פקודת מעטפת מחוץ ל-Claude Code. הוא לא יכול לשכתב פרומפט ולא לצייר בספינר.</span></button>
+   <button type="button" class="q-opt" data-ok="1">Mod, כי הוא רץ בתוך Claude Code ויכול גם לשכתב פרומפט וגם לשנות ממשק<span class="q-fb" hidden>נכון. שכתוב פרומפט וציור בממשק הם בדיוק מה ש-Mods מוסיפים על הוקס.</span></button>
+   <button type="button" class="q-opt">הנחיה ב-CLAUDE.md<span class="q-fb" hidden>CLAUDE.md הוא הוראה למודל, לא קוד שרץ על האירועים.</span></button>
+   <button type="button" class="q-opt">שרת MCP<span class="q-fb" hidden>MCP נותן לקלוד כלים. הוא לא משנה את Claude Code עצמו ולא את הממשק שלו.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">עמית שולח לכם Mod מהאינטרנט "שמשפר את Claude Code". מה עושים לפני שמתקינים?</p>
+   <button type="button" class="q-opt">מתקינים בפרויקט קטן, כי Mod מוגבל לפרויקט<span class="q-fb" hidden>Mod לא מוגבל לפרויקט. הוא רץ עם כל ההרשאות שלכם.</span></button>
+   <button type="button" class="q-opt">סומכים, כי Mods בארגז חול<span class="q-fb" hidden>להפך: הם לא בארגז חול ויכולים לקרוא קבצים ומשתני סביבה ולהפעיל תוכנות.</span></button>
+   <button type="button" class="q-opt" data-ok="1">מורידים את הקבצים, מריצים claude plugin validate וקוראים את שורות hooks ו-calls, ובודקים שהמקור מהימן<span class="q-fb" hidden>נכון. הפקודה מציגה על אילו אירועים ה-Mod מגיב ומה הוא מבקש לעשות, בלי להריץ אותו.</span></button>
+   <button type="button" class="q-opt">מתקינים ובודקים אם משהו רע קורה<span class="q-fb" hidden>ה-Mod רץ מיד עם ההרשאות שלכם. נזק כבר יכול לקרות לפני שתשימו לב.</span></button>
+  </div>
+  <div class="q">
+   <p class="q-stem">בארגון שלכם אין פלאגינים. מה נכון לגבי Mods?</p>
+   <button type="button" class="q-opt">Mods זמינים לכולם כי הם מובנים ב-Claude Code<span class="q-fb" hidden>רק חלק מהפיצ׳רים המובנים (כמו /diff) הם Mods. Mods חדשים מגיעים בתוך plugins, ואדמין יכול לחסום אותם.</span></button>
+   <button type="button" class="q-opt" data-ok="1">לא מניחים שזה זמין. שואלים את ה-IT אם Mods מותרים ובאיזה מסלול, ולא מנסים לעקוף<span class="q-fb" hidden>נכון. Mods מגיעים כ-plugins, והארגון יכול להגביל אותם עם הגדרות מנוהלות, כולל טעינה מקומית.</span></button>
+   <button type="button" class="q-opt">מורידים את sec-default ואז הכול מותר<span class="q-fb" hidden>sec-default מובנה, נטען ראשון ומשתמשים לא יכולים לכבות אותו.</span></button>
+   <button type="button" class="q-opt">משתמשים ב---plugin-dir, כי הוא תמיד עוקף את הארגון<span class="q-fb" hidden>לא נכון: ארגון יכול לחסום גם mods שנטענו עם --plugin-dir, באמצעות allowManagedModsOnly.</span></button>
+  </div>
+ </div>
+</article>
+
+
 <section class="part" id="part-d">
  <h2>חלק ד׳: <span class="grad-text">Fabric Skills</span> בעולם Power BI</h2>
 </section>
@@ -1259,7 +1332,7 @@ footer .heart{color:var(--coral)}
 </div><!-- /wrap -->
 <script>
 const CHAPTERS=[
- ['ch01','01 · מה יש לכם ואיך המדריך עובד'],['ch02','02 · Chat: השיחה הראשונה'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · זיכרון, חיפוש ואינקוגניטו'],['ch06','06 · קונטקסט וטוקנים'],['ch07','07 · Claude Code: התקנה'],['ch08','08 · סשנים והפרויקט הראשון'],['ch09','09 · מצבי הרשאות'],['ch10','10 · חשיבה מורחבת'],['ch12','12 · קיצורים וטיפים'],['ch13','13 · סקילים'],['ch14','14 · פקודות סלאש'],["ch15","15 · סאב-אייג'נטים"],['ch16','16 · הוקס'],['ch17','17 · CLAUDE.md'],['ch18','18 · MCP בסביבה נעולה'],['ch19','19 · Skills for Fabric: Power BI'],['ch20','20 · כתיבת דוחות PBI'],['ch21','21 · Modeling MCP']
+ ['ch01','01 · מה יש לכם ואיך המדריך עובד'],['ch02','02 · Chat: השיחה הראשונה'],['ch03','03 · פרויקטים'],['ch04','04 · ארטיפקטים'],['ch05','05 · זיכרון, חיפוש ואינקוגניטו'],['ch06','06 · קונטקסט וטוקנים'],['ch07','07 · Claude Code: התקנה'],['ch08','08 · סשנים והפרויקט הראשון'],['ch09','09 · מצבי הרשאות'],['ch10','10 · חשיבה מורחבת'],['ch12','12 · קיצורים וטיפים'],['ch13','13 · סקילים'],['ch14','14 · פקודות סלאש'],["ch15","15 · סאב-אייג'נטים"],['ch16','16 · הוקס'],['ch17','17 · CLAUDE.md'],['ch18','18 · MCP בסביבה נעולה'],['ch18b','18ב · Mods'],['ch19','19 · Skills for Fabric: Power BI'],['ch20','20 · כתיבת דוחות PBI'],['ch21','21 · Modeling MCP']
 ];
 document.getElementById('toc').innerHTML=CHAPTERS.map(c=>`<a href="#${c[0]}">${c[1]}</a>`).join('');
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -1284,4 +1357,4 @@ setTimeout(end,14000);
 })();
 </script>
 </body>
-</html>
+                                                                                                      </html>
