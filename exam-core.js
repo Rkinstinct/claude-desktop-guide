@@ -6,7 +6,7 @@ window.EXAM_CONFIG={
  weightA:0.45, weightB:0.40, weightC:0.15,
  targetMinutesB:60,  // reference time shown to examinees and in the admin table
  // Later: set to a Cloudflare Worker URL and results are also POSTed there (see submitResult in exam.js).
- resultsEndpoint:null,
+ resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev',
  scenarioSet:'web' // 'web' (site building and design) or 'bi' (Power BI): which Part C scenarios are drawn
 };
 (function(){
