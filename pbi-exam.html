@@ -15,9 +15,9 @@
 <section id="s-start">
  <span class="pill">רמה בסיסית</span>
  <h1>מבחן יסודות Power BI</h1>
- <p class="lead">למי שסיימו קורס יסודות ב-Power BI. שלושה חלקים: 24 שאלות הבנה, תרגיל קצר על נתונים שתקבלו, וחלק קצר על תכנון עוזר AI.</p>
+ <p class="lead">למי שסיימו קורס יסודות ב-Power BI. שלושה חלקים: 15 שאלות הבנה, תרגיל קצר על נתונים שתקבלו, וחלק קצר על תכנון עוזר AI.</p>
  <div class="facts">
-  <div><b>חלק א׳: 24 שאלות הבנה</b><span>מה Power BI נותן, הכנת נתונים, מודל, מדדים, בחירת ויזואל, מסננים ושיתוף, ו-AI בסיסי, כולל מושגי MCP וסקילס. שואלים למה ומתי, לא איך מקישים.</span></div>
+  <div><b>חלק א׳: 15 שאלות הבנה</b><span>מה Power BI נותן, הכנת נתונים, מודל, מדדים, בחירת ויזואל, מסננים ושיתוף, ו-AI בסיסי, כולל מושגי MCP וסקילס. שואלים למה ומתי, לא איך מקישים.</span></div>
   <div><b>חלק ב׳: תרגיל על נתונים</b><span>קובץ נתונים אישי. 4 תשובות קצרות ומסקנה אחת במילים שלכם. זמן יעד 15 דקות.</span></div>
   <div><b>חלק ג׳: בונים עוזר AI</b><span>מתארים לכם צורך, ואתם עונים איך הייתם בונים עוזר שיענה עליו: 3 תשובות קצרות במילים שלכם.</span></div>
  </div>
@@ -25,7 +25,7 @@
   <h3>לפני שמתחילים</h3>
   <ul>
    <li><b>חלק ב׳:</b> מומלץ לעבוד ב-Power BI Desktop (Windows). אפשר לחשב גם בכלי אחר, אבל המבחן בודק את המספרים.</li>
-   <li><b>דילוג:</b> שאלה שמדלגים עליה נחשבת תשובה שגויה, ואי אפשר לחזור אליה.</li>
+   <li><b>חלק א׳:</b> אפשר לדלג, לחזור אחורה ולשנות תשובה עד סיום חלק א׳. שאלה שנשארה בלי תשובה נחשבת שגויה.</li>
    <li><b>לשונית:</b> ההתקדמות נשמרת בלשונית הזאת בלבד. אל תסגרו אותה באמצע.</li>
   </ul>
  </div>
@@ -33,21 +33,21 @@
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
   <label>קוד נבחן <small>(רק אם קיבלתם ממנהל המבחן)</small><input id="in-id" maxlength="6" dir="ltr" pattern="[A-Za-z2-9]{6}" placeholder="6 תווים" style="text-transform:uppercase"></label>
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום אקבל קוד תוצאה ושאשלח אותו בעצמי למנהל המבחן. הציון נקבע אצל מנהל המבחן. שום דבר לא נשלח אוטומטית.</span></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הזמנים, ומספר הפעמים שיצאתי מהמסך בחלק ג׳. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
-  <p>הזמנים נמדדים בדפדפן שלכם ונכללים בקוד התוצאה. המבחן לא שומר שום מידע בשרת. את התשובות הנכונות והציון אתם לא רואים: הם נקבעים אצל מנהל המבחן.</p>
+  <p>הזמנים נמדדים בדפדפן שלכם ונכללים בקוד התוצאה. בסיום התשובות והזמנים נשלחים למנהל המבחן ונשמרים אצלו, ולא נשמר שום דבר אחר. את התשובות הנכונות והציון אתם לא רואים: הם נקבעים אצל מנהל המבחן.</p>
   <p>חלק א׳ ותשובות המספרים בחלק ב׳ נבדקים אוטומטית. המסקנה בחלק ב׳ וחלק ג׳ נבדקים ידנית. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
  </details>
 </section>
 
 <section id="s-a" hidden>
- <div class="prog-top"><span id="a-count">שאלה 1 מתוך 24</span><span id="a-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="a-bar"></i></div>
+ <div class="prog-top"><span id="a-count">שאלה 1 מתוך 15</span><span id="a-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="a-bar"></i></div>
  <div class="topic" id="a-topic"></div>
  <h2 id="a-stem" class="stem"></h2>
  <div id="a-opts" class="opts" role="radiogroup"></div>
- <div class="nav"><button id="a-skip" class="btn ghost" type="button">דלג</button><button id="a-next" class="btn" type="button" disabled>הבא</button></div>
+ <div class="nav"><button id="a-prev" class="btn ghost" type="button" hidden>הקודמת</button><button id="a-skip" class="btn ghost" type="button">דלג</button><button id="a-next" class="btn" type="button" disabled>הבא</button></div>
 </section>
 
 <section id="s-bintro" hidden>
@@ -79,17 +79,18 @@
 
 <section id="s-res" hidden>
  <span class="pill">המבחן הושלם</span>
- <h1>סיימתם. נשאר לשלוח למנהל המבחן</h1>
- <p class="lead">הציון לא מחושב כאן. הוא נקבע אצל מנהל המבחן, מהקוד שלמטה.</p>
+ <h1>סיימתם, התשובות נשלחו</h1>
+ <p class="lead">הציון לא מחושב כאן. הוא נקבע אצל מנהל המבחן.</p>
+ <p id="r-wait" class="muted" hidden>שולח את התשובות…</p><p id="r-ok" class="muted" hidden>התשובות והזמנים נשלחו בהצלחה למנהל המבחן. אין צורך לשלוח דבר נוסף.</p>
  <div class="statrow"><div class="stat"><b id="r-ta">0</b><span>זמן חלק א׳</span></div><div class="stat"><b id="r-tb">0</b><span>זמן חלק ב׳</span></div><div class="stat"><b id="r-tc">0</b><span>זמן חלק ג׳</span></div></div>
- <div class="card"><h3>קוד התוצאה שלכם</h3>
+ <div class="card" id="r-card" hidden><h3>קוד התוצאה שלכם</h3>
   <textarea id="r-code" class="codebox" readonly></textarea>
   <div class="dl"><button id="r-copy" class="btn">העתקת הקוד</button><button id="r-file" class="btn ghost">שמירה כקובץ</button></div>
   <p class="muted" id="r-sent"></p></div>
 </section>
 </main>
-<script src="pbi-exam-data.js?v=3"></script>
-<script src="pbi-exam-core.js?v=4"></script>
-<script src="pbi-exam.js?v=4"></script>
+<script src="pbi-exam-data.js?v=4"></script>
+<script src="pbi-exam-core.js?v=5"></script>
+<script src="pbi-exam.js?v=5"></script>
 </body>
 </html>
