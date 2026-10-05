@@ -60,8 +60,14 @@
   S.b={k:S.track,t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,$('b-v3').value,g('b-v4'),$('b-v5').value,g('b-v6').replace(/[^\d]/g,'')],note:g('b-note').slice(0,300),z:proj,sh:shots.slice()};
   S.phase='c';S.tC0=Date.now();save();showC();
  }
+ // Part C focus guard: counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
+ let awayAt=0;
+ function onAway(){if(!S||S.phase!=='c'||$('s-c').hidden||awayAt)return;awayAt=Date.now()}
+ function onBack(){if(!awayAt)return;const sec=Math.round((Date.now()-awayAt)/1000);awayAt=0;if(!S||S.phase!=='c')return;S.co=(S.co||0)+1;S.cs=(S.cs||0)+sec;save();$('c-warn').hidden=false;$('c-warn-n').textContent=S.co}
+ document.addEventListener('visibilitychange',()=>{document.hidden?onAway():onBack()});
+ window.addEventListener('blur',onAway);window.addEventListener('focus',onBack);
  function showC(){
-  const sc=E.scenario(S.id);show('s-c');tick();
+  const sc=E.scenario(S.id);show('s-c');tick();$('c-warn').hidden=!(S.co>0);$('c-warn-n').textContent=S.co||0;
   $('c-title').textContent=sc.title;$('c-brief').textContent=sc.brief;
   const q=$('c-qs');q.innerHTML='';
   E.CQ.forEach((x,i)=>{if(i===2)return;const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=350;t.rows=3;t.required=true;t.dataset.i=i;l.append(t);q.append(l)});
@@ -71,7 +77,7 @@
  }
  function finish(){
   const a=[...document.querySelectorAll('#c-qs textarea')].sort((x,y)=>x.dataset.i-y.dataset.i).map(t=>t.value.trim().slice(0,350));
-  S.c={s:E.scenario(S.id).id,tools:[...document.querySelectorAll('#c-tools input:checked')].map(x=>x.value),a,t:Math.round((Date.now()-S.tC0)/1000)};
+  S.c={s:E.scenario(S.id).id,o:S.co||0,w:S.cs||0,tools:[...document.querySelectorAll('#c-tools input:checked')].map(x=>x.value),a,t:Math.round((Date.now()-S.tC0)/1000)};
   S.phase='done';S.tEnd=Date.now();save();result();
  }
  function result(){
