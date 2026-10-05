@@ -73,3 +73,5 @@ textarea{resize:vertical}
 .qa select,.qa textarea,.qa input{font-weight:400;margin-top:8px}
 .qa .why{margin-top:8px}
 .qa.bad select,.qa.bad textarea{border-color:#b9402a}
+
+.warn{background:#fbf1d9;border:1px solid #d9a441;border-inline-start:5px solid #d97757;border-radius:10px;padding:10px 14px;margin:12px 0;color:#292621;font-size:15px}.warn.alert{background:#f8e1dd;border-color:#b4493a;font-weight:600}
