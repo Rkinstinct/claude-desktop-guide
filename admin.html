@@ -10,7 +10,7 @@ button{background:#1b1a19;color:#fff;border:0;cursor:pointer}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .muted{color:#666;font-size:.9rem}.err{color:#b00020}
 .res b{font-size:1.05rem}.tag{display:inline-block;background:#f2c811;border-radius:20px;padding:0 9px;font-size:.8rem;margin-inline-end:6px}
-.warn{color:#b00020;font-weight:600}
+.big{font-size:1.3rem;font-weight:700}.okc{color:#0a7d2c;font-weight:600}.ok{color:#0a7d2c}.bad{color:#b00020}.shot{margin:6px 0}ol{padding-inline-start:20px}.warn{color:#b00020;font-weight:600}
 pre{white-space:pre-wrap;word-break:break-word;background:#f3f2f1;padding:8px;border-radius:6px;font-size:.85rem}
 details{margin-top:6px}
 </style></head><body>
@@ -19,25 +19,51 @@ details{margin-top:6px}
 <form id="f" class="card row"><input id="pw" type="password" placeholder="סיסמת מנהל" autocomplete="current-password" required>
 <select id="ex"><option value="">שני המבחנים</option><option value="pbi">Power BI</option><option value="claude">Claude</option></select>
 <button type="submit">כניסה</button><span id="msg" class="muted"></span></form>
-<p class="muted">הסיסמה לא נשמרת בדפדפן. הציון של חלק א׳ אינו מחושב כאן (מפתח התשובות פרטי); מוצגים התשובות, הזמנים והיציאות מהמסך. יציאה מהמסך היא סימן לבדיקה ידנית, לא הוכחה.</p>
+<p class="muted">הסיסמה לא נשמרת בדפדפן. חלק א׳ ב-Power BI מחושב כאן מול מפתח שנמצא רק בשרת, מאחורי הסיסמה. יציאה מהמסך היא סימן לבדיקה ידנית, לא הוכחה.</p>
 <div id="out"></div>
 </main>
+<script src="pbi-exam-data.js?v=4"></script><script src="pbi-exam-core.js?v=6"></script>
 <script>
 const API='https://exam-results-api.ariel-crm.workers.dev/admin/list';
 const $=id=>document.getElementById(id);
 const fmt=s=>{s=Math.max(0,Math.floor(+s||0));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
 const dec=c=>{try{let p=c.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');while(p.length%4)p+='=';return JSON.parse(decodeURIComponent(escape(atob(p))))}catch(e){return null}};
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let KEY=null,PW='';
+const OPT=['א','ב','ג','ד'];
+function scoreA(d){
+ if(!KEY||!d.a||!Array.isArray(d.a.r)||!(d.v>=4))return null;
+ const p=PbiCore.paperA(d.id);if(p.length!==d.a.r.length)return null;
+ let n=0;const rows=p.map((q,i)=>{const k=KEY[q[0]],g=d.a.r[i],ok=g===k;if(ok)n++;
+  return '<li class="'+(ok?'ok':'bad')+'">'+(ok?'✓ ':'✗ ')+esc(q[2])+'<br><span class="muted">ענה: '+(g>=0?esc(q[3][g]):'לא ענה')+(ok?'':' · נכון: '+esc(q[3][k]))+'</span></li>'}).join('');
+ return {n,total:p.length,rows};
+}
+function card(x){
+ const d=dec(x.code)||{},c=d.c||{},b=d.b||{},a=d.a||{},pbi=x.exam==='pbi';
+ const away=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך';
+ let h='<div class="card res"><span class="tag">'+(pbi?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span><br>זמנים: א׳ '+fmt(a.t)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+'<br>'+away;
+ if(pbi){
+  const sc=scoreA(d);
+  h+='<p><b>חלק א׳:</b> '+(sc?'<span class="big">'+sc.n+' מתוך '+sc.total+' נכון</span>':'לא ניתן לחשב (גרסה ישנה של המבחן)')+'</p>';
+  if(sc)h+='<details><summary>כל השאלות: נכון / שגוי</summary><ol>'+sc.rows+'</ol></details>';
+  let exp=null;try{exp=PbiCore.dataset(d.id).reduce((s,r)=>s+r.Revenue,0)}catch(e){}
+  const got=(b.v||[])[0];
+  h+='<p><b>חלק ב׳, הכרטיס:</b> '+esc(got)+(exp!=null&&got!==undefined&&got!==''?(String(exp)===String(got)?' <span class="okc">✓ נכון</span>':' <span class="warn">✗ צפוי '+exp+'</span>'):'')+'</p>';
+  h+='<p><b>הסבר הנבחן:</b> '+esc(b.note||'')+'</p>';
+  h+=x.has_file?'<button type="button" class="shot" data-id="'+x.id+'">הצגת צילום המסך של הדשבורד</button><div class="shotbox"></div>':'<p class="muted">לא הועלה צילום מסך.</p>';
+ }else{
+  h+='<details><summary>חלק א׳ וחלק ב׳ (גולמי)</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details>';
+ }
+ h+='<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details></div>';
+ return h;
+}
+document.addEventListener('click',async e=>{const t=e.target.closest('.shot');if(!t)return;const box=t.nextElementSibling;box.textContent='טוען…';
+ try{const r=await fetch(API.replace('list','file'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:PW,id:+t.dataset.id})});const j=await r.json();box.innerHTML='';const im=new Image();im.src=j.data;im.style.maxWidth='100%';box.append(im)}catch(err){box.textContent='שגיאה בטעינה'}});
 $('f').onsubmit=async e=>{e.preventDefault();$('msg').textContent='טוען…';$('msg').className='muted';
  try{const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:$('pw').value,exam:$('ex').value||undefined})});
   if(r.status===401){$('msg').textContent='סיסמה שגויה';$('msg').className='err';return}
-  const j=await r.json();$('msg').textContent=j.rows.length+' תוצאות';
-  $('out').innerHTML=j.rows.map(x=>{const d=dec(x.code)||{};const c=d.c||{},b=d.b||{},a=d.a||{};
-   const nA=Array.isArray(a.r)?a.r.filter(v=>v>=0).length+' מתוך '+a.r.length+' נענו':'';
-   const ta=a.t!=null?a.t:'',away=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך';
-   return '<div class="card res"><span class="tag">'+(x.exam==='pbi'?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span><br>'
-   +'זמנים: א׳ '+fmt(ta)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+(nA?' · חלק א׳: '+nA:'')+'<br>'+away
-   +'<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details>'
-   +'<details><summary>חלק ב׳ ונתונים גולמיים</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details></div>'}).join('')||'<p>אין תוצאות עדיין.</p>';
+  const j=await r.json();KEY=j.key;PW=$('pw').value;$('msg').textContent=j.rows.length+' תוצאות';
+  $('out').innerHTML=j.rows.map(card).join('')||'<p>אין תוצאות עדיין.</p>';
  }catch(err){$('msg').textContent='שגיאת תקשורת';$('msg').className='err'}};
 </script></body></html>
