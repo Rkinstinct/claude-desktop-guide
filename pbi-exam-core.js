@@ -31,10 +31,16 @@ window.PBI_CONFIG={version:3,passMark:70,advancedMark:85,perTopic:3,weightA:0.5,
   for(let i=out.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[out[i],out[j]]=[out[j],out[i]]}
   return out;
  }
+ const SCEN=[
+  {id:'dax',title:'מדדים בלי טעויות',brief:'בצוות ה-BI יש מודל עם עשרות מדדים שכתבו אנשים שונים. רוצים עוזר AI שעובר על המדדים ומחזיר רשימה של בעיות: חילוק בלי הגנה מחלוקה באפס, שמות לא ברורים ומדדים שחוזרים על עצמם. הוא רק מדווח ולא משנה כלום במודל.'},
+  {id:'doc',title:'תיעוד אוטומטי של המודל',brief:'אף אחד לא זוכר מה יש במודל של המכירות: אילו טבלאות, איך הן מחוברות ומה כל מדד מחשב. רוצים עוזר AI שקורא את המודל וכותב מסמך תיעוד חדש בשפה פשוטה. הוא לא משנה את המודל ולא נוגע בנתונים עצמם.'},
+  {id:'sum',title:'טיוטת סיכום חודשי למנהל',brief:'כל חודש מישהו כותב למנהל פסקה שמסכמת את דוח המכירות: מה עלה, מה ירד ומה חריג. רוצים עוזר AI שמכין טיוטה מהנתונים של החודש. הוא לא מפרסם ולא שולח כלום, ואדם קורא ומאשר לפני שזה מגיע למנהל.'}
+ ];
+ function scenario(id){return SCEN[seedNum('c:'+id)%SCEN.length]}
  const CQ=[
-  'עוזר AI כתב לכם מדד. מה אתם עושים לפני שהוא נכנס לדוח שמגיע למנהלים, ולמה?',
-  'אילו נתונים לא תדביקו בכלי AI חיצוני כשאתם מבקשים עזרה, ומה תעשו במקום? תנו דוגמה.',
-  'סיכום אוטומטי בדוח אומר "ההכנסות ירדו ב-12%", ובטבלה ההפרש הוא 8%. איך תבררו מה קרה, ומה תגידו למי שקורא את הדוח?'];
+  'איך תתארו לעוזר את התפקיד שלו: מה הוא מקבל, מה הוא מחזיר ובאיזה פורמט?',
+  'מה מותר לעוזר לעשות ומה אסור לו (לקרוא, לשנות, לשלוח, לגשת לנתונים רגישים), ולמה?',
+  'איך תבדקו שהוא עובד נכון לפני שסומכים עליו, ומי מאשר את התוצאה?'];
  function h53(s){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^h1>>>16,2246822507)^Math.imul(h2^h2>>>13,3266489909);h2=Math.imul(h2^h2>>>16,2246822507)^Math.imul(h1^h1>>>13,3266489909);return (4294967296*(2097151&h2)+(h1>>>0)).toString(36)}
  function b64u(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
  function unb64u(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return decodeURIComponent(escape(atob(s)))}
@@ -44,5 +50,5 @@ window.PBI_CONFIG={version:3,passMark:70,advancedMark:85,perTopic:3,weightA:0.5,
   const checkOk=h53('p1'+m[1]).slice(0,8)===m[2];
   try{return {data:JSON.parse(unb64u(m[1])),checkOk}}catch(e){return {error:'הקוד פגום'}}
  }
- window.PbiCore={REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,encode,decode,mulberry,seedNum,h53};
+ window.PbiCore={REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
 })();
