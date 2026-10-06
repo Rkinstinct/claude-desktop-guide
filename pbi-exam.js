@@ -4,8 +4,8 @@
  const LIMIT=C.limitMinutesB*60;
  let S=null;
  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
- const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done'}catch(e){}};
- const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done';stepRender()}catch(e){}};
+ const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0);stepRender()};
  const fmt=s=>{s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const fmtH=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/3600)+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const newId=()=>{const a='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let o='';crypto.getRandomValues(new Uint8Array(6)).forEach(x=>o+=a[x%a.length]);return o};
@@ -181,6 +181,35 @@
  $('b-toa').onclick=()=>{S.phase='a';save();show('s-a');renderQ();tick()};
  $('b-start').onclick=()=>{S.phase='b';if(!S.tB0)S.tB0=Date.now();save();fillB();dlCsv();show('s-b');tick()};
  $('b-dl').onclick=dlOrders;$('b-dl2').onclick=dlRegions;
+
+ // ---------- stepper: free movement between the three parts, state is kept in localStorage
+ const SECS=['s-a','s-bintro','s-b','s-c','s-sum'];
+ function curSec(){return SECS.find(i=>$(i)&&!$(i).hidden)}
+ function stepRender(){
+  const nav=$('steps');if(!nav)return;
+  const sec=curSec();
+  if(!S||!sec||S.phase==='done'){nav.hidden=true;return}
+  nav.hidden=false;
+  const cur={'s-a':'a','s-bintro':'b','s-b':'b','s-c':'c','s-sum':'c'}[sec];
+  const st={a:P().length>0&&answered()===P().length,b:!!S.bDone,c:false};
+  nav.querySelectorAll('button').forEach(b=>{const p=b.dataset.p;
+   b.classList.toggle('done',!!st[p]);b.classList.toggle('locked',p==='c'&&!S.bDone);
+   if(p===cur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
+   b.firstChild.textContent=(st[p]&&p!==cur)?'✓':({a:'1',b:'2',c:'3'})[p]});
+ }
+ let hintT=null;
+ function stepHint(m){const h=$('step-hint');h.textContent=m;h.hidden=false;clearTimeout(hintT);hintT=setTimeout(()=>{h.hidden=true},6000)}
+ function snapA(){S.r=Array.from({length:P().length},(_,k)=>isAns(S.r[k])?S.r[k]:-1);if(!S.tAsec)S.tAsec=Math.round((Date.now()-S.tA0)/1000)}
+ function stepNav(p){
+  if(!S||S.phase==='done'||closing)return;
+  const sec=curSec();$('step-hint').hidden=true;
+  if(sec==='s-a')snapA();
+  if(p==='a'){if(sec!=='s-a')goPhase('a');else save();return}
+  if(p==='b'){if(!S.tB0){S.phase='bintro';save();show('s-bintro')}else if(sec!=='s-b')goPhase('b');return}
+  if(!S.bDone){stepHint('כדי לעבור לחלק ג׳ צריך קודם לסיים את חלק ב׳ (שליחת המספרים והקבצים). אפשר לחזור אליו ולהשלים.');return}
+  S.phase='c';save();showC();
+ }
+ $('steps').addEventListener('click',e=>{const b=e.target.closest('button[data-p]');if(b)stepNav(b.dataset.p)});
  $('restart').onclick=()=>{if(confirm('למחוק את כל ההתקדמות ולהתחיל מחדש? אי אפשר לשחזר.')){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}};
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB(false)});
  $('f-c').addEventListener('submit',e=>{e.preventDefault();showSum()});
