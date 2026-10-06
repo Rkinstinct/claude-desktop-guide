@@ -110,3 +110,4 @@ textarea{resize:vertical}
  .btn{padding:0 36px}
  .sumlist li{padding:14px 18px}
 }
+@media(max-width:520px){.bar .wrap{gap:6px}.bar .wrap a,.bar .wrap button,#restart{white-space:nowrap;font-size:.8rem}.bar .wrap>*:first-child{font-size:.9rem}}
