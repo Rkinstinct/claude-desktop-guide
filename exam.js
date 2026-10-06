@@ -30,7 +30,7 @@
   const emptyW=P.writes.filter(i=>!(d.w[i]||'').trim()).length;
   if(emptyW&&!confirm(emptyW+' שאלות כתובות ריקות ויקבלו אפס. להמשיך?'))return;
   S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
-  S.tAsec=S.a.t;S.phase='bintro';save();show('s-bintro');
+  S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;if(S.tB0){S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}else{S.phase='bintro';save();show('s-bintro')}
  }
  function fillSelects(){
   $('b-v2').innerHTML='<option value="">בחרו</option>'+E.CATS.map(c=>'<option>'+c+'</option>').join('');
@@ -57,8 +57,8 @@
  function finishB(){
   const g=id=>$(id).value.trim();
   if(!proj||shots.length<2||new Set(shots).size<shots.length){refreshFind();$('b-find').scrollIntoView({block:'center'});return}
-  S.b={k:S.track,t:Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,$('b-v3').value,g('b-v4'),$('b-v5').value,g('b-v6').replace(/[^\d]/g,'')],note:g('b-note').slice(0,300),z:proj,sh:shots.slice()};
-  S.phase='c';S.tC0=Date.now();save();showC();
+  S.b={k:S.track,t:(S.b&&S.b.t)||Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,$('b-v3').value,g('b-v4'),$('b-v5').value,g('b-v6').replace(/[^\d]/g,'')],note:g('b-note').slice(0,300),z:proj,sh:shots.slice()};
+  S.phase='c';S.tC0=S.tC0||Date.now();save();showC();
  }
  // Part C focus guard: counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
  let awayAt=0;
@@ -69,7 +69,7 @@
  function showC(){
   const sc=E.scenario(S.id);show('s-c');tick();$('c-warn').hidden=!(S.co>0);$('c-warn-n').textContent=S.co||0;
   $('c-title').textContent=sc.title;$('c-brief').textContent=sc.brief;
-  const q=$('c-qs');q.innerHTML='';
+  const q=$('c-qs');if(q.children.length)return;q.innerHTML='';
   E.CQ.forEach((x,i)=>{if(i===2)return;const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=350;t.rows=3;t.required=true;t.dataset.i=i;l.append(t);q.append(l)});
   const l3=document.createElement('label');l3.textContent='3. '+E.CQ[2]+' (הנימוק; את הכלים מסמנים למטה)';const t3=document.createElement('textarea');t3.maxLength=350;t3.rows=3;t3.required=true;t3.dataset.i=2;l3.append(t3);
   q.insertBefore(l3,q.children[2]||null);
@@ -103,7 +103,10 @@
   const given=($('in-id').value||'').trim().toUpperCase();S={id:/^[A-HJKMNP-Z2-9]{6}$/.test(given)?given:newId(),name:$('in-name').value.trim(),email:$('in-mail').value.trim(),phase:'a',tA0:Date.now()};save();show('s-a');renderA();tick()});
  $('f-a').addEventListener('submit',e=>{e.preventDefault();finishA()});
  $('env-check').onclick=()=>dl('sample-check.csv','text/csv;charset=utf-8','\ufeffdate,region,category,units,revenue,cost\n2025-01-15,צפון,תוכנה,10,9000,2500\n2025-02-15,מרכז,חומרה,8,11000,7200\n2025-03-15,דרום,שירות,12,8400,3800\n');
- $('b-start').onclick=()=>{S.track=(document.querySelector('input[name=track]:checked')||{}).value||'chat';S.phase='b';S.tB0=Date.now();save();fillSelects();dlCsv();setTimeout(dlLogo,500);show('s-b');tick()};
+ $('b-start').onclick=()=>{S.track=(document.querySelector('input[name=track]:checked')||{}).value||'chat';S.phase='b';S.tB0=S.tB0||Date.now();save();fillSelects();dlCsv();setTimeout(dlLogo,500);show('s-b');tick()};
+ $('a-toa').onclick=()=>{S.phase='a';save();show('s-a');renderA();tick()};
+ $('b-back').onclick=()=>{S.phase='a';save();show('s-a');renderA();tick()};
+ $('c-back').onclick=()=>{S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()};
  $('b-dl').onclick=dlCsv;$('b-dl2').onclick=dlLogo;$('b-dl3').onclick=dlPng;
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB()});
  $('f-c').addEventListener('submit',e=>{e.preventDefault();finish()});
