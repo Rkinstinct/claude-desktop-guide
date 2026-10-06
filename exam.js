@@ -30,7 +30,7 @@
   const emptyW=P.writes.filter(i=>!(d.w[i]||'').trim()).length;
   if(emptyW&&!confirm(emptyW+' שאלות כתובות ריקות ויקבלו אפס. להמשיך?'))return;
   S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
-  S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;if(S.tB0){S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}else{S.phase='bintro';save();show('s-bintro')}
+  S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;S.aDone=true;if(S.tB0){S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}else{S.phase='bintro';save();show('s-bintro')}
  }
  function fillSelects(){
   const keep=['b-v2','b-v3','b-v5'].map(i=>$(i).value);
@@ -161,7 +161,7 @@
   if(!S||!sec||S.phase==='done'){nav.hidden=true;return}
   nav.hidden=false;
   const cur={'s-a':'a','s-bintro':'b','s-b':'b','s-c':'c','s-sum':'c'}[sec];
-  const st={a:!!S.a,b:!!S.b,c:false};
+  const st={a:!!S.aDone,b:!!S.b,c:false};
   nav.querySelectorAll('button').forEach(b=>{const p=b.dataset.p;
    b.classList.toggle('done',!!st[p]);b.classList.toggle('locked',p==='c'&&!S.b);
    if(p===cur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
