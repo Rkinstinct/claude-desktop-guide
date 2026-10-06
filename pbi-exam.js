@@ -4,7 +4,7 @@
  const LIMIT=C.limitMinutesB*60;
  let S=null;
  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
- const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S}catch(e){}};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done'}catch(e){}};
  const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
  const fmt=s=>{s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const fmtH=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/3600)+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
@@ -29,7 +29,7 @@
  function dots(){
   const box=$('a-dots'),n=P().length;if(box.children.length!==n){box.innerHTML='';for(let i=0;i<n;i++){const b=document.createElement('button');b.type='button';b.textContent=i+1;b.setAttribute('aria-label','שאלה '+(i+1));b.onclick=()=>go(i);box.append(b)}}
   [...box.children].forEach((b,i)=>{b.classList.toggle('done',isAns(S.r[i]));b.setAttribute('aria-current',i===S.i?'true':'false')});
-  const left=n-answered();$('a-left').textContent=left?('נשארו '+left+' שאלות בלי תשובה'):'ענית על כל השאלות. אפשר עדיין לחזור ולשנות.';
+  const left=n-answered();$('a-left').textContent=left?((left==1?'נשארה שאלה אחת בלי תשובה':'נשארו '+left+' שאלות בלי תשובה')):'ענית על כל השאלות. אפשר עדיין לחזור ולשנות.';
  }
  function go(n){const len=P().length;if(n<0||n>=len)return;S.i=n;save();renderQ()}
  function renderQ(){
@@ -44,7 +44,7 @@
  }
  function finishA(){
   const len=P().length,left=len-answered();
-  if(left&&!confirm('נשארו '+left+' שאלות בלי תשובה, והן ייחשבו שגויות. לסיים את חלק א׳ בכל זאת? (אפשר גם ללחוץ ביטול ולחזור אליהן.)'))return;
+  if(left&&!confirm((left==1?'נשארה שאלה אחת בלי תשובה, והיא תיחשב שגויה.':'נשארו '+left+' שאלות בלי תשובה, והן ייחשבו שגויות.')+' לסיים את חלק א׳ בכל זאת? (אפשר גם ללחוץ ביטול ולחזור אליהן.)'))return;
   S.r=Array.from({length:len},(_,k)=>isAns(S.r[k])?S.r[k]:-1);
   if(!S.tAsec)S.tAsec=Math.round((Date.now()-S.tA0)/1000);
   S.phase='bintro';save();show('s-bintro');
@@ -139,7 +139,7 @@
    {ok:aOk===len,t:'חלק א׳: '+aOk+' מתוך '+len+' שאלות נענו',go:'a'},
    {ok:!!S.bDone&&bFilled>=8,t:'חלק ב׳: '+bFilled+' מתוך 8 מספרים מולאו'+(S.bDone?'':' (החלק עוד לא נסגר)'),go:'b'},
    {ok:!!(b.up&&b.up.zip),t:b.up&&b.up.zip?'חלק ב׳: ה-ZIP הועלה':'חלק ב׳: ה-ZIP לא הועלה',go:'b'},
-   {ok:!!(b.up&&b.up.sh>0),t:b.up&&b.up.sh>0?'חלק ב׳: הועלו '+b.up.sh+' צילומי מסך':'חלק ב׳: צילום מסך לא הועלה',go:'b'},
+   {ok:!!(b.up&&b.up.sh>0),t:b.up&&b.up.sh>0?(b.up.sh==1?'חלק ב׳: הועלה צילום מסך אחד':'חלק ב׳: הועלו '+b.up.sh+' צילומי מסך'):'חלק ב׳: צילום מסך לא הועלה',go:'b'},
    {ok:(b.note||'').length>=20&&(b.issue||'').length>=5,t:(b.note||'').length>=20&&(b.issue||'').length>=5?'חלק ב׳: ההסבר והבעיה בנתונים נכתבו':'חלק ב׳: חסר הסבר או תיאור הבעיה בנתונים',go:'b'},
    {ok:cOk===E.CQ.length,t:'חלק ג׳: '+cOk+' מתוך '+E.CQ.length+' תשובות נכתבו',go:'c'}
   ];
@@ -163,7 +163,7 @@
   const payload={v:C.version,id:S.id,n:S.name,e:S.email||'',s:new Date(S.tA0).toISOString(),z:new Date(S.tEnd).toISOString(),a:{r:S.r,t:S.tAsec},b:S.b,c:S.c};
   const code=E.encode(payload);show('s-res');
   $('r-ta').textContent=fmt(S.tAsec||0);$('r-tb').textContent=fmtH(S.b.t);$('r-tc').textContent=fmt(S.c.t||0);$('r-code').value=code;
-  const bu=S.b.up||{};$('r-files').textContent=(bu.zip?'ה-ZIP הועלה':'ה-ZIP לא הועלה: שלחו אותו למנהל המבחן בנפרד')+(bu.sh?'. הועלו '+bu.sh+' צילומי מסך.':'. צילומי המסך לא הועלו: שלחו אותם בנפרד.');
+  const bu=S.b.up||{};$('r-files').textContent=(bu.zip?'ה-ZIP הועלה':'ה-ZIP לא הועלה: שלחו אותו למנהל המבחן בנפרד')+(bu.sh?(bu.sh==1?'. הועלה צילום מסך אחד.':'. הועלו '+bu.sh+' צילומי מסך.'):'. צילומי המסך לא הועלו: שלחו אותם בנפרד.');
   const showCode=()=>{$('r-card').hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן.'};
   if(S.sent){$('r-card').hidden=true;$('r-ok').hidden=false;return}
   $('r-ok').hidden=true;$('r-card').hidden=true;$('r-wait').hidden=false;
@@ -185,11 +185,11 @@
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB(false)});
  $('f-c').addEventListener('submit',e=>{e.preventDefault();showSum()});
  $('sum-back').onclick=()=>goPhase('c');
- $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm('יש '+miss+' פריטים חסרים (מסומנים באדום). אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
+ $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm((miss==1?'חסר פריט אחד (מסומן באדום).':'חסרים '+miss+' פריטים (מסומנים באדום).')+' אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
  $('c-back').onclick=()=>{S.phase='b';save();fillB();show('s-b');tick();const late=Date.now()>=deadline();if(late){$('f-b').querySelectorAll('input,select,textarea').forEach(x=>{x.disabled=true});$('b-upmsg').textContent='הזמן של חלק ב׳ נגמר, אי אפשר לערוך.'}};
  $('r-copy').onclick=async()=>{const t=$('r-code').value;try{await navigator.clipboard.writeText(t)}catch(e){$('r-code').select();document.execCommand('copy')}$('r-copy').textContent='הועתק';setTimeout(()=>$('r-copy').textContent='העתקת הקוד',2000)};
  $('r-file').onclick=()=>dl('pbi-exam-result-'+S.id+'.txt','text/plain',$('r-code').value);
- S=load();$('restart').hidden=!S;
+ S=load();$('restart').hidden=!S||S.phase==='done';
  if(S){
   if(S.phase==='a'){show('s-a');renderQ();tick()}
   else if(S.phase==='bintro')show('s-bintro');
