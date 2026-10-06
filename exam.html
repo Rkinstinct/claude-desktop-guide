@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="exam.css?v=5.2">
+<link rel="stylesheet" href="exam.css?v=5.3">
 </head>
 <body>
-<div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><a class="back" href="index.html">← למדריך</a></div></div>
+<div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><button id="restart" class="linkbtn" type="button" hidden>התחל מחדש</button><a class="back" href="index.html">← למדריך</a></div></div>
 <main class="wrap">
 
 <section id="s-start" class="screen">
@@ -30,7 +30,7 @@
    <li><b>סביבה:</b> חלק ב׳ דורש Power BI Desktop, שרץ על Windows בלבד. אי אפשר לבצע אותו מנייד.</li>
    <li><b>קבצים:</b> תצטרכו לשמור את הדוח כפרויקט PBIP ולכווץ אותו ל-ZIP (או לצרף קובץ pbix אם PBIP לא זמין לכם), ולצלם מסך של כל עמוד.</li>
    <li><b>חלק א׳:</b> תשובות כתובות במילים שלכם. הן נקראות ונבדקות אצל מנהל המבחן, לא אוטומטית.</li>
-   <li><b>לשונית:</b> סגירת הלשונית מוחקת את ההתקדמות. אל תסגרו אותה באמצע.</li>
+   <li><b>שמירה:</b> ההתקדמות נשמרת בדפדפן הזה, גם אחרי סגירת הלשונית, כל עוד זה אותו דפדפן ואותו מחשב. הכפתור "התחל מחדש" בראש העמוד מוחק אותה.</li>
   </ul>
   <p><button id="env-check" class="linkbtn" type="button">בדיקת סביבה: הורדת קובץ דוגמה</button> <span class="muted">פתחו אותו ב-Power BI Desktop (קבל נתונים ← טקסט/CSV) לפני שמתחילים, כדי לוודא שהכל עובד.</span></p>
  </div>
@@ -38,12 +38,12 @@
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל עבודה <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
   <input id="in-id" type="hidden">
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הזמנים ומספר הפעמים שיצאתי מהמסך בחלק ג׳. את קובץ הפרויקט וצילומי המסך אשלח בעצמי. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הכלים שסימנתי בחלק ג׳, חתימות (hash) של קובץ הפרויקט וצילומי המסך, הזמנים בכל חלק ומספר הפעמים שיצאתי מהמסך בחלק ג׳. שום דבר אחר לא נשלח. את קובץ הפרויקט וצילומי המסך אשלח בעצמי. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <p class="muted" style="text-align:center"><a href="admin.html">כניסת מנהל</a></p>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
-  <p>הזמנים נמדדים בדפדפן שלכם, מרגע הלחיצה על "התחל" ועד ההגשה. בסיום הם נשלחים למנהל המבחן יחד עם התשובות. במהלך המבחן ההתקדמות נשמרת רק בלשונית הזאת, כדי שרענון לא יאבד אותה.</p>
+  <p>הזמנים נמדדים בדפדפן שלכם, מרגע הלחיצה על "התחל" ועד ההגשה. בסיום הם נשלחים למנהל המבחן יחד עם התשובות. במהלך המבחן ההתקדמות נשמרת בדפדפן הזה, כדי שרענון או סגירת לשונית לא יאבדו אותה.</p>
   <p>בחלק ב׳ אתם עובדים עם Claude שלכם (Chat או Claude Code) ובונים דוח ב-Power BI Desktop. את התשובות מזינים כאן, ואת הדוח עצמו שולחים למנהל המבחן. הציון לא מוצג לכם: הוא מחושב אצל מנהל המבחן.</p>
  </details>
 </section>
@@ -109,6 +109,7 @@
   <label>איזה אזור עם ההכנסות הגבוהות ביותר על פני השנה?<select id="b-v5" required><option value="">בחרו</option></select></label>
   <label><span id="b-q6"></span><input id="b-v6" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
+  <label>איפה Claude טעה או הציע משהו שלא התאים, ואיך גיליתם? <small>(2 עד 3 משפטים. אם לא טעה, כתבו מה בדקתם בתוצאה ואיך)</small><textarea id="b-err" maxlength="300" rows="3" required></textarea></label>
   <div class="nav"><button id="a-toa" class="btn ghost" type="button">חזרה לחלק א׳</button><button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button></div>
  </form>
 </section>
@@ -121,8 +122,16 @@
   <p class="muted">ענו בקצרה ובמדויק, עד 350 תווים לכל תשובה. אין צורך לכתוב קוד.</p>
   <div id="c-qs"></div>
   <fieldset class="tools"><legend>אילו כלים תאפשרו לסוכן? (סמנו רק מה שצריך)</legend><div id="c-tools"></div></fieldset>
-  <div class="nav"><button id="c-back" class="btn ghost" type="button">חזרה לחלק ב׳</button><button class="btn big" type="submit">סיום וקבלת התוצאה</button></div>
+  <div class="nav"><button id="c-back" class="btn ghost" type="button">חזרה לחלק ב׳</button><button class="btn big" type="submit">למסך ההגשה</button></div>
  </form>
+</section>
+
+<section id="s-sum" class="screen" hidden>
+ <span class="pill">הגשה</span>
+ <h1>לפני שמגישים</h1>
+ <p class="lead">מה שמסומן באדום חסר. אפשר לחזור לכל חלק ולהשלים. אחרי ההגשה אי אפשר לשנות תשובות.</p>
+ <ul id="sum-list" class="sumlist"></ul>
+ <div class="nav"><button id="sum-back" class="btn ghost" type="button">חזרה לחלק ג׳</button><button id="sum-send" class="btn big" type="button">הגשה סופית</button></div>
 </section>
 
 <section id="s-res" class="screen" hidden>
@@ -146,6 +155,6 @@
 </main>
 <script src="exam-data.js?v=5.1"></script>
 <script src="exam-core.js?v=5.3"></script>
-<script src="exam.js?v=5.4"></script>
+<script src="exam.js?v=5.5"></script>
 </body>
 </html>
