@@ -1,5 +1,5 @@
 /* Public code of the Power BI basics exam. No answers here: the key, the expected numbers and the scoring live only in the private admin file. */
-window.PBI_CONFIG={version:5,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4:3,5:1,6:2,7:2,8:1},weightA:0.5,weightB:0.35,weightC:0.15,targetMinutesB:15,resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev'};
+window.PBI_CONFIG={version:6,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4:3,5:1,6:2,7:1,8:2},limitMinutesB:180,zipMaxBytes:5242880,weightA:0.5,weightB:0.35,weightC:0.15,targetMinutesB:15,resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev'};
 (function(){
  function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
  function seedNum(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
@@ -50,5 +50,12 @@ window.PBI_CONFIG={version:5,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4
   const checkOk=h53('p1'+m[1]).slice(0,8)===m[2];
   try{return {data:JSON.parse(unb64u(m[1])),checkOk}}catch(e){return {error:'הקוד פגום'}}
  }
- window.PbiCore={REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
+  const MONTHS=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+ function expectedB(id){
+  const rows=dataset(id),tot=rows.reduce((s,r)=>s+r.Revenue,0),orders=new Set(rows.map(r=>r.OrderID)).size,cust=new Set(rows.map(r=>r.CustomerID)).size;
+  const bp={},bm={};rows.forEach(r=>{bp[r.Product]=(bp[r.Product]||0)+r.Revenue;const m=+r.OrderDate.slice(5,7)-1;bm[m]=(bm[m]||0)+r.Revenue});
+  const top=Object.keys(bp).sort((a,b)=>bp[b]-bp[a])[0],bestM=Object.keys(bm).sort((a,b)=>bm[b]-bm[a])[0];
+  return {total:tot,orders,customers:cust,avg:Math.round(tot/orders),product:top,month:MONTHS[+bestM]};
+ }
+ window.PbiCore={MONTHS,expectedB,REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
 })();
