@@ -3,7 +3,7 @@
  const $=id=>document.getElementById(id);
  let S=null,proj=null,shots=[];
  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
- const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S}catch(e){}};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done'}catch(e){}};
  const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
  const fmt=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return(h?h+':':'')+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const newId=()=>{const a='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let o='';crypto.getRandomValues(new Uint8Array(6)).forEach(x=>o+=a[x%a.length]);return o};
@@ -26,7 +26,7 @@
   const P=E.paperA(S.id),d=S.da||{c:{},k:{},kr:{},w:{}};
   const miss=[];P.cmds.forEach(i=>{if(d.c[i]==null)miss.push('c:'+i)});P.tools.forEach(i=>{if(d.k[i]==null)miss.push('k:'+i)});
   document.querySelectorAll('.qa').forEach(x=>x.classList.toggle('bad',miss.includes(x.dataset.k)));
-  if(miss.length){const f=document.querySelector('.qa.bad');f.scrollIntoView({block:'center'});alert('נשארו '+miss.length+' בחירות ריקות. תשובות הבחירה חובה; בשאלות הכתובות אפשר להשאיר ריק, וזה נחשב אפס.');return}
+  if(miss.length){const f=document.querySelector('.qa.bad');f.scrollIntoView({block:'center'});alert((miss.length==1?'נשארה בחירה ריקה אחת.':'נשארו '+miss.length+' בחירות ריקות.')+' תשובות הבחירה חובה; בשאלות הכתובות אפשר להשאיר ריק, וזה נחשב אפס.');return}
   const emptyW=P.writes.filter(i=>!(d.w[i]||'').trim()).length;
   if(emptyW&&!confirm(emptyW+' שאלות כתובות ריקות ויקבלו אפס. להמשיך?'))return;
   S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
@@ -143,11 +143,11 @@
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB()});
  $('f-c').addEventListener('submit',e=>{e.preventDefault();showSum()});
  $('sum-back').onclick=()=>goPhase('c');
- $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm('יש '+miss+' פריטים חסרים (מסומנים באדום). אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
+ $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm((miss==1?'חסר פריט אחד (מסומן באדום).':'חסרים '+miss+' פריטים (מסומנים באדום).')+' אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
  $('restart').onclick=()=>{if(confirm('למחוק את כל ההתקדמות ולהתחיל מחדש? אי אפשר לשחזר.')){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}};
  $('r-copy').onclick=async()=>{const t=$('r-code').value;try{await navigator.clipboard.writeText(t)}catch(e){$('r-code').select();document.execCommand('copy')}$('r-copy').textContent='הועתק';setTimeout(()=>$('r-copy').textContent='העתקת הקוד',2000)};
  $('r-file').onclick=()=>dl('exam-result-'+S.id+'.txt','text/plain',$('r-code').value);
- S=load();$('restart').hidden=!S;
+ S=load();$('restart').hidden=!S||S.phase==='done';
  if(S){
   if(S.fa){proj=S.fa.z||null;shots=S.fa.sh||[]}
   if(S.phase==='a'){show('s-a');renderA();tick()}
