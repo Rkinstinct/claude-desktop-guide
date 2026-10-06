@@ -22,7 +22,7 @@ details{margin-top:6px}
 <p class="muted">הסיסמה לא נשמרת בדפדפן. חלק א׳ ב-Power BI מחושב כאן מול מפתח שנמצא רק בשרת, מאחורי הסיסמה. יציאה מהמסך היא סימן לבדיקה ידנית, לא הוכחה.</p>
 <div id="out"></div>
 </main>
-<script src="pbi-exam-data.js?v=5"></script><script src="pbi-exam-core.js?v=8"></script>
+<script src="pbi-exam-data.js?v=5"></script><script src="pbi-exam-core.js?v=9"></script>
 <script>
 const API='https://exam-results-api.ariel-crm.workers.dev/admin/list';
 const $=id=>document.getElementById(id);
@@ -42,12 +42,12 @@ function scoreA(d){
 function card(x){
  const d=dec(x.code)||{},c=d.c||{},b=d.b||{},a=d.a||{},pbi=x.exam==='pbi';
  const away=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך';
- let h='<div class="card res"><span class="tag">'+(pbi?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span><br>זמנים: א׳ '+fmt(a.t)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+'<br>'+away;
+ let h='<div class="card res"><span class="tag">'+(pbi?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span> '+(x.sig_ok?'<span class="muted">· נחתם בשרת ✓</span>':'<span class="warn">· חתימת שרת לא תקינה</span>')+'<br>זמנים: א׳ '+fmt(a.t)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+'<br>'+away;
  if(pbi){
   const sc=scoreA(d);
   h+='<p><b>חלק א׳:</b> '+(sc?'<span class="big">'+sc.n+' מתוך '+sc.total+' נכון</span>':'לא ניתן לחשב (גרסה ישנה של המבחן)')+'</p>';
   if(sc)h+='<details><summary>כל השאלות: נכון / שגוי</summary><ol>'+sc.rows+'</ol></details>';
-  let E=null;try{E=PbiCore.expectedB(d.id)}catch(e){}
+  let E=null;try{E=(new Function('return '+KEY._expB)())(PbiCore,d.id)}catch(e){}
   const V=b.v||[],nm=['סך הכנסות','מספר הזמנות','מספר לקוחות','ממוצע להזמנה','מוצר מוביל','חודש הטוב ביותר'];
   if(E&&d.v>=6){const ex=[E.total,E.orders,E.customers,E.avg,E.product,E.month];if(d.v>=7){ex.push(E.pct,E.jq4);nm.push('אחוז עמידה ביעד','הכנסות ירושלים ברבעון 4')}let ok=0;
    const li=ex.map((x,i)=>{const g=V[i],good=String(g).trim()===String(x);if(good)ok++;return '<li class="'+(good?'ok':'bad')+'">'+nm[i]+': '+esc(g)+(good?' ✓':' ✗ צפוי '+esc(x))+'</li>'}).join('');
