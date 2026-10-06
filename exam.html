@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="exam.css?v=5.3">
+<link rel="stylesheet" href="exam.css?v=5.4">
 </head>
 <body>
-<div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><button id="restart" class="linkbtn" type="button" hidden>התחל מחדש</button><a class="back" href="index.html">← למדריך</a></div></div>
+<div class="bar"><div class="wrap"><a class="brand" href="index.html">Claude Desktop <span aria-hidden="true">✦</span> מבחן מסכם</a><button id="restart" class="linkbtn" type="button" hidden>התחל מחדש</button><a class="back" href="index.html">← למדריך</a></div><nav id="steps" class="steps" aria-label="חלקי המבחן" hidden><div class="wrap"><button type="button" data-p="a"><i>1</i><span>חלק א׳<small>הבנה</small></span></button><button type="button" data-p="b"><i>2</i><span>חלק ב׳<small>בניית דוח</small></span></button><button type="button" data-p="c"><i>3</i><span>חלק ג׳<small>תכנון סוכן</small></span></button></div><div class="wrap"><div id="step-hint" class="step-hint" role="status" hidden></div></div></nav></div>
 <main class="wrap">
 
 <section id="s-start" class="screen">
@@ -102,12 +102,12 @@
   <label>צילומי מסך של שני העמודים (לפחות שניים)<input id="b-shots" type="file" accept="image/*" multiple></label>
   <div id="b-find" class="finds muted">עוד לא נבחרו קבצים.</div>
   <h3>2. תשובות מהנתונים (DAX)</h3>
-  <label><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
-  <label>איזו קטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה?<select id="b-v2" required><option value="">בחרו</option></select></label>
-  <label>באיזה חודש הייתה הירידה החדה ביותר בהכנסות לעומת החודש שלפניו?<select id="b-v3" required><option value="">בחרו</option></select></label>
-  <label>מה אחוז הרווח הגולמי הכולל של השנה? <small>(אחוזים עם ספרה אחת אחרי הנקודה, מעוגל, למשל 41.3)</small><input id="b-v4" inputmode="decimal" required dir="ltr" maxlength="7"></label>
-  <label>איזה אזור עם ההכנסות הגבוהות ביותר על פני השנה?<select id="b-v5" required><option value="">בחרו</option></select></label>
-  <label><span id="b-q6"></span><input id="b-v6" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
+  <label class="half"><span id="b-q1"></span><input id="b-v1" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
+  <label class="half">איזו קטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה?<select id="b-v2" required><option value="">בחרו</option></select></label>
+  <label class="half">באיזה חודש הייתה הירידה החדה ביותר בהכנסות לעומת החודש שלפניו?<select id="b-v3" required><option value="">בחרו</option></select></label>
+  <label class="half">מה אחוז הרווח הגולמי הכולל של השנה? <small>(אחוזים עם ספרה אחת אחרי הנקודה, מעוגל, למשל 41.3)</small><input id="b-v4" inputmode="decimal" required dir="ltr" maxlength="7"></label>
+  <label class="half">איזה אזור עם ההכנסות הגבוהות ביותר על פני השנה?<select id="b-v5" required><option value="">בחרו</option></select></label>
+  <label class="half"><span id="b-q6"></span><input id="b-v6" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
   <label>איפה Claude טעה או הציע משהו שלא התאים, ואיך גיליתם? <small>(2 עד 3 משפטים. אם לא טעה, כתבו מה בדקתם בתוצאה ואיך)</small><textarea id="b-err" maxlength="300" rows="3" required></textarea></label>
   <div class="nav"><button id="a-toa" class="btn ghost" type="button">חזרה לחלק א׳</button><button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button></div>
@@ -155,6 +155,6 @@
 </main>
 <script src="exam-data.js?v=5.1"></script>
 <script src="exam-core.js?v=5.3"></script>
-<script src="exam.js?v=5.6"></script>
+<script src="exam.js?v=5.7"></script>
 </body>
 </html>
