@@ -81,3 +81,32 @@ textarea{resize:vertical}
 .sumlist li.ok .ic{color:#1b7a3a;font-weight:700}
 .sumlist li.no{border-color:#c0392b;background:#fdf3f2}
 .sumlist li.no .ic,.sumlist li.no .grow{color:#a52a1d;font-weight:600}
+
+/* ---- stepper + desktop polish ---- */
+.steps{border-top:1px solid var(--line)}
+.bar .steps .wrap{display:flex;gap:6px;min-height:0;padding-top:0;padding-bottom:0}
+.steps button{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;background:none;border:0;border-bottom:2px solid transparent;color:var(--soft);font:inherit;font-weight:600;font-size:15px;min-height:54px;padding:6px;cursor:pointer;transition:color .15s,border-color .15s}
+.steps button:hover{color:var(--ink)}
+.steps button i{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid #cfc7b9;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:700;background:#fff}
+.steps button span{display:flex;flex-direction:column;text-align:right;line-height:1.25}
+.steps button small{font-weight:400;font-size:12px;color:var(--soft)}
+.steps button[aria-current=step]{color:var(--ink);border-bottom-color:var(--coral)}
+.steps button[aria-current=step] i{background:var(--coral-deep);border-color:var(--coral-deep);color:#fff}
+.steps button.done:not([aria-current]) i{background:var(--green);border-color:var(--green);color:#fff}
+.steps button.locked{opacity:.55}
+.step-hint{width:100%;background:#fbf1d9;border:1px solid #e3c67f;border-inline-start:5px solid var(--coral);border-radius:10px;padding:8px 14px;margin:8px 0 10px;font-size:14.5px;color:var(--ink)}
+@media(max-width:560px){.steps button small{display:none}.steps button{gap:7px;font-size:14px;min-height:48px}.steps button i{width:24px;height:24px}}
+@media(min-width:900px){
+ .wrap{max-width:880px}
+ .bar .wrap{min-height:64px}
+ main.wrap{padding-top:44px;padding-bottom:110px}
+ h1{font-size:50px}
+ .facts{gap:14px}.facts div{padding:16px 18px;border-radius:16px;box-shadow:0 1px 8px rgba(41,38,33,.04)}.facts b{font-size:17px;margin-bottom:4px}
+ .card{padding:28px 34px;border-radius:20px;box-shadow:0 2px 14px rgba(41,38,33,.05)}
+ .qa{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:12px 0}
+ .opt{padding:16px 20px}
+ #f-b{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+ #f-b>*{grid-column:1/-1}#f-b>label.half{grid-column:auto}
+ .btn{padding:0 36px}
+ .sumlist li{padding:14px 18px}
+}
