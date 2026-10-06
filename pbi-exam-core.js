@@ -62,12 +62,5 @@ window.PBI_CONFIG={version:7,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4
   try{return {data:JSON.parse(unb64u(m[1])),checkOk}}catch(e){return {error:'הקוד פגום'}}
  }
   const MONTHS=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
- function expectedB(id){
-  const rows=dataset(id),tot=rows.reduce((s,r)=>s+r.Revenue,0),orders=new Set(rows.map(r=>r.OrderID)).size,cust=new Set(rows.map(r=>r.CustomerID)).size;
-  const bp={},bm={};rows.forEach(r=>{bp[r.Product]=(bp[r.Product]||0)+r.Revenue;const m=+r.OrderDate.slice(5,7)-1;bm[m]=(bm[m]||0)+r.Revenue});
-  const top=Object.keys(bp).sort((a,b)=>bp[b]-bp[a])[0],bestM=Object.keys(bm).sort((a,b)=>bm[b]-bm[a])[0];
-  const tg=regions(id).reduce((a,x)=>a+x.AnnualTarget,0),jq4=rows.filter(x=>cleanRegion(x.Region)==='ירושלים'&&x.OrderDate>='2025-10-01').reduce((a,x)=>a+x.Revenue,0);
-  return {total:tot,orders,customers:cust,avg:Math.round(tot/orders),product:top,month:MONTHS[+bestM],pct:(tot/tg*100).toFixed(1),jq4};
- }
- window.PbiCore={MONTHS,expectedB,regions,regionsCsv,cleanRegion,REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
+ window.PbiCore={MONTHS,regions,regionsCsv,cleanRegion,REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
 })();
