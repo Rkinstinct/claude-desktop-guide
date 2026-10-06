@@ -58,7 +58,7 @@
   <div id="a-tools"></div>
   <h2 class="sec">3. הסבירו במילים שלכם</h2><p class="muted">2 עד 5 משפטים. אפשר דוגמה קצרה.</p>
   <div id="a-writes"></div>
-  <p class="muted">אי אפשר לחזור לחלק הזה אחרי הלחיצה. תשובה ריקה נחשבת אפס.</p>
+  <p class="muted">אפשר לחזור לחלק הזה ולתקן עד סוף המבחן. תשובה ריקה נחשבת אפס.</p>
   <button class="btn" type="submit">סיום חלק א׳ והמשך לחלק ב׳</button>
  </form>
 </section>
@@ -87,7 +87,7 @@
   <label class="radio"><input type="radio" name="track" value="code"><span><b>Claude Code</b> - פרויקט PBIP בתיקייה: Claude עורך את קובצי TMDL ואת קובצי הדוח</span></label>
   <label class="radio"><input type="radio" name="track" value="mcp"><span><b>MCP (לא חובה)</b> - חיבור שרת MCP שהארגון מאשר למודל הנתונים. רק למי שיש לו את זה בסביבה</span></label>
  </div>
- <button id="b-start" class="btn big" type="button">הורדת הקבצים והתחלת השעון</button>
+ <div class="nav"><button id="b-back" class="btn ghost" type="button">חזרה לחלק א׳</button><button id="b-start" class="btn big" type="button">הורדת הקבצים והתחלת השעון</button></div>
 </section>
 
 <section id="s-b" class="screen" hidden>
@@ -109,7 +109,7 @@
   <label>איזה אזור עם ההכנסות הגבוהות ביותר על פני השנה?<select id="b-v5" required><option value="">בחרו</option></select></label>
   <label><span id="b-q6"></span><input id="b-v6" inputmode="numeric" required dir="ltr" placeholder="מספר שלם, בלי פסיקים"></label>
   <label>מה ביקשתם מ-Claude, ובאילו צעדים? <small>(עד 300 תווים)</small><textarea id="b-note" maxlength="300" rows="3"></textarea></label>
-  <button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button>
+  <div class="nav"><button id="a-toa" class="btn ghost" type="button">חזרה לחלק א׳</button><button class="btn big" type="submit">סיום חלק ב׳ והמשך לחלק ג׳</button></div>
  </form>
 </section>
 
@@ -121,7 +121,7 @@
   <p class="muted">ענו בקצרה ובמדויק, עד 350 תווים לכל תשובה. אין צורך לכתוב קוד.</p>
   <div id="c-qs"></div>
   <fieldset class="tools"><legend>אילו כלים תאפשרו לסוכן? (סמנו רק מה שצריך)</legend><div id="c-tools"></div></fieldset>
-  <button class="btn big" type="submit">סיום וקבלת התוצאה</button>
+  <div class="nav"><button id="c-back" class="btn ghost" type="button">חזרה לחלק ב׳</button><button class="btn big" type="submit">סיום וקבלת התוצאה</button></div>
  </form>
 </section>
 
@@ -146,6 +146,6 @@
 </main>
 <script src="exam-data.js?v=5.1"></script>
 <script src="exam-core.js?v=5.3"></script>
-<script src="exam.js?v=5.3"></script>
+<script src="exam.js?v=5.4"></script>
 </body>
 </html>
