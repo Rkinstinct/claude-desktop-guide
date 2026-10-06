@@ -6,10 +6,10 @@
 <title>מבחן יסודות Power BI</title>
 <meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="pbi-exam.css?v=5">
+<link rel="stylesheet" href="pbi-exam.css?v=6">
 </head>
 <body>
-<div class="bar"><div class="wrap"><span class="brand"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>מבחן יסודות Power BI</span></div></div>
+<div class="bar"><div class="wrap"><span class="brand"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>מבחן יסודות Power BI</span><button id="restart" class="linkbtn" type="button" hidden>התחל מחדש</button></div></div>
 <main class="wrap">
 
 <section id="s-start">
@@ -18,7 +18,7 @@
  <p class="lead">למי שסיימו קורס יסודות ב-Power BI. שלושה חלקים: 15 שאלות הבנה, בניית דשבורד שלם על נתונים שתקבלו (עד 3 שעות), וחלק קצר על תכנון עוזר AI.</p>
  <div class="facts">
   <div><b>חלק א׳: 15 שאלות הבנה</b><span>מה Power BI נותן, הכנת נתונים, מודל, מדדים, בחירת ויזואל, מסננים ושיתוף, ו-AI בסיסי, כולל מושגי MCP וסקילס. שואלים מה קורה, למה ומה עושים, לא איך מקישים.</span></div>
-  <div><b>חלק ב׳: דשבורד שלם</b><span>קובץ נתונים אישי. בונים דשבורד בשני עמודים עם כרטיסים, מגמה, פירוט ומודל תקין. זמן מוגבל: 3 שעות. מעלים ZIP של הדשבורד וצילומי מסך, וכותבים הסבר קצר.</span></div>
+  <div><b>חלק ב׳: דשבורד שלם</b><span>שני קבצי נתונים אישיים: הזמנות ויעדים לפי אזור. בונים דשבורד בשני עמודים עם כרטיסים, מגמה, עמידה ביעד ומודל תקין. כמו בנתונים אמיתיים, כדאי לבדוק אותם לפני שבונים. זמן מוגבל: 3 שעות. מעלים ZIP של הדשבורד וצילומי מסך, וכותבים הסבר קצר.</span></div>
   <div><b>חלק ג׳: בונים עוזר AI</b><span>מתארים לכם צורך, ואתם עונים איך הייתם בונים עוזר שיענה עליו: 3 תשובות קצרות במילים שלכם.</span></div>
  </div>
  <div class="card">
@@ -26,20 +26,20 @@
   <ul>
    <li><b>חלק ב׳:</b> דורש Power BI Desktop (Windows). השעון רץ 3 שעות מהלחיצה על "התחלה", ובסיומן החלק נסגר אוטומטית. בסוף מעלים ZIP של הדשבורד וצילומי מסך.</li>
    <li><b>חלק א׳:</b> אפשר לעבור קדימה ואחורה בין השאלות, לדלג ולשנות תשובה עד סיום החלק. שאלה בלי תשובה נחשבת שגויה.</li>
-   <li><b>לשונית:</b> ההתקדמות נשמרת בלשונית הזאת בלבד. אל תסגרו אותה באמצע.</li>
+   <li><b>שמירה:</b> ההתקדמות נשמרת בדפדפן הזה, גם אחרי סגירת הלשונית, כל עוד זה אותו דפדפן ואותו מחשב. השעון של חלק ב׳ ממשיך לרוץ גם כשהלשונית סגורה. הכפתור "התחל מחדש" למעלה מוחק את ההתקדמות.</li>
   </ul>
  </div>
  <form id="f-start" class="card" autocomplete="off">
   <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
   <label>מייל <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
   <input id="in-id" type="hidden">
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, קובץ ה-ZIP וצילומי המסך של הדשבורד, הזמנים, ומספר הפעמים שיצאתי מהמסך בחלק ג׳. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, קובץ ה-ZIP וצילומי המסך של הדשבורד, הזמנים בכל חלק, ומספר הפעמים שיצאתי מהמסך בחלק ג׳. שום דבר אחר לא נשלח. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <p class="muted" style="text-align:center"><a href="admin.html">כניסת מנהל</a></p>
  <details class="note"><summary>איך זה עובד ומה נמדד</summary>
   <p>הזמנים נמדדים בדפדפן שלכם ונכללים בקוד התוצאה. בסיום התשובות והזמנים נשלחים למנהל המבחן ונשמרים אצלו, ולא נשמר שום דבר אחר. את התשובות הנכונות והציון אתם לא רואים: הם נקבעים אצל מנהל המבחן.</p>
-  <p>חלק א׳ והמספרים בחלק ב׳ (הכנסות, הזמנות, לקוחות, ממוצע, מוצר מוביל וחודש שיא) נבדקים אוטומטית מול הנתונים שלכם. הדשבורד עצמו (ה-ZIP, צילומי המסך וההסבר) וחלק ג׳ נבדקים ידנית, ובדיקת הסדר והעיצוב נעשית אצל מנהל המבחן. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
+  <p>חלק א׳ והמספרים בחלק ב׳ (הכנסות, הזמנות, לקוחות, ממוצע, מוצר מוביל, חודש שיא, עמידה ביעד והכנסות ירושלים ברבעון 4) נבדקים אוטומטית מול הנתונים שלכם. הדשבורד עצמו (ה-ZIP, צילומי המסך וההסבר) וחלק ג׳ נבדקים ידנית, ובדיקת הסדר והעיצוב נעשית אצל מנהל המבחן. המבחן לא יכול לוודא באיזה כלי חישבתם.</p>
  </details>
 </section>
 
@@ -57,14 +57,14 @@
 <section id="s-bintro" hidden>
  <span class="pill">חלק ב׳: דשבורד שלם</span>
  <h1>בונים דשבורד שלם, עד 3 שעות</h1>
- <p class="lead">סיימתם את חלק א׳. כשתלחצו על הכפתור יורד אליכם קובץ CSV אישי של הזמנות 2025 והשעון של חלק ב׳ מתחיל: יש לכם 3 שעות בדיוק. בסוף הזמן החלק נסגר אוטומטית ונשלח מה שהכנתם עד אז. טענו את הקובץ ל-Power BI Desktop (קבל נתונים ← טקסט/CSV) ובנו דשבורד שלם בשני עמודים:</p>
+ <p class="lead">סיימתם את חלק א׳. כשתלחצו על הכפתור יורדים אליכם שני קבצי CSV אישיים, הזמנות 2025 ויעדים שנתיים לפי אזור, והשעון של חלק ב׳ מתחיל: יש לכם 3 שעות בדיוק. בסוף הזמן החלק נסגר אוטומטית ונשלח מה שהכנתם עד אז. טענו את הקובץ ל-Power BI Desktop (קבל נתונים ← טקסט/CSV) ובנו דשבורד שלם בשני עמודים:</p>
  <div class="card"><h3>מה בונים</h3><ul>
-  <li><b>עמוד 1, סקירה:</b> ארבעה כרטיסים (סך הכנסות, מספר הזמנות, מספר לקוחות, הכנסה ממוצעת להזמנה), מגמת הכנסות לפי חודש, הכנסות לפי מוצר ולפי אזור, וסליסרים לאזור ולמוצר.</li>
+  <li><b>עמוד 1, סקירה:</b> חמישה כרטיסים (סך הכנסות, מספר הזמנות, מספר לקוחות, הכנסה ממוצעת להזמנה, ואחוז עמידה ביעד השנתי: סך ההכנסות חלקי סך היעדים), מגמת הכנסות לפי חודש, הכנסות מול יעד לפי אזור, הכנסות לפי מוצר, וסליסרים לאזור ולמוצר.</li>
   <li><b>עמוד 2, פירוט:</b> מטריצה של מוצר מול אזור עם הכנסות, והלקוחות המובילים לפי הכנסות.</li>
-  <li><b>מודל:</b> טבלת תאריכים נפרדת, וקשר ביניה לבין עמודת התאריך. מדדים כתובים כמדדים (לא עמודות) עם שמות ברורים. סוגי נתונים נכונים.</li>
+  <li><b>מודל:</b> טבלת תאריכים נפרדת, וקשר ביניה לבין עמודת התאריך, וקשר בין טבלת ההזמנות לטבלת האזורים. מדדים כתובים כמדדים (לא עמודות) עם שמות ברורים. סוגי נתונים נכונים.</li>
   <li><b>עיצוב ותקשורת:</b> כותרת לכל עמוד ולכל ויזואל, צבעים אחידים, כפתור ניווט בין העמודים, והמסר המרכזי של הנתונים מודגש.</li>
  </ul></div>
- <div class="card"><b>מה בקובץ:</b> שורה לכל פריט בהזמנה: OrderID, OrderDate, CustomerID, Region, Product, Quantity ו-Revenue (ההכנסה של השורה). להזמנה אחת יכולות להיות כמה שורות, ולכן מספר השורות אינו מספר ההזמנות.</div>
+ <div class="card"><b>מה בקבצים:</b> <b>orders</b>: שורה לכל פריט בהזמנה: OrderID, OrderDate, CustomerID, Region, Product, Quantity ו-Revenue (ההכנסה של השורה). להזמנה אחת יכולות להיות כמה שורות, ולכן מספר השורות אינו מספר ההזמנות. <b>regions</b>: שורה לכל אזור: Region, Manager ו-AnnualTarget (היעד השנתי בשקלים). הנתונים הם כמו נתונים אמיתיים, ולא בהכרח נקיים. בדקו אותם לפני שמסתמכים עליהם.</div>
  <div class="card"><b>מה מעלים בסוף:</b> קובץ ZIP של הדשבורד (קובץ ה-pbix אחרי כיווץ ל-ZIP, או תיקיית פרויקט PBIP מכווצת), עד 5MB, וצילום מסך של כל עמוד.</div>
  <div class="nav"><button id="b-back" class="btn ghost" type="button">חזרה לשאלות חלק א׳</button><button id="b-start" class="btn" type="button">התחלת חלק ב׳ והורדת הנתונים</button></div>
 </section>
@@ -72,7 +72,7 @@
 <section id="s-b" hidden>
  <div class="prog-top"><span>חלק ב׳: נותר</span><span id="b-time" dir="ltr">3:00:00</span></div><div class="prog-bar"><i id="b-bar"></i></div>
  <p class="muted" id="b-clock-note">יש 3 שעות מרגע ההתחלה. בסיומן החלק נסגר ונשלח אוטומטית מה שמילאתם והעליתם עד אז.</p>
- <div class="card"><div class="dl"><button id="b-dl" class="btn ghost" type="button">הורדה חוזרת של הנתונים (CSV)</button></div><span class="muted">הקובץ מכיל את כל הנתונים, ולא צריך לשנות בו כלום.</span></div>
+ <div class="card"><div class="dl"><button id="b-dl" class="btn ghost" type="button">הורדה חוזרת: הזמנות (CSV)</button> <button id="b-dl2" class="btn ghost" type="button">הורדה חוזרת: יעדים לפי אזור (CSV)</button></div><span class="muted">הקבצים מכילים את כל הנתונים. אין חובה לשנות בהם כלום.</span></div>
  <form id="f-b" class="card q-b" autocomplete="off">
   <h3>1. מספרים מהדשבורד שלכם</h3>
   <label>סך ההכנסות של השנה (ללא סימנים) <input id="b-v1" inputmode="numeric" required dir="ltr"></label>
@@ -81,12 +81,15 @@
   <label>הכנסה ממוצעת להזמנה, מעוגלת למספר שלם <input id="b-v4" inputmode="numeric" required dir="ltr"></label>
   <label>איזה מוצר מוביל בהכנסות? <select id="b-v5" required><option value="">בחרו</option></select></label>
   <label>באיזה חודש ההכנסות הגבוהות ביותר? <select id="b-v6" required><option value="">בחרו</option></select></label>
+  <label>אחוז העמידה ביעד השנתי: סך ההכנסות חלקי סך היעדים, באחוזים עם ספרה אחת אחרי הנקודה (למשל 97.3) <input id="b-v7" inputmode="decimal" required dir="ltr"></label>
+  <label>הכנסות אזור ירושלים ברבעון 4 (אוקטובר עד דצמבר), בשקלים שלמים <input id="b-v8" inputmode="numeric" required dir="ltr"></label>
   <h3>2. קבצים</h3>
   <label>ZIP של הדשבורד (pbix מכווץ או תיקיית PBIP מכווצת, עד 5MB)<input id="b-zip" type="file" accept=".zip,application/zip,application/x-zip-compressed"></label>
   <label>צילומי מסך של עמודי הדשבורד (PNG או JPG, עד שניים)<input id="b-file" type="file" accept="image/png,image/jpeg" multiple></label>
   <p class="muted" id="b-fileinfo"></p>
   <h3>3. המסר</h3>
   <label>מה הדשבורד מראה, ואיזו החלטה הוא תומך בה? <small>(2 עד 4 משפטים)</small><textarea id="b-note" rows="4" maxlength="400" required></textarea></label>
+  <label>בעיה שמצאתם בנתונים ואיך טיפלתם בה <small>(אם לא מצאתם, כתבו מה בדקתם)</small><textarea id="b-issue" rows="3" maxlength="300" required></textarea></label>
   <p class="muted" id="b-upmsg" role="status"></p>
   <div class="nav"><button id="b-toa" class="btn ghost" type="button">חזרה לחלק א׳</button><button class="btn" type="submit" id="b-submit">סיום חלק ב׳ והמשך לחלק ג׳</button></div>
  </form>
@@ -96,7 +99,15 @@
  <div class="prog-top"><span>חלק ג׳: בונים עוזר AI</span><span id="c-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="c-bar"></i></div>
  <div class="warn" role="note"><b>שימו לב:</b> המטרה של החלק הזה היא לבחון את רמת ההבנה שלכם, ולכן חשוב לענות במילים שלכם. מי שיוצא מהמסך כדי להתייעץ עם כלי AI: המערכת מתריעה, ויציאות מהמסך נרשמות בקוד התוצאה.</div><div id="c-warn" class="warn alert" role="alert" hidden>זוהתה יציאה מהמסך (<span id="c-warn-n">0</span>). המטרה היא לבחון הבנה, לא את הכלי שמסביר. נא להמשיך לענות בעצמכם. היציאה נרשמה בקוד התוצאה.</div><span class="pill">הצורך</span><h1 id="c-title"></h1><p class="lead" id="c-brief"></p><p class="muted">איך הייתם בונים את העוזר? שלוש תשובות קצרות, 2 עד 4 משפטים כל אחת. אין צורך לכתוב קוד ולא לבחור כלי מסוים.</p>
  <div id="c-auto" class="warn alert" hidden>הזמן של חלק ב׳ נגמר, והחלק נסגר אוטומטית עם מה שמילאתם והעליתם עד אז.</div>
- <form id="f-c" class="card"><div id="c-qs"></div><div class="nav"><button id="c-back" class="btn ghost" type="button">חזרה לחלק ב׳</button><button class="btn" type="submit">סיום המבחן</button></div></form>
+ <form id="f-c" class="card"><div id="c-qs"></div><div class="nav"><button id="c-back" class="btn ghost" type="button">חזרה לחלק ב׳</button><button class="btn" type="submit">למסך ההגשה</button></div></form>
+</section>
+
+<section id="s-sum" hidden>
+ <span class="pill">הגשה</span>
+ <h1>לפני שמגישים</h1>
+ <p class="lead">מה שמסומן באדום חסר. אפשר לחזור לכל חלק ולהשלים. אחרי ההגשה אי אפשר לשנות תשובות.</p>
+ <ul id="sum-list" class="sumlist"></ul>
+ <div class="nav"><button id="sum-back" class="btn ghost" type="button">חזרה לחלק ג׳</button><button id="sum-send" class="btn" type="button">הגשה סופית</button></div>
 </section>
 
 <section id="s-res" hidden>
@@ -113,7 +124,7 @@
 </section>
 </main>
 <script src="pbi-exam-data.js?v=5"></script>
-<script src="pbi-exam-core.js?v=7"></script>
-<script src="pbi-exam.js?v=8"></script>
+<script src="pbi-exam-core.js?v=8"></script>
+<script src="pbi-exam.js?v=9"></script>
 </body>
 </html>
