@@ -22,7 +22,7 @@ details{margin-top:6px}
 <p class="muted">הסיסמה לא נשמרת בדפדפן. חלק א׳ ב-Power BI מחושב כאן מול מפתח שנמצא רק בשרת, מאחורי הסיסמה. יציאה מהמסך היא סימן לבדיקה ידנית, לא הוכחה.</p>
 <div id="out"></div>
 </main>
-<script src="pbi-exam-data.js?v=5"></script><script src="pbi-exam-core.js?v=7"></script>
+<script src="pbi-exam-data.js?v=5"></script><script src="pbi-exam-core.js?v=8"></script>
 <script>
 const API='https://exam-results-api.ariel-crm.workers.dev/admin/list';
 const $=id=>document.getElementById(id);
@@ -49,16 +49,23 @@ function card(x){
   if(sc)h+='<details><summary>כל השאלות: נכון / שגוי</summary><ol>'+sc.rows+'</ol></details>';
   let E=null;try{E=PbiCore.expectedB(d.id)}catch(e){}
   const V=b.v||[],nm=['סך הכנסות','מספר הזמנות','מספר לקוחות','ממוצע להזמנה','מוצר מוביל','חודש הטוב ביותר'];
-  if(E&&d.v>=6){const ex=[E.total,E.orders,E.customers,E.avg,E.product,E.month];let ok=0;
+  if(E&&d.v>=6){const ex=[E.total,E.orders,E.customers,E.avg,E.product,E.month];if(d.v>=7){ex.push(E.pct,E.jq4);nm.push('אחוז עמידה ביעד','הכנסות ירושלים ברבעון 4')}let ok=0;
    const li=ex.map((x,i)=>{const g=V[i],good=String(g).trim()===String(x);if(good)ok++;return '<li class="'+(good?'ok':'bad')+'">'+nm[i]+': '+esc(g)+(good?' ✓':' ✗ צפוי '+esc(x))+'</li>'}).join('');
-   h+='<p><b>חלק ב׳, בדיקות:</b> <span class="big">'+ok+' מתוך 6</span></p><ul>'+li+'</ul>';}
+   h+='<p><b>חלק ב׳, בדיקות:</b> <span class="big">'+ok+' מתוך '+ex.length+'</span></p><ul>'+li+'</ul>';
+   if(d.v>=7)h+='<p class="muted">הבדיקה "הכנסות ירושלים ברבעון 4" נכונה רק למי שאיחד את הכתיב "י-ם" לירושלים.</p>';}
   else h+='<p><b>חלק ב׳ (גרסה ישנה):</b> '+esc(JSON.stringify(V))+'</p>';
   if(b.late)h+='<p class="warn">נסגר אוטומטית בתום 3 שעות</p>';
   h+='<p><b>הסבר הנבחן:</b> '+esc(b.note||'')+'</p>';
+  if(b.issue!==undefined)h+='<p><b>בעיה בנתונים ואיך טיפל:</b> '+esc(b.issue||'')+'</p>';
   const mine=BL.filter(z=>z.examinee===d.id);
   if(mine.length){h+='<p>'+mine.map(z=>'<button type="button" class="dl" data-id="'+esc(d.id)+'" data-k="'+esc(z.kind)+'" data-n="'+z.n+'">'+(z.kind==='zip'?'הורדת ZIP של הדשבורד':'הצגת צילום '+(z.kind==='shot1'?'1':'2'))+(z.got<z.n?' (חלקי)':'')+'</button> ').join('')+'</p><div class="shotbox"></div>'}
   else h+=x.has_file?'<button type="button" class="shot" data-id="'+x.id+'">הצגת צילום המסך (גרסה ישנה)</button><div class="shotbox"></div>':'<p class="muted">לא הועלו קבצים.</p>';
  }else{
+  const R=(KEY&&KEY._rules)||{},rule=R[c.s],tl=c.tools||[];
+  if(rule){const miss=rule.req.filter(t=>!tl.includes(t)),extra=rule.forbid.filter(t=>tl.includes(t));
+   h+='<p><b>חלק ג׳, כלים לסוכן ('+esc(c.s)+'):</b> '+(tl.length?esc(tl.join(', ')):'לא סומנו')+(miss.length||extra.length?' <span class="warn">✗ '+(miss.length?'חסרים: '+esc(miss.join(', ')):'')+(miss.length&&extra.length?' · ':'')+(extra.length?'מיותרים או אסורים: '+esc(extra.join(', ')):'')+'</span>':' <span class="okc">✓ תואם את הכללים</span>')+'</p>'}
+  else h+='<p><b>חלק ג׳, כלים:</b> '+esc(tl.join(', ')||'לא סומנו')+' <span class="muted">(כללי הבדיקה לא נטענו)</span></p>';
+  if(b.err!==undefined)h+='<p><b>איפה Claude טעה ואיך גילה:</b> '+esc(b.err||'')+'</p>';
   h+='<details><summary>חלק א׳ וחלק ב׳ (גולמי)</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details>';
  }
  h+='<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details></div>';
