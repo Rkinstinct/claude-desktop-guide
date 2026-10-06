@@ -75,3 +75,9 @@ textarea{resize:vertical}
 .qa.bad select,.qa.bad textarea{border-color:#b9402a}
 
 .warn{background:#fbf1d9;border:1px solid #d9a441;border-inline-start:5px solid #d97757;border-radius:10px;padding:10px 14px;margin:12px 0;color:#292621;font-size:15px}.warn.alert{background:#f8e1dd;border-color:#b4493a;font-weight:600}
+.sumlist{list-style:none;padding:0;margin:18px 0}
+.sumlist li{display:flex;gap:10px;align-items:center;padding:12px 14px;margin-bottom:8px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.sumlist li .grow{flex:1}
+.sumlist li.ok .ic{color:#1b7a3a;font-weight:700}
+.sumlist li.no{border-color:#c0392b;background:#fdf3f2}
+.sumlist li.no .ic,.sumlist li.no .grow{color:#a52a1d;font-weight:600}
