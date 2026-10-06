@@ -1,10 +1,10 @@
 (()=>{
- const E=window.ExamCore,C=window.EXAM_CONFIG,KEY='claude-exam-v5';
+ const E=window.ExamCore,C=window.EXAM_CONFIG,KEY='claude-exam-v6';
  const $=id=>document.getElementById(id);
  let S=null,proj=null,shots=[];
- const load=()=>{try{return JSON.parse(sessionStorage.getItem(KEY))}catch(e){return null}};
- const save=()=>{try{sessionStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
- const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
+ const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S}catch(e){}};
+ const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
  const fmt=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return(h?h+':':'')+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const newId=()=>{const a='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let o='';crypto.getRandomValues(new Uint8Array(6)).forEach(x=>o+=a[x%a.length]);return o};
  let timer=null;
@@ -57,7 +57,7 @@
  function finishB(){
   const g=id=>$(id).value.trim();
   if(!proj||shots.length<2||new Set(shots).size<shots.length){refreshFind();$('b-find').scrollIntoView({block:'center'});return}
-  S.b={k:S.track,t:(S.b&&S.b.t)||Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,$('b-v3').value,g('b-v4'),$('b-v5').value,g('b-v6').replace(/[^\d]/g,'')],note:g('b-note').slice(0,300),z:proj,sh:shots.slice()};
+  S.b={k:S.track,t:(S.b&&S.b.t)||Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,$('b-v3').value,g('b-v4'),$('b-v5').value,g('b-v6').replace(/[^\d]/g,'')],note:g('b-note').slice(0,300),err:g('b-err').slice(0,300),z:proj,sh:shots.slice()};
   S.phase='c';S.tC0=S.tC0||Date.now();save();showC();
  }
  // Part C focus guard: counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
@@ -70,10 +70,42 @@
   const sc=E.scenario(S.id);show('s-c');tick();$('c-warn').hidden=!(S.co>0);$('c-warn-n').textContent=S.co||0;
   $('c-title').textContent=sc.title;$('c-brief').textContent=sc.brief;
   const q=$('c-qs');if(q.children.length)return;q.innerHTML='';
-  E.CQ.forEach((x,i)=>{if(i===2)return;const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=350;t.rows=3;t.required=true;t.dataset.i=i;l.append(t);q.append(l)});
-  const l3=document.createElement('label');l3.textContent='3. '+E.CQ[2]+' (הנימוק; את הכלים מסמנים למטה)';const t3=document.createElement('textarea');t3.maxLength=350;t3.rows=3;t3.required=true;t3.dataset.i=2;l3.append(t3);
+  E.CQ.forEach((x,i)=>{if(i===2)return;const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=350;t.rows=3;t.dataset.i=i;l.append(t);q.append(l)});
+  const l3=document.createElement('label');l3.textContent='3. '+E.CQ[2]+' (הנימוק; את הכלים מסמנים למטה)';const t3=document.createElement('textarea');t3.maxLength=350;t3.rows=3;t3.dataset.i=2;l3.append(t3);
   q.insertBefore(l3,q.children[2]||null);
   const tb=$('c-tools');tb.innerHTML='';E.TOOLS.forEach(t=>{const l=document.createElement('label');l.innerHTML='<input type="checkbox" value="'+t+'"> '+t;tb.append(l)});
+  restoreC();document.querySelectorAll('#c-qs textarea,#c-tools input').forEach(x=>x.addEventListener('input',saveC));
+ }
+ function saveC(){S.cd=[...document.querySelectorAll('#c-qs textarea')].map(t=>t.value);S.ctools=[...document.querySelectorAll('#c-tools input:checked')].map(x=>x.value);save()}
+ function restoreC(){(S.cd||[]).forEach((v,i)=>{const t=document.querySelector('#c-qs textarea[data-i="'+i+'"]');if(t&&!t.value)t.value=v});(S.ctools||[]).forEach(v=>{const c=document.querySelector('#c-tools input[value="'+v+'"]');if(c)c.checked=true})}
+ // ---------- submission screen: what is missing, then lock
+ function sumItems(){
+  const d=S.da||{c:{},k:{},kr:{},w:{}},P=E.paperA(S.id),b=S.b||{},bv=b.v||[];
+  const sel=P.cmds.filter(i=>d.c[i]!=null).length+P.tools.filter(i=>d.k[i]!=null).length,selTot=P.cmds.length+P.tools.length;
+  const wr=P.writes.filter(i=>(d.w[i]||'').trim().length>=15).length;
+  const cta=[...document.querySelectorAll('#c-qs textarea')].filter(t=>t.value.trim().length>=15).length,ctot=E.CQ.length;
+  const ct=document.querySelectorAll('#c-tools input:checked').length;
+  const vs=bv.filter(x=>String(x||'').trim()!=='').length,files=!!(b.z&&(b.sh||[]).length>=2);
+  return [
+   {ok:sel===selTot,t:'חלק א׳: '+sel+' מתוך '+selTot+' בחירות (פקודות וכלים)',go:'a'},
+   {ok:wr===P.writes.length,t:'חלק א׳: '+wr+' מתוך '+P.writes.length+' הסברים כתובים נכתבו',go:'a'},
+   {ok:files,t:files?'חלק ב׳: קובץ פרויקט ושני צילומי מסך נבחרו':'חלק ב׳: חסר קובץ פרויקט או שני צילומי מסך',go:'b'},
+   {ok:vs>=6,t:'חלק ב׳: '+vs+' מתוך 6 תשובות מהנתונים מולאו',go:'b'},
+   {ok:(b.note||'').length>=10&&(b.err||'').length>=10,t:(b.note||'').length>=10&&(b.err||'').length>=10?'חלק ב׳: תיאור העבודה עם Claude ותיאור הטעות נכתבו':'חלק ב׳: חסר תיאור העבודה עם Claude או איפה Claude טעה',go:'b'},
+   {ok:cta===ctot,t:'חלק ג׳: '+cta+' מתוך '+ctot+' תשובות נכתבו',go:'c'},
+   {ok:ct>0,t:ct>0?'חלק ג׳: סומנו '+ct+' כלים':'חלק ג׳: לא סומן אף כלי',go:'c'}
+  ];
+ }
+ function goPhase(p){
+  if(p==='a'){S.phase='a';save();show('s-a');renderA();tick()}
+  else if(p==='b'){S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}
+  else showC();
+ }
+ function showSum(){
+  S.cd=[...document.querySelectorAll('#c-qs textarea')].map(t=>t.value);S.ctools=[...document.querySelectorAll('#c-tools input:checked')].map(x=>x.value);S.phase='sum';save();show('s-sum');
+  const ul=$('sum-list');ul.innerHTML='';
+  sumItems().forEach(it=>{const li=document.createElement('li');li.className=it.ok?'ok':'no';li.innerHTML='<span class="ic"></span><span class="grow"></span>';li.children[0].textContent=it.ok?'✓':'✗';li.children[1].textContent=it.t;
+   if(!it.ok){const a=document.createElement('button');a.type='button';a.className='linkbtn';a.textContent='למעבר';a.onclick=()=>goPhase(it.go);li.append(a)}ul.append(li)});
  }
  function finish(){
   const a=[...document.querySelectorAll('#c-qs textarea')].sort((x,y)=>x.dataset.i-y.dataset.i).map(t=>t.value.trim().slice(0,350));
@@ -109,16 +141,20 @@
  $('c-back').onclick=()=>{S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()};
  $('b-dl').onclick=dlCsv;$('b-dl2').onclick=dlLogo;$('b-dl3').onclick=dlPng;
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB()});
- $('f-c').addEventListener('submit',e=>{e.preventDefault();finish()});
+ $('f-c').addEventListener('submit',e=>{e.preventDefault();showSum()});
+ $('sum-back').onclick=()=>goPhase('c');
+ $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm('יש '+miss+' פריטים חסרים (מסומנים באדום). אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
+ $('restart').onclick=()=>{if(confirm('למחוק את כל ההתקדמות ולהתחיל מחדש? אי אפשר לשחזר.')){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}};
  $('r-copy').onclick=async()=>{const t=$('r-code').value;try{await navigator.clipboard.writeText(t)}catch(e){$('r-code').select();document.execCommand('copy')}$('r-copy').textContent='הועתק';setTimeout(()=>$('r-copy').textContent='העתקת הקוד',2000)};
  $('r-file').onclick=()=>dl('exam-result-'+S.id+'.txt','text/plain',$('r-code').value);
- S=load();
+ S=load();$('restart').hidden=!S;
  if(S){
   if(S.fa){proj=S.fa.z||null;shots=S.fa.sh||[]}
   if(S.phase==='a'){show('s-a');renderA();tick()}
   else if(S.phase==='bintro')show('s-bintro');
   else if(S.phase==='b'){fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}
   else if(S.phase==='c')showC();
+  else if(S.phase==='sum'){showC();restoreC();showSum()}
   else if(S.phase==='done'&&S.c)result();
  }
 })();
