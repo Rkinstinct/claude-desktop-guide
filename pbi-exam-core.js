@@ -1,5 +1,5 @@
 /* Public code of the Power BI basics exam. No answers here: the key, the expected numbers and the scoring live only in the private admin file. */
-window.PBI_CONFIG={version:6,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4:3,5:1,6:2,7:1,8:2},limitMinutesB:180,zipMaxBytes:5242880,weightA:0.5,weightB:0.35,weightC:0.15,targetMinutesB:15,resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev'};
+window.PBI_CONFIG={version:7,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4:3,5:1,6:2,7:1,8:2},limitMinutesB:180,zipMaxBytes:5242880,weightA:0.5,weightB:0.35,weightC:0.15,targetMinutesB:15,resultsEndpoint:'https://exam-results-api.ariel-crm.workers.dev'};
 (function(){
  function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
  function seedNum(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
@@ -18,8 +18,19 @@ window.PBI_CONFIG={version:6,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4
    }
    oid++;
   }
+  // Data-quality trap: about a third of Jerusalem orders are written "י-ם", and the first Jerusalem order of Q4 always is.
+  const q4=rows.find(x=>x.Region==='ירושלים'&&x.OrderDate>='2025-10-01'),forced=q4?q4.OrderID:null;
+  rows.forEach(x=>{if(x.Region==='ירושלים'&&(x.OrderID===forced||seedNum('k:'+id+':'+x.OrderID)%3===0))x.Region='י-ם'});
   return rows;
  }
+ const cleanRegion=g=>g==='י-ם'?'ירושלים':g;
+ const MANAGERS={'צפון':'אורי לוי','מרכז':'מיכל כהן','דרום':'יוסי פרץ','ירושלים':'נועה ביטון'};
+ function regions(id){
+  const r=mulberry(seedNum('t:'+id)),rev={};
+  dataset(id).forEach(x=>{const g=cleanRegion(x.Region);rev[g]=(rev[g]||0)+x.Revenue});
+  return REGIONS.map(g=>({Region:g,Manager:MANAGERS[g],AnnualTarget:Math.round(rev[g]*(.9+r()*.25)/1000)*1000}));
+ }
+ function regionsCsv(id){return 'Region,Manager,AnnualTarget\n'+regions(id).map(x=>[x.Region,x.Manager,x.AnnualTarget].join(',')).join('\n')+'\n'}
  function csv(rows){return 'OrderID,OrderDate,CustomerID,Region,Product,Quantity,Revenue\n'+rows.map(x=>[x.OrderID,x.OrderDate,x.CustomerID,x.Region,x.Product,x.Quantity,x.Revenue].join(',')).join('\n')+'\n'}
  function spec(id){const a=seedNum('p:'+id);return {product:PRODUCTS[a%5]}}
  function paperA(id){
@@ -55,7 +66,8 @@ window.PBI_CONFIG={version:6,passMark:70,advancedMark:85,perTopic:{1:1,2:2,3:3,4
   const rows=dataset(id),tot=rows.reduce((s,r)=>s+r.Revenue,0),orders=new Set(rows.map(r=>r.OrderID)).size,cust=new Set(rows.map(r=>r.CustomerID)).size;
   const bp={},bm={};rows.forEach(r=>{bp[r.Product]=(bp[r.Product]||0)+r.Revenue;const m=+r.OrderDate.slice(5,7)-1;bm[m]=(bm[m]||0)+r.Revenue});
   const top=Object.keys(bp).sort((a,b)=>bp[b]-bp[a])[0],bestM=Object.keys(bm).sort((a,b)=>bm[b]-bm[a])[0];
-  return {total:tot,orders,customers:cust,avg:Math.round(tot/orders),product:top,month:MONTHS[+bestM]};
+  const tg=regions(id).reduce((a,x)=>a+x.AnnualTarget,0),jq4=rows.filter(x=>cleanRegion(x.Region)==='ירושלים'&&x.OrderDate>='2025-10-01').reduce((a,x)=>a+x.Revenue,0);
+  return {total:tot,orders,customers:cust,avg:Math.round(tot/orders),product:top,month:MONTHS[+bestM],pct:(tot/tg*100).toFixed(1),jq4};
  }
- window.PbiCore={MONTHS,expectedB,REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
+ window.PbiCore={MONTHS,expectedB,regions,regionsCsv,cleanRegion,REGIONS,PRODUCTS,dataset,csv,spec,paperA,CQ,SCEN,scenario,encode,decode,mulberry,seedNum,h53};
 })();
