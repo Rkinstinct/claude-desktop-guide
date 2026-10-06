@@ -6,10 +6,10 @@
 <title>מבחן יסודות Power BI</title>
 <meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="pbi-exam.css?v=6">
+<link rel="stylesheet" href="pbi-exam.css?v=7">
 </head>
 <body>
-<div class="bar"><div class="wrap"><span class="brand"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>מבחן יסודות Power BI</span><button id="restart" class="linkbtn" type="button" hidden>התחל מחדש</button></div></div>
+<div class="bar"><div class="wrap"><span class="brand"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>מבחן יסודות Power BI</span><button id="restart" class="linkbtn" type="button" hidden>התחל מחדש</button></div><nav id="steps" class="steps" aria-label="חלקי המבחן" hidden><div class="wrap"><button type="button" data-p="a"><i>1</i><span>חלק א׳<small>שאלות הבנה</small></span></button><button type="button" data-p="b"><i>2</i><span>חלק ב׳<small>בניית דשבורד</small></span></button><button type="button" data-p="c"><i>3</i><span>חלק ג׳<small>עוזר AI</small></span></button></div><div class="wrap"><div id="step-hint" class="step-hint" role="status" hidden></div></div></nav></div>
 <main class="wrap">
 
 <section id="s-start">
@@ -46,9 +46,11 @@
 <section id="s-a" hidden>
  <div class="prog-top"><span id="a-count">שאלה 1 מתוך 15</span><span id="a-time" dir="ltr">00:00</span></div><div class="prog-bar"><i id="a-bar"></i></div>
  <div id="a-dots" class="dots" aria-label="מעבר בין שאלות"></div>
+ <div class="qcard">
  <div class="topic" id="a-topic"></div>
  <h2 id="a-stem" class="stem"></h2>
  <div id="a-opts" class="opts" role="radiogroup"></div>
+ </div>
  <div class="nav"><button id="a-prev" class="btn ghost" type="button">הקודמת</button><button id="a-next" class="btn" type="button">הבאה</button></div>
  <p class="muted" id="a-left" style="text-align:center"></p>
  <p style="text-align:center"><button id="a-finish" class="linkbtn" type="button">סיום חלק א׳ והמשך לחלק ב׳</button></p>
@@ -75,14 +77,14 @@
  <div class="card"><div class="dl"><button id="b-dl" class="btn ghost" type="button">הורדה חוזרת: הזמנות (CSV)</button> <button id="b-dl2" class="btn ghost" type="button">הורדה חוזרת: יעדים לפי אזור (CSV)</button></div><span class="muted">הקבצים מכילים את כל הנתונים. אין חובה לשנות בהם כלום.</span></div>
  <form id="f-b" class="card q-b" autocomplete="off">
   <h3>1. מספרים מהדשבורד שלכם</h3>
-  <label>סך ההכנסות של השנה (ללא סימנים) <input id="b-v1" inputmode="numeric" required dir="ltr"></label>
-  <label>מספר ההזמנות השונות (לא מספר השורות) <input id="b-v2" inputmode="numeric" required dir="ltr"></label>
-  <label>מספר הלקוחות השונים <input id="b-v3" inputmode="numeric" required dir="ltr"></label>
-  <label>הכנסה ממוצעת להזמנה, מעוגלת למספר שלם <input id="b-v4" inputmode="numeric" required dir="ltr"></label>
-  <label>איזה מוצר מוביל בהכנסות? <select id="b-v5" required><option value="">בחרו</option></select></label>
-  <label>באיזה חודש ההכנסות הגבוהות ביותר? <select id="b-v6" required><option value="">בחרו</option></select></label>
-  <label>אחוז העמידה ביעד השנתי: סך ההכנסות חלקי סך היעדים, באחוזים עם ספרה אחת אחרי הנקודה (למשל 97.3) <input id="b-v7" inputmode="decimal" required dir="ltr"></label>
-  <label>הכנסות אזור ירושלים ברבעון 4 (אוקטובר עד דצמבר), בשקלים שלמים <input id="b-v8" inputmode="numeric" required dir="ltr"></label>
+  <label class="half">סך ההכנסות של השנה (ללא סימנים) <input id="b-v1" inputmode="numeric" required dir="ltr"></label>
+  <label class="half">מספר ההזמנות השונות (לא מספר השורות) <input id="b-v2" inputmode="numeric" required dir="ltr"></label>
+  <label class="half">מספר הלקוחות השונים <input id="b-v3" inputmode="numeric" required dir="ltr"></label>
+  <label class="half">הכנסה ממוצעת להזמנה, מעוגלת למספר שלם <input id="b-v4" inputmode="numeric" required dir="ltr"></label>
+  <label class="half">איזה מוצר מוביל בהכנסות? <select id="b-v5" required><option value="">בחרו</option></select></label>
+  <label class="half">באיזה חודש ההכנסות הגבוהות ביותר? <select id="b-v6" required><option value="">בחרו</option></select></label>
+  <label class="half">אחוז העמידה ביעד השנתי: סך ההכנסות חלקי סך היעדים, באחוזים עם ספרה אחת אחרי הנקודה (למשל 97.3) <input id="b-v7" inputmode="decimal" required dir="ltr"></label>
+  <label class="half">הכנסות אזור ירושלים ברבעון 4 (אוקטובר עד דצמבר), בשקלים שלמים <input id="b-v8" inputmode="numeric" required dir="ltr"></label>
   <h3>2. קבצים</h3>
   <label>ZIP של הדשבורד (pbix מכווץ או תיקיית PBIP מכווצת, עד 5MB)<input id="b-zip" type="file" accept=".zip,application/zip,application/x-zip-compressed"></label>
   <label>צילומי מסך של עמודי הדשבורד (PNG או JPG, עד שניים)<input id="b-file" type="file" accept="image/png,image/jpeg" multiple></label>
@@ -125,6 +127,6 @@
 </main>
 <script src="pbi-exam-data.js?v=5"></script>
 <script src="pbi-exam-core.js?v=8"></script>
-<script src="pbi-exam.js?v=10"></script>
+<script src="pbi-exam.js?v=11"></script>
 </body>
 </html>
