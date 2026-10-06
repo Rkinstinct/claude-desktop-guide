@@ -22,7 +22,7 @@ details{margin-top:6px}
 <p class="muted">הסיסמה לא נשמרת בדפדפן. חלק א׳ ב-Power BI מחושב כאן מול מפתח שנמצא רק בשרת, מאחורי הסיסמה. יציאה מהמסך היא סימן לבדיקה ידנית, לא הוכחה.</p>
 <div id="out"></div>
 </main>
-<script src="pbi-exam-data.js?v=4"></script><script src="pbi-exam-core.js?v=6"></script>
+<script src="pbi-exam-data.js?v=5"></script><script src="pbi-exam-core.js?v=7"></script>
 <script>
 const API='https://exam-results-api.ariel-crm.workers.dev/admin/list';
 const $=id=>document.getElementById(id);
@@ -30,10 +30,10 @@ const fmt=s=>{s=Math.max(0,Math.floor(+s||0));return String(Math.floor(s/60)).pa
 const dec=c=>{try{let p=c.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');while(p.length%4)p+='=';return JSON.parse(decodeURIComponent(escape(atob(p))))}catch(e){return null}};
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-let KEY=null,PW='';
+let KEY=null,PW='',BL=[];
 const OPT=['א','ב','ג','ד'];
 function scoreA(d){
- if(!KEY||!d.a||!Array.isArray(d.a.r)||!(d.v>=4))return null;
+ if(!KEY||!d.a||!Array.isArray(d.a.r)||!(d.v>=6))return null;
  const p=PbiCore.paperA(d.id);if(p.length!==d.a.r.length)return null;
  let n=0;const rows=p.map((q,i)=>{const k=KEY[q[0]],g=d.a.r[i],ok=g===k;if(ok)n++;
   return '<li class="'+(ok?'ok':'bad')+'">'+(ok?'✓ ':'✗ ')+esc(q[2])+'<br><span class="muted">ענה: '+(g>=0?esc(q[3][g]):'לא ענה')+(ok?'':' · נכון: '+esc(q[3][k]))+'</span></li>'}).join('');
@@ -47,23 +47,34 @@ function card(x){
   const sc=scoreA(d);
   h+='<p><b>חלק א׳:</b> '+(sc?'<span class="big">'+sc.n+' מתוך '+sc.total+' נכון</span>':'לא ניתן לחשב (גרסה ישנה של המבחן)')+'</p>';
   if(sc)h+='<details><summary>כל השאלות: נכון / שגוי</summary><ol>'+sc.rows+'</ol></details>';
-  let exp=null;try{exp=PbiCore.dataset(d.id).reduce((s,r)=>s+r.Revenue,0)}catch(e){}
-  const got=(b.v||[])[0];
-  h+='<p><b>חלק ב׳, הכרטיס:</b> '+esc(got)+(exp!=null&&got!==undefined&&got!==''?(String(exp)===String(got)?' <span class="okc">✓ נכון</span>':' <span class="warn">✗ צפוי '+exp+'</span>'):'')+'</p>';
+  let E=null;try{E=PbiCore.expectedB(d.id)}catch(e){}
+  const V=b.v||[],nm=['סך הכנסות','מספר הזמנות','מספר לקוחות','ממוצע להזמנה','מוצר מוביל','חודש הטוב ביותר'];
+  if(E&&d.v>=6){const ex=[E.total,E.orders,E.customers,E.avg,E.product,E.month];let ok=0;
+   const li=ex.map((x,i)=>{const g=V[i],good=String(g).trim()===String(x);if(good)ok++;return '<li class="'+(good?'ok':'bad')+'">'+nm[i]+': '+esc(g)+(good?' ✓':' ✗ צפוי '+esc(x))+'</li>'}).join('');
+   h+='<p><b>חלק ב׳, בדיקות:</b> <span class="big">'+ok+' מתוך 6</span></p><ul>'+li+'</ul>';}
+  else h+='<p><b>חלק ב׳ (גרסה ישנה):</b> '+esc(JSON.stringify(V))+'</p>';
+  if(b.late)h+='<p class="warn">נסגר אוטומטית בתום 3 שעות</p>';
   h+='<p><b>הסבר הנבחן:</b> '+esc(b.note||'')+'</p>';
-  h+=x.has_file?'<button type="button" class="shot" data-id="'+x.id+'">הצגת צילום המסך של הדשבורד</button><div class="shotbox"></div>':'<p class="muted">לא הועלה צילום מסך.</p>';
+  const mine=BL.filter(z=>z.examinee===d.id);
+  if(mine.length){h+='<p>'+mine.map(z=>'<button type="button" class="dl" data-id="'+esc(d.id)+'" data-k="'+esc(z.kind)+'" data-n="'+z.n+'">'+(z.kind==='zip'?'הורדת ZIP של הדשבורד':'הצגת צילום '+(z.kind==='shot1'?'1':'2'))+(z.got<z.n?' (חלקי)':'')+'</button> ').join('')+'</p><div class="shotbox"></div>'}
+  else h+=x.has_file?'<button type="button" class="shot" data-id="'+x.id+'">הצגת צילום המסך (גרסה ישנה)</button><div class="shotbox"></div>':'<p class="muted">לא הועלו קבצים.</p>';
  }else{
   h+='<details><summary>חלק א׳ וחלק ב׳ (גולמי)</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details>';
  }
  h+='<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details></div>';
  return h;
 }
-document.addEventListener('click',async e=>{const t=e.target.closest('.shot');if(!t)return;const box=t.nextElementSibling;box.textContent='טוען…';
+document.addEventListener('click',async e=>{const dl=e.target.closest('.dl');
+ if(dl){const box=dl.parentElement.nextElementSibling;box.textContent='טוען…';try{let parts=[],name='';for(let i=0;i<+dl.dataset.n;i++){const r=await fetch(API.replace('list','blob'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:PW,id:dl.dataset.id,kind:dl.dataset.k,i})});const j=await r.json();if(!j.data)throw 0;parts.push(j.data);name=j.name||name}
+  const b64=parts.join('');box.innerHTML='';
+  if(dl.dataset.k==='zip'){const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([u],{type:'application/zip'}));a.download=name||'dashboard.zip';a.textContent='הורדה: '+a.download;box.append(a);a.click()}
+  else{const im=new Image();im.src='data:'+(b64.startsWith('iVBOR')?'image/png':'image/jpeg')+';base64,'+b64;im.style.maxWidth='100%';box.append(im)}}catch(err){box.textContent='שגיאה בטעינה'}return}
+ const t=e.target.closest('.shot');if(!t)return;const box=t.nextElementSibling;box.textContent='טוען…';
  try{const r=await fetch(API.replace('list','file'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:PW,id:+t.dataset.id})});const j=await r.json();box.innerHTML='';const im=new Image();im.src=j.data;im.style.maxWidth='100%';box.append(im)}catch(err){box.textContent='שגיאה בטעינה'}});
 $('f').onsubmit=async e=>{e.preventDefault();$('msg').textContent='טוען…';$('msg').className='muted';
  try{const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:$('pw').value,exam:$('ex').value||undefined})});
   if(r.status===401){$('msg').textContent='סיסמה שגויה';$('msg').className='err';return}
-  const j=await r.json();KEY=j.key;PW=$('pw').value;$('msg').textContent=j.rows.length+' תוצאות';
+  const j=await r.json();KEY=j.key;BL=j.blobs||[];PW=$('pw').value;$('msg').textContent=j.rows.length+' תוצאות';
   $('out').innerHTML=j.rows.map(card).join('')||'<p>אין תוצאות עדיין.</p>';
  }catch(err){$('msg').textContent='שגיאת תקשורת';$('msg').className='err'}};
 </script></body></html>
