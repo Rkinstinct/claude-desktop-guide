@@ -1,11 +1,11 @@
 (()=>{
- const E=window.PbiCore,C=window.PBI_CONFIG,KEY='pbi-exam-v3',T=window.PBI_TOPICS;
+ const E=window.PbiCore,C=window.PBI_CONFIG,KEY='pbi-exam-v4',T=window.PBI_TOPICS;
  const $=id=>document.getElementById(id);
  const LIMIT=C.limitMinutesB*60;
  let S=null;
- const load=()=>{try{return JSON.parse(sessionStorage.getItem(KEY))}catch(e){return null}};
- const save=()=>{try{sessionStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
- const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
+ const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S}catch(e){}};
+ const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
  const fmt=s=>{s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const fmtH=s=>{s=Math.max(0,Math.floor(s));return Math.floor(s/3600)+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const newId=()=>{const a='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let o='';crypto.getRandomValues(new Uint8Array(6)).forEach(x=>o+=a[x%a.length]);return o};
@@ -50,15 +50,17 @@
   S.phase='bintro';save();show('s-bintro');
  }
  function dl(name,type,content){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
- const dlCsv=()=>dl('orders-2025-'+S.id+'.csv','text/csv;charset=utf-8','\ufeff'+E.csv(E.dataset(S.id)));
+ const dlOrders=()=>dl('orders-2025-'+S.id+'.csv','text/csv;charset=utf-8','\ufeff'+E.csv(E.dataset(S.id)));
+ const dlRegions=()=>dl('regions-'+S.id+'.csv','text/csv;charset=utf-8','\ufeff'+E.regionsCsv(S.id));
+ const dlCsv=()=>{dlOrders();setTimeout(dlRegions,400)};
  function fillB(){
   if($('b-v5').options.length<2){
    $('b-v5').innerHTML='<option value="">בחרו</option>'+E.PRODUCTS.map(c=>'<option>'+c+'</option>').join('');
    $('b-v6').innerHTML='<option value="">בחרו</option>'+E.MONTHS.map(c=>'<option>'+c+'</option>').join('');
   }
-  if(S.bv)['b-v1','b-v2','b-v3','b-v4','b-v5','b-v6','b-note'].forEach(id=>{if(S.bv[id]!=null&&!$(id).value)$(id).value=S.bv[id]});
+  if(S.bv)['b-v1','b-v2','b-v3','b-v4','b-v5','b-v6','b-v7','b-v8','b-note','b-issue'].forEach(id=>{if(S.bv[id]!=null&&!$(id).value)$(id).value=S.bv[id]});
  }
- $('f-b').addEventListener('input',()=>{if(!S)return;S.bv=S.bv||{};['b-v1','b-v2','b-v3','b-v4','b-v5','b-v6','b-note'].forEach(id=>S.bv[id]=$(id).value);save()});
+ $('f-b').addEventListener('input',()=>{if(!S)return;S.bv=S.bv||{};['b-v1','b-v2','b-v3','b-v4','b-v5','b-v6','b-v7','b-v8','b-note','b-issue'].forEach(id=>S.bv[id]=$(id).value);save()});
  // ---------- uploads (screenshots and ZIP) in chunks through the results Worker
  function shrink(file){return new Promise((res,rej)=>{const im=new Image(),u=URL.createObjectURL(file);im.onload=()=>{const w=Math.min(1400,im.width),h=Math.round(im.height*w/im.width),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);URL.revokeObjectURL(u);let q=.8,d=c.toDataURL('image/jpeg',q);while(d.length>1300000&&q>.3){q-=.1;d=c.toDataURL('image/jpeg',q)}d.length>1300000?rej():res(d)};im.onerror=()=>rej();im.src=u})}
  const readB64=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej();r.readAsDataURL(f)});
@@ -114,7 +116,7 @@
     const ok=await doUploads(false);if(!ok){closing=false;return}
    }else{await doUploads(true)}
    const end=Math.min(Date.now(),deadline());
-   S.b={t:S.b&&S.b.t?S.b.t:Math.round((end-S.tB0)/1000),v:[1,2,3,4].map(k=>g('b-v'+k).replace(/[^\d]/g,'')).concat([$('b-v5').value,$('b-v6').value]),note:g('b-note').slice(0,400),late,up:{zip:!!(S.up&&S.up.zip),sh:(S.up&&S.up.sh)||0,fail:!!S.upFail},zi:S.zipInfo||null};
+   S.b={t:S.b&&S.b.t?S.b.t:Math.round((end-S.tB0)/1000),v:[1,2,3,4].map(k=>g('b-v'+k).replace(/[^\d]/g,'')).concat([$('b-v5').value,$('b-v6').value,g('b-v7').replace(',','.').replace(/[^\d.]/g,''),g('b-v8').replace(/[^\d]/g,'')]),note:g('b-note').slice(0,400),issue:g('b-issue').slice(0,300),late,up:{zip:!!(S.up&&S.up.zip),sh:(S.up&&S.up.sh)||0,fail:!!S.upFail},zi:S.zipInfo||null};
    S.bDone=true;S.phase='c';S.tC0=S.tC0||Date.now();save();setBusy(false,'');showC();
   }finally{closing=false}
  }
@@ -128,7 +130,30 @@
  function showC(){
   show('s-c');tick();$('c-warn').hidden=!(S.co>0);$('c-warn-n').textContent=S.co||0;$('c-auto').hidden=!S.b||!S.b.late;
   const sc=E.scenario(S.id);$('c-title').textContent=sc.title;$('c-brief').textContent=sc.brief;const q=$('c-qs');if(q.children.length)return;
-  E.CQ.forEach((x,i)=>{const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=320;t.rows=5;t.required=true;t.value=(S.cd&&S.cd[i])||'';t.oninput=()=>{(S.cd=S.cd||[])[i]=t.value;save()};l.append(t);q.append(l)});
+  E.CQ.forEach((x,i)=>{const l=document.createElement('label');l.textContent=(i+1)+'. '+x;const t=document.createElement('textarea');t.maxLength=320;t.rows=5;t.value=(S.cd&&S.cd[i])||'';t.oninput=()=>{(S.cd=S.cd||[])[i]=t.value;save()};l.append(t);q.append(l)});
+ }
+ // ---------- submission screen: what is missing, then lock
+ function sumItems(){
+  const len=P().length,aOk=P().filter((_,i)=>isAns(S.r[i])).length,b=S.b||{},bv=b.v||[],bFilled=bv.filter(x=>String(x||'').trim()!=='').length,cd=(S.cd||[]),cOk=E.CQ.filter((_,i)=>(cd[i]||'').trim().length>=15).length;
+  return [
+   {ok:aOk===len,t:'חלק א׳: '+aOk+' מתוך '+len+' שאלות נענו',go:'a'},
+   {ok:!!S.bDone&&bFilled>=8,t:'חלק ב׳: '+bFilled+' מתוך 8 מספרים מולאו'+(S.bDone?'':' (החלק עוד לא נסגר)'),go:'b'},
+   {ok:!!(b.up&&b.up.zip),t:b.up&&b.up.zip?'חלק ב׳: ה-ZIP הועלה':'חלק ב׳: ה-ZIP לא הועלה',go:'b'},
+   {ok:!!(b.up&&b.up.sh>0),t:b.up&&b.up.sh>0?'חלק ב׳: הועלו '+b.up.sh+' צילומי מסך':'חלק ב׳: צילום מסך לא הועלה',go:'b'},
+   {ok:(b.note||'').length>=20&&(b.issue||'').length>=5,t:(b.note||'').length>=20&&(b.issue||'').length>=5?'חלק ב׳: ההסבר והבעיה בנתונים נכתבו':'חלק ב׳: חסר הסבר או תיאור הבעיה בנתונים',go:'b'},
+   {ok:cOk===E.CQ.length,t:'חלק ג׳: '+cOk+' מתוך '+E.CQ.length+' תשובות נכתבו',go:'c'}
+  ];
+ }
+ function showSum(){
+  S.phase='sum';save();show('s-sum');
+  const ul=$('sum-list');ul.innerHTML='';
+  sumItems().forEach(it=>{const li=document.createElement('li');li.className=it.ok?'ok':'no';li.innerHTML='<span class="ic"></span><span class="grow"></span>';li.children[0].textContent=it.ok?'✓':'✗';li.children[1].textContent=it.t;
+   if(!it.ok){const a=document.createElement('button');a.type='button';a.className='linkbtn';a.textContent='למעבר';a.onclick=()=>goPhase(it.go);li.append(a)}ul.append(li)});
+ }
+ function goPhase(p){
+  if(p==='a'){S.phase='a';save();show('s-a');renderQ();tick()}
+  else if(p==='b'){S.phase='b';save();fillB();show('s-b');tick();if(Date.now()>=deadline()){$('f-b').querySelectorAll('input,select,textarea').forEach(x=>{x.disabled=true});$('b-upmsg').textContent='הזמן של חלק ב׳ נגמר, אי אפשר לערוך.'}}
+  else showC();
  }
  function finish(){
   const a=[...document.querySelectorAll('#c-qs textarea')].map(t=>t.value.trim().slice(0,320));
@@ -155,18 +180,22 @@
  $('b-back').onclick=()=>{S.phase='a';save();show('s-a');renderQ();tick()};
  $('b-toa').onclick=()=>{S.phase='a';save();show('s-a');renderQ();tick()};
  $('b-start').onclick=()=>{S.phase='b';if(!S.tB0)S.tB0=Date.now();save();fillB();dlCsv();show('s-b');tick()};
- $('b-dl').onclick=dlCsv;
+ $('b-dl').onclick=dlOrders;$('b-dl2').onclick=dlRegions;
+ $('restart').onclick=()=>{if(confirm('למחוק את כל ההתקדמות ולהתחיל מחדש? אי אפשר לשחזר.')){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}};
  $('f-b').addEventListener('submit',e=>{e.preventDefault();finishB(false)});
- $('f-c').addEventListener('submit',e=>{e.preventDefault();finish()});
+ $('f-c').addEventListener('submit',e=>{e.preventDefault();showSum()});
+ $('sum-back').onclick=()=>goPhase('c');
+ $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm('יש '+miss+' פריטים חסרים (מסומנים באדום). אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
  $('c-back').onclick=()=>{S.phase='b';save();fillB();show('s-b');tick();const late=Date.now()>=deadline();if(late){$('f-b').querySelectorAll('input,select,textarea').forEach(x=>{x.disabled=true});$('b-upmsg').textContent='הזמן של חלק ב׳ נגמר, אי אפשר לערוך.'}};
  $('r-copy').onclick=async()=>{const t=$('r-code').value;try{await navigator.clipboard.writeText(t)}catch(e){$('r-code').select();document.execCommand('copy')}$('r-copy').textContent='הועתק';setTimeout(()=>$('r-copy').textContent='העתקת הקוד',2000)};
  $('r-file').onclick=()=>dl('pbi-exam-result-'+S.id+'.txt','text/plain',$('r-code').value);
- S=load();
+ S=load();$('restart').hidden=!S;
  if(S){
   if(S.phase==='a'){show('s-a');renderQ();tick()}
   else if(S.phase==='bintro')show('s-bintro');
   else if(S.phase==='b'){fillB();show('s-b');tick()}
   else if(S.phase==='c')showC();
+  else if(S.phase==='sum'){showC();showSum()}
   else if(S.phase==='done'&&S.c)result();
   if(S.tB0&&!S.bDone)tick();
  }
