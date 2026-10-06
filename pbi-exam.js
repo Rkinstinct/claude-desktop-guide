@@ -187,6 +187,7 @@
  function curSec(){return SECS.find(i=>$(i)&&!$(i).hidden)}
  function stepRender(){
   const nav=$('steps');if(!nav)return;
+  if(S&&$('b-lbl')){if(S.bDone){$('b-lbl').textContent='חלק ב׳: נשלח. זמן העבודה';$('b-time').textContent=fmtH((S.b&&S.b.t)||0);$('b-time').classList.remove('b-low');$('b-bar').style.width='100%'}else $('b-lbl').textContent='חלק ב׳: נותר'}
   const sec=curSec();
   if(!S||!sec||S.phase==='done'){nav.hidden=true;return}
   nav.hidden=false;
