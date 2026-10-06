@@ -7,7 +7,7 @@
  disclosure.classList.add('course-home-intro');
  const note=document.createElement('details');const noteSummary=document.createElement('summary');noteSummary.textContent='על הסרטונים והמקורות';note.append(noteSummary);
  while(disclosure.firstChild)note.append(disclosure.firstChild);disclosure.append(note);
- const examLink=document.createElement('a');examLink.className='exam-banner';examLink.href='exam.html';examLink.innerHTML='<b>מבחן מסכם</b><span>40 שאלות על כל הפרקים ומשימה מעשית אחת. מקבלים קוד תוצאה לשליחה למנהל המבחן.</span><span aria-hidden="true">←</span>';disclosure.after(examLink);
+
  const originalSub=document.querySelector('.hero p.sub');
  const more=document.createElement('details');more.className='intro-more';const moreSummary=document.createElement('summary');moreSummary.textContent='למי מתאים המדריך?';more.append(moreSummary);
  const full=document.createElement('p');full.textContent=originalSub.textContent;more.append(full);originalSub.after(more);
