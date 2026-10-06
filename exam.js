@@ -3,8 +3,8 @@
  const $=id=>document.getElementById(id);
  let S=null,proj=null,shots=[];
  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
- const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done'}catch(e){}};
- const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0)};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done';stepRender()}catch(e){}};
+ const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0);stepRender()};
  const fmt=s=>{s=Math.max(0,Math.floor(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return(h?h+':':'')+String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
  const newId=()=>{const a='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let o='';crypto.getRandomValues(new Uint8Array(6)).forEach(x=>o+=a[x%a.length]);return o};
  let timer=null;
@@ -33,10 +33,12 @@
   S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;if(S.tB0){S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}else{S.phase='bintro';save();show('s-bintro')}
  }
  function fillSelects(){
+  const keep=['b-v2','b-v3','b-v5'].map(i=>$(i).value);
   $('b-v2').innerHTML='<option value="">בחרו</option>'+E.CATS.map(c=>'<option>'+c+'</option>').join('');
   $('b-v5').innerHTML='<option value="">בחרו</option>'+E.REGIONS.map(c=>'<option>'+c+'</option>').join('');
   $('b-v3').innerHTML='<option value="">בחרו</option>'+E.MONTHS.slice(1).map(c=>'<option>'+c+'</option>').join('');
   const sp=E.spec(S.id);$('b-q1').textContent='מה סך ההכנסות ברבעון 3 (יולי עד ספטמבר) באזור '+sp.region+'?';$('b-q6').textContent='מה ההכנסות המצטברות מתחילת השנה (ינואר) ועד סוף חודש '+E.MONTHS[sp.ytdMonth-1]+', באזור '+sp.ytdRegion+'? (YTD)';
+  if(S){keep.forEach((v,k)=>{const i=['b-v2','b-v3','b-v5'][k],val=v||(S.bv&&S.bv[i]);if(val)$(i).value=val});['b-v1','b-v4','b-v6','b-note','b-err'].forEach(i=>{if(S.bv&&S.bv[i]!=null&&!$(i).value)$(i).value=S.bv[i]})}
  }
  function dl(name,type,content){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
  const dlCsv=()=>dl('sales-2025-'+S.id+'.csv','text/csv;charset=utf-8','\ufeff'+E.csv(E.dataset(S.id)));
@@ -144,6 +146,39 @@
  $('f-c').addEventListener('submit',e=>{e.preventDefault();showSum()});
  $('sum-back').onclick=()=>goPhase('c');
  $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm((miss==1?'חסר פריט אחד (מסומן באדום).':'חסרים '+miss+' פריטים (מסומנים באדום).')+' אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
+ function snapA(){const P=E.paperA(S.id),d=S.da||{c:{},k:{},kr:{},w:{}};
+  S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
+  S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;
+ }
+
+ $('f-b').addEventListener('input',()=>{if(!S)return;S.bv=S.bv||{};['b-v1','b-v2','b-v3','b-v4','b-v5','b-v6','b-note','b-err'].forEach(id=>S.bv[id]=$(id).value);save()});
+ // ---------- stepper: free movement between the three parts, state is kept in localStorage
+ const SECS=['s-a','s-bintro','s-b','s-c','s-sum'];
+ function curSec(){return SECS.find(i=>$(i)&&!$(i).hidden)}
+ function stepRender(){
+  const nav=$('steps');if(!nav)return;
+  const sec=curSec();
+  if(!S||!sec||S.phase==='done'){nav.hidden=true;return}
+  nav.hidden=false;
+  const cur={'s-a':'a','s-bintro':'b','s-b':'b','s-c':'c','s-sum':'c'}[sec];
+  const st={a:!!S.a,b:!!S.b,c:false};
+  nav.querySelectorAll('button').forEach(b=>{const p=b.dataset.p;
+   b.classList.toggle('done',!!st[p]);b.classList.toggle('locked',p==='c'&&!S.b);
+   if(p===cur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');
+   b.firstChild.textContent=(st[p]&&p!==cur)?'✓':({a:'1',b:'2',c:'3'})[p]});
+ }
+ let hintT=null;
+ function stepHint(m){const h=$('step-hint');h.textContent=m;h.hidden=false;clearTimeout(hintT);hintT=setTimeout(()=>{h.hidden=true},6000)}
+ function stepNav(p){
+  if(!S||S.phase==='done')return;
+  const sec=curSec();$('step-hint').hidden=true;
+  if(sec==='s-a')snapA();
+  if(p==='a'){if(sec!=='s-a')goPhase('a');return}
+  if(p==='b'){if(!S.tB0){S.phase='bintro';save();show('s-bintro')}else if(sec!=='s-b')goPhase('b');return}
+  if(!S.b){stepHint('כדי לעבור לחלק ג׳ צריך קודם לסיים את חלק ב׳ (קבצים ותשובות). אפשר לחזור אליו ולהשלים.');return}
+  S.phase='c';save();showC();
+ }
+ $('steps').addEventListener('click',e=>{const b=e.target.closest('button[data-p]');if(b)stepNav(b.dataset.p)});
  $('restart').onclick=()=>{if(confirm('למחוק את כל ההתקדמות ולהתחיל מחדש? אי אפשר לשחזר.')){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}};
  $('r-copy').onclick=async()=>{const t=$('r-code').value;try{await navigator.clipboard.writeText(t)}catch(e){$('r-code').select();document.execCommand('copy')}$('r-copy').textContent='הועתק';setTimeout(()=>$('r-copy').textContent='העתקת הקוד',2000)};
  $('r-file').onclick=()=>dl('exam-result-'+S.id+'.txt','text/plain',$('r-code').value);
