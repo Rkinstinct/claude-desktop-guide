@@ -49,3 +49,10 @@ details.note{margin:16px 0;color:var(--g)}details summary{cursor:pointer;font-we
 .dots button[aria-current=true]{background:var(--dark);color:#fff;border-color:var(--dark)}
 .b-low{color:#A4262C;font-weight:800}
 @media(max-width:520px){.dots{grid-template-columns:repeat(5,1fr)}}
+.bar .linkbtn{color:#f2c811;font-size:14px}
+.sumlist{list-style:none;padding:0;margin:18px 0}
+.sumlist li{display:flex;gap:10px;align-items:center;padding:12px 14px;margin-bottom:8px;border:1px solid #e1dfdd;border-radius:10px;background:#fff}
+.sumlist li .grow{flex:1}
+.sumlist li.ok .ic{color:#1b7a3a;font-weight:700}
+.sumlist li.no{border-color:#c0392b;background:#fdf3f2}
+.sumlist li.no .ic,.sumlist li.no .grow{color:#a52a1d;font-weight:600}
