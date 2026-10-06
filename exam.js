@@ -89,7 +89,7 @@
   const ct=document.querySelectorAll('#c-tools input:checked').length;
   const vs=bv.filter(x=>String(x||'').trim()!=='').length,files=!!(b.z&&(b.sh||[]).length>=2);
   return [
-   {ok:sel===selTot,t:'חלק א׳: '+sel+' מתוך '+selTot+' בחירות (פקודות וכלים)',go:'a'},
+   {ok:sel===selTot,t:'חלק א׳: '+sel+' מתוך '+selTot+' בחירות (פקודות)',go:'a'},
    {ok:wr===P.writes.length,t:'חלק א׳: '+wr+' מתוך '+P.writes.length+' הסברים כתובים נכתבו',go:'a'},
    {ok:files,t:files?'חלק ב׳: קובץ פרויקט ושני צילומי מסך נבחרו':'חלק ב׳: חסר קובץ פרויקט או שני צילומי מסך',go:'b'},
    {ok:vs>=6,t:'חלק ב׳: '+vs+' מתוך 6 תשובות מהנתונים מולאו',go:'b'},
