@@ -45,7 +45,7 @@ window.EXAM_CONFIG={
  function paperA(id){
   const r=mulberry(seedNum('paperA:'+id)),A=window.EXAM_A;
   const sh=l=>{const a=l.map(x=>x.id);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-  return {cmds:sh(A.cmds),tools:sh(A.tools),writes:sh(A.writes)};
+  return {cmds:sh(A.cmds),tools:(sh(A.tools),[]),writes:sh(A.writes)};
  }
 
  // Part C: agent-building scenarios (public part: titles, briefs, questions). Tool rules and the rubric are in the admin file.
