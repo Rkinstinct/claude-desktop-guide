@@ -29,7 +29,7 @@
   if(miss.length){const f=document.querySelector('.qa.bad');f.scrollIntoView({block:'center'});alert((miss.length==1?'נשארה בחירה ריקה אחת.':'נשארו '+miss.length+' בחירות ריקות.')+' תשובות הבחירה חובה; בשאלות הכתובות אפשר להשאיר ריק, וזה נחשב אפס.');return}
   const emptyW=P.writes.filter(i=>!(d.w[i]||'').trim()).length;
   if(emptyW&&!confirm(emptyW+' שאלות כתובות ריקות ויקבלו אפס. להמשיך?'))return;
-  S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
+  S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),o:S.ao||0,os:S.as||0,t:Math.round((Date.now()-S.tA0)/1000)};
   S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;S.aDone=true;if(S.tB0){S.phase='b';save();fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}else{S.phase='bintro';save();show('s-bintro')}
  }
  function fillSelects(){
@@ -62,10 +62,15 @@
   S.b={k:S.track,t:(S.b&&S.b.t)||Math.round((Date.now()-S.tB0)/1000),v:[g('b-v1').replace(/[^\d]/g,''),$('b-v2').value,$('b-v3').value,g('b-v4'),$('b-v5').value,g('b-v6').replace(/[^\d]/g,'')],note:g('b-note').slice(0,300),err:g('b-err').slice(0,300),z:proj,sh:shots.slice()};
   S.phase='c';S.tC0=S.tC0||Date.now();save();showC();
  }
- // Part C focus guard: counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
- let awayAt=0;
- function onAway(){if(!S||S.phase!=='c'||$('s-c').hidden||awayAt)return;awayAt=Date.now()}
- function onBack(){if(!awayAt)return;const sec=Math.round((Date.now()-awayAt)/1000);awayAt=0;if(!S||S.phase!=='c')return;S.co=(S.co||0)+1;S.cs=(S.cs||0)+sec;save();$('c-warn').hidden=false;$('c-warn-n').textContent=S.co}
+ // Focus guard (parts A and C): counts leaving the screen. Not proof of consulting an AI tool; it only flags it.
+ // Part A exits are recorded silently for the manager view; part C keeps its on-screen warning.
+ let awayAt=0,awayKind=null;
+ function onAway(){if(awayAt||!S)return;
+  if(S.phase==='c'&&!$('s-c').hidden){awayAt=Date.now();awayKind='c';return}
+  if(S.phase==='a'&&!$('s-a').hidden){awayAt=Date.now();awayKind='a'}}
+ function onBack(){if(!awayAt)return;const sec=Math.round((Date.now()-awayAt)/1000),k=awayKind;awayAt=0;awayKind=null;if(!S)return;
+  if(k==='c'){if(S.phase!=='c')return;S.co=(S.co||0)+1;S.cs=(S.cs||0)+sec;save();$('c-warn').hidden=false;$('c-warn-n').textContent=S.co}
+  if(k==='a'){if(S.phase!=='a')return;S.ao=(S.ao||0)+1;S.as=(S.as||0)+sec;save()}}
  document.addEventListener('visibilitychange',()=>{document.hidden?onAway():onBack()});
  window.addEventListener('blur',onAway);window.addEventListener('focus',onBack);
  function showC(){
@@ -147,7 +152,7 @@
  $('sum-back').onclick=()=>goPhase('c');
  $('sum-send').onclick=()=>{const miss=sumItems().filter(x=>!x.ok).length;if(miss&&!confirm((miss==1?'חסר פריט אחד (מסומן באדום).':'חסרים '+miss+' פריטים (מסומנים באדום).')+' אחרי ההגשה אי אפשר להשלים. להגיש בכל זאת?'))return;finish()};
  function snapA(){const P=E.paperA(S.id),d=S.da||{c:{},k:{},kr:{},w:{}};
-  S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),t:Math.round((Date.now()-S.tA0)/1000)};
+  S.a={ci:P.cmds.map(i=>d.c[i]),ki:P.tools.map(i=>d.k[i]),kr:P.tools.map(i=>(d.kr[i]||'').trim().slice(0,140)),w:P.writes.map(i=>(d.w[i]||'').trim().slice(0,320)),o:S.ao||0,os:S.as||0,t:Math.round((Date.now()-S.tA0)/1000)};
   S.tAsec=S.tAsec||S.a.t;S.a.t=S.tAsec;
  }
 
