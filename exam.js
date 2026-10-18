@@ -146,12 +146,12 @@
  }
  function submitResult(payload,code){
   const card=$('r-card'),ok=$('r-ok'),wait=$('r-wait');
-  if(S.sent){card.hidden=true;ok.hidden=false;return}
+  if(S.sent){card.hidden=true;ok.hidden=false;if(S.filesSent){$('r-files').hidden=true}else{$('r-ok').textContent='התשובות והזמנים נשלחו בהצלחה למנהל המבחן.';$('r-files').hidden=false}return}
   card.hidden=true;ok.hidden=true;wait.hidden=false;
   fetch(C.resultsEndpoint+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exam:'claude',code,id:S.id,name:S.name,email:S.email||''})})
    .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;save();
     if(projFile||shotFiles.length){wait.hidden=false;$('r-wait').textContent='שולח את הקבצים…';
-     uploadFiles().then(()=>{wait.hidden=true;ok.hidden=false;$('r-files').hidden=true}).catch(()=>{wait.hidden=true;ok.hidden=false;$('r-files').hidden=false})}
+     uploadFiles().then(()=>{S.filesSent=true;save();wait.hidden=true;ok.hidden=false;$('r-files').hidden=true}).catch(()=>{wait.hidden=true;ok.hidden=false;$('r-files').hidden=false})}
     else{wait.hidden=true;ok.hidden=false;$('r-files').hidden=false}})
    .catch(()=>{wait.hidden=true;card.hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן, יחד עם הקבצים.'});
  }
