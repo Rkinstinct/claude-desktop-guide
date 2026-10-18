@@ -13,6 +13,9 @@ button{background:#1b1a19;color:#fff;border:0;cursor:pointer}
 .big{font-size:1.3rem;font-weight:700}.okc{color:#0a7d2c;font-weight:600}.ok{color:#0a7d2c}.bad{color:#b00020}.shot{margin:6px 0}ol{padding-inline-start:20px}.warn{color:#b00020;font-weight:600}
 pre{white-space:pre-wrap;word-break:break-word;background:#f3f2f1;padding:8px;border-radius:6px;font-size:.85rem}
 details{margin-top:6px}
+.qa{margin:10px 0}
+.qa .q{font-weight:600;margin-bottom:3px}
+.ans{background:#fafaf8;border-inline-start:3px solid #f2c811;padding:7px 10px;border-radius:8px;white-space:pre-wrap;word-break:break-word}
 ul{padding-inline-start:20px}
 </style></head><body>
 <div class="bar">תצוגת מנהל: תוצאות מבחנים</div>
@@ -72,6 +75,7 @@ function expectBClaude(EC,id){
 }
 function card(x){
  const d=dec(x.code)||{},c=d.c||{},b=d.b||{},a=d.a||{},pbi=x.exam==='pbi';
+ const EC=window.ExamCore,EA=window.EXAM_A,PC=window.PbiCore;
  const awayC=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך בחלק ג׳';
  const awayA=(!pbi&&a.o)?'<br><span class="warn">יציאות מהמסך בחלק א׳: '+a.o+' ('+(+a.os||0)+' שניות)</span>':'';
  const away=awayA+awayC;
@@ -79,7 +83,7 @@ function card(x){
  if(pbi){
   const sc=scoreA(d);
   h+='<p><b>חלק א׳:</b> '+(sc?'<span class="big">'+sc.n+' מתוך '+sc.total+' נכון</span>':'לא ניתן לחשב (גרסה ישנה של המבחן)')+'</p>';
-  if(sc)h+='<details><summary>כל השאלות: נכון / שגוי</summary><ol>'+sc.rows+'</ol></details>';
+  if(sc)h+='<details open><summary>כל השאלות: נכון / שגוי</summary><ol>'+sc.rows+'</ol></details>';
   let E=null;try{E=(new Function('return '+KEY._expB)())(PbiCore,d.id)}catch(e){}
   const V=b.v||[],nm=['סך הכנסות','מספר הזמנות','מספר לקוחות','ממוצע להזמנה','מוצר מוביל','חודש הטוב ביותר'];
   if(E&&d.v>=6){const ex=[E.total,E.orders,E.customers,E.avg,E.product,E.month];if(d.v>=7){ex.push(E.pct,E.jq4);nm.push('אחוז עמידה ביעד','הכנסות ירושלים ברבעון 4')}let ok=0;
@@ -94,7 +98,7 @@ function card(x){
   if(mine.length){h+=blButtons(mine,d.id)}
   else h+=x.has_file?'<button type="button" class="shot" data-id="'+x.id+'">הצגת צילום המסך (גרסה ישנה)</button><div class="shotbox"></div>':'<p class="muted">לא הועלו קבצים.</p>';
  }else{
-  const EC=window.ExamCore,EA=window.EXAM_A,K=(KEY&&(KEY._claude||KEY.claude))||null;
+  const K=(KEY&&(KEY._claude||KEY.claude))||null;
   let P=null;try{P=EC&&EC.paperA(d.id)}catch(e){}
   const cById={},wById={},tById={};((EA&&EA.cmds)||[]).forEach(q=>cById[q.id]=q);((EA&&EA.writes)||[]).forEach(q=>wById[q.id]=q);((EA&&EA.tools)||[]).forEach(q=>tById[q.id]=q);
   // Part A: which command. Correct/incorrect is marked only if the key arrived from the server.
@@ -102,7 +106,7 @@ function card(x){
    const has=!!(K&&P.cmds.every(id=>K[id]!=null));let n=0;
    const rows=P.cmds.map((qid,i)=>{const q=cById[qid],g=a.ci[i],k=has?K[qid]:null,ok=has&&g===k;if(ok)n++;
     return '<li class="'+(has?(ok?'ok':'bad'):'')+'">'+(has?(ok?'✓ ':'✗ '):'')+esc(q?q.q:qid)+'<br><span class="muted">ענה: '+(g>=0&&g!=null?esc(EA.cmdOpts[g]):'לא ענה')+(has&&!ok?' · נכון: '+esc(EA.cmdOpts[k]):'')+'</span></li>'}).join('');
-   h+='<p><b>חלק א׳, פקודות:</b> '+(has?'<span class="big">'+n+' מתוך '+P.cmds.length+' נכון</span>':'<span class="muted">מפתח הבדיקה לא הגיע מהשרת; מוצגות התשובות בלבד</span>')+'</p><details><summary>כל שאלות הפקודות'+(has?': נכון / שגוי':'')+'</summary><ol>'+rows+'</ol></details>';
+   h+='<p><b>חלק א׳, פקודות:</b> '+(has?'<span class="big">'+n+' מתוך '+P.cmds.length+' נכון</span>':'<span class="muted">מפתח הבדיקה לא הגיע מהשרת; מוצגות התשובות בלבד</span>')+'</p><details open><summary>כל שאלות הפקודות'+(has?': נכון / שגוי':'')+'</summary><ol>'+rows+'</ol></details>';
   }
   // Part A: which tool (older versions of the exam).
   if(P&&Array.isArray(a.ki)&&a.ki.length){
@@ -112,8 +116,8 @@ function card(x){
   // Part A: free-text explanations. Not auto-scored; the manager reads them.
   if(P&&Array.isArray(a.w)&&P.writes.length){
    const wr=P.writes.map((qid,i)=>{const q=wById[qid],t=((a.w||[])[i]||'').trim();
-    return '<li>'+esc(q?q.q:qid)+'<br>'+(t?esc(t):'<span class="bad">לא נכתבה תשובה</span>')+'</li>'}).join('');
-   h+='<details><summary>חלק א׳, הסברים במילים ('+P.writes.length+')</summary><ol>'+wr+'</ol></details>';
+    return '<div class="qa"><div class="q">'+(i+1)+'. '+esc(q?q.q:qid)+'</div><div class="ans">'+(t?esc(t):'<span class="bad">לא נכתבה תשובה</span>')+'</div></div>'}).join('');
+   h+='<details open><summary>חלק א׳, הסברים במילים ('+P.writes.length+')</summary>'+wr+'</details>';
   }
   // Part B: answers from the data, checked against the values the same generator produces.
   let EB=null;try{EB=EC&&expectBClaude(EC,d.id)}catch(e){}
@@ -140,7 +144,12 @@ function card(x){
   else h+='<p class="muted">לא צורפו קבצים.</p>';
   h+='<details><summary>הצגה גולמית של חלקים א׳ וב׳</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details>';
  }
- h+='<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details></div>';
+ const CQx=(pbi?(PC&&PC.CQ):(EC&&EC.CQ))||[];
+ let scn=null;try{scn=pbi?(PC&&PC.scenario(d.id)):(EC&&EC.scenario(d.id))}catch(e){}
+ h+='<p style="margin-bottom:2px"><b>חלק ג׳, תכנון סוכן'+(scn?': '+esc(scn.title):'')+'</b></p>';
+ if(scn&&scn.brief)h+='<p class="muted" style="margin-top:0">'+esc(scn.brief)+'</p>';
+ h+=(c.a&&c.a.length?c.a.map((t,i)=>'<div class="qa"><div class="q">'+(i+1)+'. '+esc(CQx[i]||('שאלה '+(i+1)))+'</div><div class="ans">'+esc(String(t||'').trim()||'—')+'</div></div>').join(''):'<p class="muted">אין תשובות לחלק ג׳.</p>');
+ h+='</div>';
  return h;
 }
 document.addEventListener('click',async e=>{const dl=e.target.closest('.dl');
