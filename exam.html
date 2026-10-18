@@ -36,10 +36,10 @@
   <p><button id="env-check" class="linkbtn" type="button">בדיקת סביבה: הורדת קובץ דוגמה</button> <span class="muted">פתחו אותו ב-Power BI Desktop (קבל נתונים ← טקסט/CSV) לפני שמתחילים, כדי לוודא שהכל עובד.</span></p>
  </div>
  <form id="f-start" class="card" autocomplete="off">
-  <label>שם מלא או כינוי<input id="in-name" required maxlength="60"></label>
+  <label>שם מלא<input id="in-name" required maxlength="60"></label>
   <label>מייל עבודה <small>(לא חובה)</small><input id="in-mail" type="email" maxlength="80" dir="ltr"></label>
   <input id="in-id" type="hidden">
-  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הכלים שסימנתי בחלק ג׳, חתימות (hash) של קובץ הפרויקט וצילומי המסך, הזמנים בכל חלק ומספר הפעמים שיצאתי מהמסך בחלקים א׳ ו-ג׳. שום דבר אחר לא נשלח. את קובץ הפרויקט וצילומי המסך אשלח בעצמי. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
+  <label class="chk"><input id="in-ok" type="checkbox" required><span>אני מבין/ה שבסיום המבחן יישלחו אוטומטית למנהל המבחן: השם שלי, המייל (אם מילאתי), התשובות שלי, הכלים שסימנתי בחלק ג׳, קובץ הפרויקט וצילומי המסך שבחרתי בחלק ב׳ וחתימות (hash) שלהם, הזמנים בכל חלק ומספר הפעמים שיצאתי מהמסך בחלקים א׳ ו-ג׳. שום דבר אחר לא נשלח. הציון נקבע אצל מנהל המבחן. מטרת המבחן היא לבחון הבנה ברמה אישית.</span></label>
   <button class="btn" type="submit">מתחילים</button>
  </form>
  <p class="muted" style="text-align:center"><a href="admin.html">כניסת מנהל</a></p>
@@ -79,7 +79,7 @@
    <li><b>אחידות:</b> ערכת נושא (Theme JSON) אחת, שמיובאת לדוח, וצבע המותג מהלוגו הוא הצבע הראשון בה. אותו פונט, אותו מיקום לוגו ואותו ניווט בשני העמודים</li>
   </ul>
   <p>איך Claude עוזר: מבקשים ממנו לנסח את מדדי ה-DAX, לכתוב את קובץ ערכת הנושא, ולתכנן את פריסת העמודים. מי שעובד עם פרויקט PBIP (פורמט תיקיות של Power BI) יכול לתת ל-Claude Code לערוך ישירות את קובצי TMDL ואת הגדרות הדוח.</p>
-  <p>בסוף בוחרים כאן את קובץ הפרויקט (ZIP של תיקיית ה-PBIP, או קובץ pbix) ואת צילומי המסך, כדי שהמערכת תחשב להם חתימה, ועונים על שש שאלות מהנתונים. הקבצים עצמם לא נשלחים לשום מקום: את קובץ הפרויקט, את צילומי המסך ואת קוד התוצאה שולחים בעצמכם למנהל המבחן. הוא בודק את מבנה הדוח מהקובץ ואת המראה מצילומי המסך.</p>
+  <p>בסוף בוחרים כאן את קובץ הפרויקט (ZIP של תיקיית ה-PBIP, או קובץ pbix) ואת צילומי המסך, ועונים על שש שאלות מהנתונים. בסיום המבחן הקבצים נשלחים אוטומטית למנהל המבחן יחד עם התשובות, והחתימה שלהם מוכיחה שלא הוחלפו אחרי ההגשה. הוא בודק את מבנה הדוח מהקובץ ואת המראה מצילומי המסך.</p>
  </div>
  <div class="card">
   <h3>באיזה מסלול אתם עובדים?</h3>
@@ -136,9 +136,9 @@
 
 <section id="s-res" class="screen" hidden>
  <span class="pill">המבחן הושלם</span>
- <h1>סיימתם. נשאר לשלוח למנהל המבחן</h1>
+ <h1>סיימתם. התוצאות בדרך למנהל המבחן</h1>
  <p class="lead">הציון לא מחושב כאן. הוא נקבע אצל מנהל המבחן.</p>
- <p id="r-wait" class="muted" hidden>שולח את התשובות…</p><p id="r-ok" class="muted" hidden>התשובות והזמנים נשלחו בהצלחה למנהל המבחן. נשארו הקבצים: שלחו אותם בנפרד, כמפורט למטה.</p>
+ <p id="r-wait" class="muted" hidden>שולח את התשובות…</p><p id="r-ok" class="muted" hidden>התשובות, הזמנים והקבצים נשלחו בהצלחה למנהל המבחן.</p>
  <div class="score-row">
   <div class="score"><b id="r-ta" dir="ltr"></b><span>זמן חלק א׳</span></div>
   <div class="score"><b id="r-tb" dir="ltr"></b><span>זמן חלק ב׳</span></div>
@@ -150,11 +150,11 @@
   <div class="nav"><button id="r-copy" class="btn" type="button">העתקת הקוד</button><button id="r-file" class="btn ghost" type="button">שמירה כקובץ</button></div>
   <p id="r-sent" class="muted"></p>
  </div>
- <div class="card"><h3>מה עוד לשלוח למנהל המבחן</h3><div id="r-bc"></div></div>
+ <div class="card" id="r-files"><h3>מה עוד לשלוח למנהל המבחן</h3><div id="r-bc"></div></div>
 </section>
 </main>
 <script src="exam-data.js?v=5.1"></script>
 <script src="exam-core.js?v=5.5"></script>
-<script src="exam.js?v=5.11"></script>
+<script src="exam.js?v=5.12"></script>
 </body>
 </html>
