@@ -5,6 +5,10 @@ body{margin:0;background:#f3f2f1;color:#1b1a19;font-family:Heebo,system-ui,sans-
 .bar{background:#1b1a19;color:#fff;padding:12px 16px;font-weight:700;border-bottom:3px solid #f2c811}
 main{max-width:980px;margin:0 auto;padding:16px}
 .card{background:#fff;border-radius:10px;padding:14px;margin:12px 0;box-shadow:0 1px 3px #0002}
+.card>summary{cursor:pointer;font-size:15px;list-style:none}
+.card>summary::before{content:'\25B8';display:inline-block;margin-left:6px;color:#888}
+.card[open]>summary::before{content:'\25BE'}
+.card[open]>summary{margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #eee}
 input,select,button{font:inherit;padding:10px;border-radius:8px;border:1px solid #bbb}
 button{background:#1b1a19;color:#fff;border:0;cursor:pointer}
 .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -79,7 +83,7 @@ function card(x){
  const awayC=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך בחלק ג׳';
  const awayA=(!pbi&&a.o)?'<br><span class="warn">יציאות מהמסך בחלק א׳: '+a.o+' ('+(+a.os||0)+' שניות)</span>':'';
  const away=awayA+awayC;
- let h='<div class="card res"><span class="tag">'+(pbi?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span> '+(x.sig_ok?'<span class="muted">· נחתם בשרת ✓</span>':'<span class="warn">· חתימת שרת לא תקינה</span>')+'<br>זמנים: א׳ '+fmt(a.t)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+'<br>'+away;
+ let h='<details class="card res"><summary><span class="tag">'+(pbi?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span> '+(x.sig_ok?'<span class="muted">· נחתם בשרת ✓</span>':'<span class="warn">· חתימת שרת לא תקינה</span>')+'</summary>זמנים: א׳ '+fmt(a.t)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+'<br>'+away;
  if(pbi){
   const sc=scoreA(d);
   h+='<p><b>חלק א׳:</b> '+(sc?'<span class="big">'+sc.n+' מתוך '+sc.total+' נכון</span>':'לא ניתן לחשב (גרסה ישנה של המבחן)')+'</p>';
@@ -149,7 +153,7 @@ function card(x){
  h+='<p style="margin-bottom:2px"><b>חלק ג׳, תכנון סוכן'+(scn?': '+esc(scn.title):'')+'</b></p>';
  if(scn&&scn.brief)h+='<p class="muted" style="margin-top:0">'+esc(scn.brief)+'</p>';
  h+=(c.a&&c.a.length?c.a.map((t,i)=>'<div class="qa"><div class="q">'+(i+1)+'. '+esc(CQx[i]||('שאלה '+(i+1)))+'</div><div class="ans">'+esc(String(t||'').trim()||'—')+'</div></div>').join(''):'<p class="muted">אין תשובות לחלק ג׳.</p>');
- h+='</div>';
+ h+='</details>';
  return h;
 }
 document.addEventListener('click',async e=>{const dl=e.target.closest('.dl');
