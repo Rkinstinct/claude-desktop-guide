@@ -13,6 +13,7 @@ button{background:#1b1a19;color:#fff;border:0;cursor:pointer}
 .big{font-size:1.3rem;font-weight:700}.okc{color:#0a7d2c;font-weight:600}.ok{color:#0a7d2c}.bad{color:#b00020}.shot{margin:6px 0}ol{padding-inline-start:20px}.warn{color:#b00020;font-weight:600}
 pre{white-space:pre-wrap;word-break:break-word;background:#f3f2f1;padding:8px;border-radius:6px;font-size:.85rem}
 details{margin-top:6px}
+ul{padding-inline-start:20px}
 </style></head><body>
 <div class="bar">תצוגת מנהל: תוצאות מבחנים</div>
 <main>
@@ -23,12 +24,14 @@ details{margin-top:6px}
 <div id="out"></div>
 </main>
 <script src="pbi-exam-data.js?v=5"></script><script src="pbi-exam-core.js?v=9"></script>
+<script src="exam-core.js?v=1"></script><script src="exam-data.js?v=1"></script>
 <script>
 const API='https://exam-results-api.ariel-crm.workers.dev/admin/list';
 const $=id=>document.getElementById(id);
 const fmt=s=>{s=Math.max(0,Math.floor(+s||0));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
 const dec=c=>{try{let p=c.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');while(p.length%4)p+='=';return JSON.parse(decodeURIComponent(escape(atob(p))))}catch(e){return null}};
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const kb=n=>n>1048576?(n/1048576).toFixed(1)+'MB':Math.round((+n||0)/1024)+'KB';
 
 let KEY=null,PW='',BL=[];
 const OPT=['א','ב','ג','ד'];
@@ -38,6 +41,34 @@ function scoreA(d){
  let n=0;const rows=p.map((q,i)=>{const k=KEY[q[0]],g=d.a.r[i],ok=g===k;if(ok)n++;
   return '<li class="'+(ok?'ok':'bad')+'">'+(ok?'✓ ':'✗ ')+esc(q[2])+'<br><span class="muted">ענה: '+(g>=0?esc(q[3][g]):'לא ענה')+(ok?'':' · נכון: '+esc(q[3][k]))+'</span></li>'}).join('');
  return {n,total:p.length,rows};
+}
+// File buttons: shared by both exams. Labels for pbi kinds stay exactly as before.
+function blButtons(mine,id){
+ return '<p>'+mine.map(z=>'<button type="button" class="dl" data-id="'+esc(id)+'" data-k="'+esc(z.kind)+'" data-n="'+z.n+'">'+(z.kind==='zip'?'הורדת ZIP של הדשבורד':z.kind==='proj'?'הורדת קובץ הפרויקט':'הצגת צילום '+String(z.kind).replace('shot',''))+(z.got<z.n?' (חלקי)':'')+'</button> ').join('')+'</p><div class="shotbox"></div>';
+}
+// Expected Part B answers for the Claude exam, rebuilt from the public generator (same one the examinee's files came from).
+function expectBClaude(EC,id){
+ const rows=EC.dataset(id),sp=EC.spec(id),M=EC.MONTHS,R=EC.REGIONS,CAT=EC.CATS;
+ const mo=r=>+r.date.slice(5,7);
+ const sum=f=>rows.reduce((s,r)=>s+(f(r)?r.revenue:0),0);
+ const q3=sum(r=>mo(r)>=7&&mo(r)<=9&&r.region===sp.region);
+ const catM={};CAT.forEach(c=>{let rv=0,cs=0;rows.forEach(r=>{if(r.category===c){rv+=r.revenue;cs+=r.cost}});catM[c]=rv?1-cs/rv:0});
+ const expCat=CAT.reduce((a,b)=>catM[a]>=catM[b]?a:b);
+ const mt=[];for(let m=1;m<=12;m++)mt[m]=sum(r=>mo(r)===m);
+ let dm=2;for(let m=3;m<=12;m++)if(mt[m]-mt[m-1]<mt[dm]-mt[dm-1])dm=m;
+ let rv=0,cs=0;rows.forEach(r=>{rv+=r.revenue;cs+=r.cost});
+ const pct=((1-cs/rv)*100).toFixed(1);
+ const regT={};R.forEach(g=>regT[g]=sum(r=>r.region===g));
+ const topReg=R.reduce((a,b)=>regT[a]>=regT[b]?a:b);
+ const ytd=sum(r=>mo(r)<=sp.ytdMonth&&r.region===sp.ytdRegion);
+ return {items:[
+  {t:'סך ההכנסות ברבעון 3 (יולי עד ספטמבר) באזור '+sp.region,x:String(q3)},
+  {t:'הקטגוריה עם אחוז הרווח הגולמי הגבוה ביותר על פני השנה',x:expCat},
+  {t:'החודש עם הירידה החדה ביותר בהכנסות לעומת החודש שלפניו',x:M[dm-1]},
+  {t:'אחוז הרווח הגולמי הכולל של השנה',x:pct,num:true},
+  {t:'האזור עם ההכנסות הגבוהות ביותר על פני השנה',x:topReg},
+  {t:'ההכנסות המצטברות (YTD) עד סוף '+M[sp.ytdMonth-1]+' באזור '+sp.ytdRegion,x:String(ytd)}
+ ]};
 }
 function card(x){
  const d=dec(x.code)||{},c=d.c||{},b=d.b||{},a=d.a||{},pbi=x.exam==='pbi';
@@ -58,15 +89,54 @@ function card(x){
   h+='<p><b>הסבר הנבחן:</b> '+esc(b.note||'')+'</p>';
   if(b.issue!==undefined)h+='<p><b>בעיה בנתונים ואיך טיפל:</b> '+esc(b.issue||'')+'</p>';
   const mine=BL.filter(z=>z.examinee===d.id);
-  if(mine.length){h+='<p>'+mine.map(z=>'<button type="button" class="dl" data-id="'+esc(d.id)+'" data-k="'+esc(z.kind)+'" data-n="'+z.n+'">'+(z.kind==='zip'?'הורדת ZIP של הדשבורד':'הצגת צילום '+(z.kind==='shot1'?'1':'2'))+(z.got<z.n?' (חלקי)':'')+'</button> ').join('')+'</p><div class="shotbox"></div>'}
+  if(mine.length){h+=blButtons(mine,d.id)}
   else h+=x.has_file?'<button type="button" class="shot" data-id="'+x.id+'">הצגת צילום המסך (גרסה ישנה)</button><div class="shotbox"></div>':'<p class="muted">לא הועלו קבצים.</p>';
  }else{
+  const EC=window.ExamCore,EA=window.EXAM_A,K=(KEY&&(KEY._claude||KEY.claude))||null;
+  let P=null;try{P=EC&&EC.paperA(d.id)}catch(e){}
+  const cById={},wById={},tById={};((EA&&EA.cmds)||[]).forEach(q=>cById[q.id]=q);((EA&&EA.writes)||[]).forEach(q=>wById[q.id]=q);((EA&&EA.tools)||[]).forEach(q=>tById[q.id]=q);
+  // Part A: which command. Correct/incorrect is marked only if the key arrived from the server.
+  if(P&&Array.isArray(a.ci)&&a.ci.length){
+   const has=!!(K&&P.cmds.every(id=>K[id]!=null));let n=0;
+   const rows=P.cmds.map((qid,i)=>{const q=cById[qid],g=a.ci[i],k=has?K[qid]:null,ok=has&&g===k;if(ok)n++;
+    return '<li class="'+(has?(ok?'ok':'bad'):'')+'">'+(has?(ok?'✓ ':'✗ '):'')+esc(q?q.q:qid)+'<br><span class="muted">ענה: '+(g>=0&&g!=null?esc(EA.cmdOpts[g]):'לא ענה')+(has&&!ok?' · נכון: '+esc(EA.cmdOpts[k]):'')+'</span></li>'}).join('');
+   h+='<p><b>חלק א׳, פקודות:</b> '+(has?'<span class="big">'+n+' מתוך '+P.cmds.length+' נכון</span>':'<span class="muted">מפתח הבדיקה לא הגיע מהשרת; מוצגות התשובות בלבד</span>')+'</p><details><summary>כל שאלות הפקודות'+(has?': נכון / שגוי':'')+'</summary><ol>'+rows+'</ol></details>';
+  }
+  // Part A: which tool (older versions of the exam).
+  if(P&&Array.isArray(a.ki)&&a.ki.length){
+   const rows=a.ki.map((g,i)=>{const q=tById[P.tools[i]];return '<li>'+esc(q?q.q:P.tools[i])+'<br><span class="muted">ענה: '+(g>=0&&g!=null?esc((EA.toolOpts||[])[g]):'לא ענה')+(a.kr&&a.kr[i]?' · למה: '+esc(a.kr[i]):'')+'</span></li>'}).join('');
+   if(rows)h+='<details><summary>חלק א׳, כלים ('+a.ki.length+')</summary><ol>'+rows+'</ol></details>';
+  }
+  // Part A: free-text explanations. Not auto-scored; the manager reads them.
+  if(P&&Array.isArray(a.w)&&P.writes.length){
+   const wr=P.writes.map((qid,i)=>{const q=wById[qid],t=((a.w||[])[i]||'').trim();
+    return '<li>'+esc(q?q.q:qid)+'<br>'+(t?esc(t):'<span class="bad">לא נכתבה תשובה</span>')+'</li>'}).join('');
+   h+='<details><summary>חלק א׳, הסברים במילים ('+P.writes.length+')</summary><ol>'+wr+'</ol></details>';
+  }
+  // Part B: answers from the data, checked against the values the same generator produces.
+  let EB=null;try{EB=EC&&expectBClaude(EC,d.id)}catch(e){}
+  const V=Array.isArray(b.v)?b.v:[];
+  if(EB){
+   let ok=0;
+   const li=EB.items.map((it,i)=>{const g=V[i];let good;
+    if(it.num){const gf=parseFloat(String(g==null?'':g).replace(',','.')),xf=parseFloat(it.x);good=isFinite(gf)&&Math.abs(gf-xf)<0.05}
+    else good=String(g==null?'':g).trim()===String(it.x);
+    if(good)ok++;return '<li class="'+(good?'ok':'bad')+'">'+esc(it.t)+': '+(g==null||String(g).trim()===''?'<span class="bad">לא מולא</span>':esc(g))+(good?' ✓':' ✗ צפוי '+esc(it.x))+'</li>'}).join('');
+   const track=b.k==='code'?'Claude Code':b.k==='mcp'?'MCP':'Chat';
+   h+='<p><b>חלק ב׳, תשובות מהנתונים</b> (מסלול '+esc(track)+'): <span class="big">'+ok+' מתוך '+EB.items.length+'</span></p><ul>'+li+'</ul>';
+  }
+  if(b.note!==undefined)h+='<p><b>מה ביקש מ-Claude ובאילו צעדים:</b> '+esc(b.note||'')+'</p>';
+  if(b.err!==undefined)h+='<p><b>איפה Claude טעה ואיך גילה:</b> '+esc(b.err||'')+'</p>';
   const R=(KEY&&KEY._rules)||{},rule=R[c.s],tl=c.tools||[];
   if(rule){const miss=rule.req.filter(t=>!tl.includes(t)),extra=rule.forbid.filter(t=>tl.includes(t));
    h+='<p><b>חלק ג׳, כלים לסוכן ('+esc(c.s)+'):</b> '+(tl.length?esc(tl.join(', ')):'לא סומנו')+(miss.length||extra.length?' <span class="warn">✗ '+(miss.length?'חסרים: '+esc(miss.join(', ')):'')+(miss.length&&extra.length?' · ':'')+(extra.length?'מיותרים או אסורים: '+esc(extra.join(', ')):'')+'</span>':' <span class="okc">✓ תואם את הכללים</span>')+'</p>'}
   else h+='<p><b>חלק ג׳, כלים:</b> '+esc(tl.join(', ')||'לא סומנו')+' <span class="muted">(כללי הבדיקה לא נטענו)</span></p>';
-  if(b.err!==undefined)h+='<p><b>איפה Claude טעה ואיך גילה:</b> '+esc(b.err||'')+'</p>';
-  h+='<details><summary>חלק א׳ וחלק ב׳ (גולמי)</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details>';
+  // Attached files. New submissions upload the files themselves; older ones recorded only hashes.
+  const mine=BL.filter(z=>z.examinee===d.id);
+  if(mine.length){h+='<p><b>קבצים מצורפים:</b></p>'+blButtons(mine,d.id)}
+  else if(b.z){h+='<p><b>קבצים מצורפים:</b> '+esc(b.z.n)+' ('+kb(b.z.s)+', חתימה '+esc(b.z.h)+') · '+((b.sh||[]).length)+' צילומי מסך<br><span class="muted">בהגשה מגרסה זו נרשמו רק חתימות הקבצים; הקבצים עצמם לא נשלחו אז לשרת, והם אמורים להגיע מהנבחן ישירות.</span></p>'}
+  else h+='<p class="muted">לא צורפו קבצים.</p>';
+  h+='<details><summary>הצגה גולמית של חלקים א׳ וב׳</summary><pre>'+esc(JSON.stringify({a:d.a,b:d.b},null,1))+'</pre></details>';
  }
  h+='<details><summary>חלק ג׳: תשובות</summary><pre>'+esc((c.a||[]).map((t,i)=>(i+1)+'. '+t).join('\n\n'))+'</pre></details></div>';
  return h;
@@ -74,7 +144,7 @@ function card(x){
 document.addEventListener('click',async e=>{const dl=e.target.closest('.dl');
  if(dl){const box=dl.parentElement.nextElementSibling;box.textContent='טוען…';try{let parts=[],name='';for(let i=0;i<+dl.dataset.n;i++){const r=await fetch(API.replace('list','blob'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:PW,id:dl.dataset.id,kind:dl.dataset.k,i})});const j=await r.json();if(!j.data)throw 0;parts.push(j.data);name=j.name||name}
   const b64=parts.join('');box.innerHTML='';
-  if(dl.dataset.k==='zip'){const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([u],{type:'application/zip'}));a.download=name||'dashboard.zip';a.textContent='הורדה: '+a.download;box.append(a);a.click()}
+  if(dl.dataset.k==='zip'||dl.dataset.k==='proj'){const bin=atob(b64),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([u],{type:dl.dataset.k==='zip'?'application/zip':'application/octet-stream'}));a.download=name||(dl.dataset.k==='zip'?'dashboard.zip':'project');a.textContent='הורדה: '+a.download;box.append(a);a.click()}
   else{const im=new Image();im.src='data:'+(b64.startsWith('iVBOR')?'image/png':'image/jpeg')+';base64,'+b64;im.style.maxWidth='100%';box.append(im)}}catch(err){box.textContent='שגיאה בטעינה'}return}
  const t=e.target.closest('.shot');if(!t)return;const box=t.nextElementSibling;box.textContent='טוען…';
  try{const r=await fetch(API.replace('list','file'),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:PW,id:+t.dataset.id})});const j=await r.json();box.innerHTML='';const im=new Image();im.src=j.data;im.style.maxWidth='100%';box.append(im)}catch(err){box.textContent='שגיאה בטעינה'}});
