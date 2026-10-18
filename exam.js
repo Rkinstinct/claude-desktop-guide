@@ -1,7 +1,7 @@
 (()=>{
  const E=window.ExamCore,C=window.EXAM_CONFIG,KEY='claude-exam-v6';
  const $=id=>document.getElementById(id);
- let S=null,proj=null,shots=[];
+ let S=null,proj=null,shots=[],projFile=null,shotFiles=[];
  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));$('restart').hidden=!S||S.phase==='done';stepRender()}catch(e){}};
  const show=n=>{['s-start','s-a','s-bintro','s-b','s-c','s-sum','s-res'].forEach(i=>$(i).hidden=i!==n);window.scrollTo(0,0);stepRender()};
@@ -51,11 +51,11 @@
   const row=(ok,t)=>{const d=document.createElement('div');d.className=ok?'y':'n';d.textContent=(ok?'✓ ':'✗ ')+t;box.append(d)};
   row(!!proj,proj?'קובץ פרויקט: '+proj.n+' ('+kb(proj.s)+', חתימה '+proj.h+')':'עוד לא נבחר קובץ פרויקט');
   row(shots.length>=2&&new Set(shots).size===shots.length,'צילומי מסך: '+shots.length+' (נדרשים לפחות שניים שונים)');
-  const n=document.createElement('div');n.className='muted';n.textContent='כאן מחושבת רק חתימה של הקבצים, כדי שאי אפשר יהיה להחליף אותם אחרי ההגשה. מבנה הדוח נבדק אצל מנהל המבחן, מהקובץ שתשלחו לו.';box.append(n);
+  const n=document.createElement('div');n.className='muted';n.textContent='הקבצים נשלחים אוטומטית למנהל המבחן יחד עם התשובות בסוף המבחן. החתימה מוכיחה שאלה אותם קבצים שנבחרו כאן, בלי החלפה אחרי ההגשה.';box.append(n);
   S.fa={z:proj,sh:shots.slice()};save();
  }
- $('b-proj').addEventListener('change',async e=>{const f=e.target.files[0];proj=f?{n:f.name.slice(0,80),s:f.size,h:await hashBuf(f)}:null;refreshFind()});
- $('b-shots').addEventListener('change',async e=>{shots=await Promise.all([...e.target.files].slice(0,6).map(hashBuf));refreshFind()});
+ $('b-proj').addEventListener('change',async e=>{const f=e.target.files[0];projFile=f||null;proj=f?{n:f.name.slice(0,80),s:f.size,h:await hashBuf(f)}:null;refreshFind()});
+ $('b-shots').addEventListener('change',async e=>{shotFiles=[...e.target.files].slice(0,6);shots=await Promise.all(shotFiles.map(hashBuf));refreshFind()});
  function finishB(){
   const g=id=>$(id).value.trim();
   if(!proj||shots.length<2||new Set(shots).size<shots.length){refreshFind();$('b-find').scrollIntoView({block:'center'});return}
@@ -130,12 +130,29 @@
   ['קובץ הפרויקט: '+(S.b.z?S.b.z.n:'')+' (חתימה '+(S.b.z?S.b.z.h:'')+'). חייב להיות אותו קובץ שבחרתם, בלי עריכה אחריה','צילומי המסך של שני העמודים, אותם קבצים שבחרתם ('+(S.b.sh||[]).length+')'].forEach(t=>{const d=document.createElement('div');d.className='rv';d.textContent='• '+t;bc.append(d)});
   submitResult(payload,code);
  }
+ const readB64=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej();r.readAsDataURL(f)});
+ const shrink=f=>new Promise((res,rej)=>{const im=new Image(),u=URL.createObjectURL(f);im.onload=()=>{const w=Math.min(1400,im.width),hh=Math.round(im.height*w/im.width),cv=document.createElement('canvas');cv.width=w;cv.height=hh;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,hh);x.drawImage(im,0,0,w,hh);URL.revokeObjectURL(u);let q=.8,d=cv.toDataURL('image/jpeg',q);while(d.length>1300000&&q>.3){q-=.1;d=cv.toDataURL('image/jpeg',q)}d.length>1300000?rej():res(d)};im.onerror=()=>rej();im.src=u});
+ async function putBlob(kind,name,b64){
+  const CH=700000,n=Math.max(1,Math.ceil(b64.length/CH));
+  for(let i=0;i<n;i++){let ok=false;
+   for(let t=0;t<3&&!ok;t++){try{const r=await fetch(C.resultsEndpoint+'/blob',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:S.id,kind,name,i,n,data:b64.slice(i*CH,(i+1)*CH)})});const x=r.ok?await r.json():null;ok=!!(x&&x.ok)}catch(e){}
+    if(!ok)await new Promise(r=>setTimeout(r,800*(t+1)))}
+   if(!ok)throw new Error('upload')}
+ }
+ async function uploadFiles(){
+  let up=0,tot=(projFile?1:0)+shotFiles.length;
+  for(let k=0;k<shotFiles.length;k++){const d=await shrink(shotFiles[k]);await putBlob('shot'+(k+1),shotFiles[k].name.slice(0,60),d.split(',')[1]);up++;$('r-wait').textContent='שולח את הקבצים… '+up+' מתוך '+tot}
+  if(projFile){$('r-wait').textContent='שולח את קובץ הפרויקט…';await putBlob('proj',projFile.name.slice(0,80),await readB64(projFile))}
+ }
  function submitResult(payload,code){
   const card=$('r-card'),ok=$('r-ok'),wait=$('r-wait');
   if(S.sent){card.hidden=true;ok.hidden=false;return}
   card.hidden=true;ok.hidden=true;wait.hidden=false;
   fetch(C.resultsEndpoint+'/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exam:'claude',code,id:S.id,name:S.name,email:S.email||''})})
-   .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;save();wait.hidden=true;ok.hidden=false})
+   .then(r=>r.ok?r.json():Promise.reject()).then(x=>{if(!x.ok)throw 0;S.sent=true;save();
+    if(projFile||shotFiles.length){wait.hidden=false;$('r-wait').textContent='שולח את הקבצים…';
+     uploadFiles().then(()=>{wait.hidden=true;ok.hidden=false;$('r-files').hidden=true}).catch(()=>{wait.hidden=true;ok.hidden=false;$('r-files').hidden=false})}
+    else{wait.hidden=true;ok.hidden=false;$('r-files').hidden=false}})
    .catch(()=>{wait.hidden=true;card.hidden=false;$('r-sent').textContent='השליחה האוטומטית לא הצליחה. העתיקו את הקוד ושלחו אותו למנהל המבחן, יחד עם הקבצים.'});
  }
  $('f-start').addEventListener('submit',e=>{e.preventDefault();
@@ -189,7 +206,7 @@
  $('r-file').onclick=()=>dl('exam-result-'+S.id+'.txt','text/plain',$('r-code').value);
  S=load();$('restart').hidden=!S||S.phase==='done';
  if(S){
-  if(S.fa){proj=S.fa.z||null;shots=S.fa.sh||[]}
+  if(S.fa){proj=S.fa.z||null;shots=S.fa.sh||[];projFile=null;shotFiles=[]}
   if(S.phase==='a'){show('s-a');renderA();tick()}
   else if(S.phase==='bintro')show('s-bintro');
   else if(S.phase==='b'){fillSelects();show('s-b');tick();if(proj||shots.length)refreshFind()}
