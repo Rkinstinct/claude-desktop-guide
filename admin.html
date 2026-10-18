@@ -72,7 +72,9 @@ function expectBClaude(EC,id){
 }
 function card(x){
  const d=dec(x.code)||{},c=d.c||{},b=d.b||{},a=d.a||{},pbi=x.exam==='pbi';
- const away=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך';
+ const awayC=c.o?'<span class="warn">יציאות מהמסך בחלק ג׳: '+c.o+' ('+c.w+' שניות)</span>':'ללא יציאות מהמסך בחלק ג׳';
+ const awayA=(!pbi&&a.o)?'<br><span class="warn">יציאות מהמסך בחלק א׳: '+a.o+' ('+(+a.os||0)+' שניות)</span>':'';
+ const away=awayA+awayC;
  let h='<div class="card res"><span class="tag">'+(pbi?'Power BI':'Claude')+'</span><b>'+esc(x.name)+'</b> <span class="muted">'+esc(x.email)+' · '+esc(x.created.slice(0,16).replace('T',' '))+' UTC</span> '+(x.sig_ok?'<span class="muted">· נחתם בשרת ✓</span>':'<span class="warn">· חתימת שרת לא תקינה</span>')+'<br>זמנים: א׳ '+fmt(a.t)+' · ב׳ '+fmt(b.t)+' · ג׳ '+fmt(c.t)+'<br>'+away;
  if(pbi){
   const sc=scoreA(d);
