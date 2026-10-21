@@ -36,7 +36,7 @@ window.EXAM_CONFIG={
  }
  function logoSvg(id){
   const b=brand(id);
-  return '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="96" viewBox="0 0 320 96" role="img" aria-label="'+b.name+'"><rect x="4" y="8" width="80" height="80" rx="18" fill="'+b.color+'"/><path d="'+b.sigD+'" transform="translate(4 8) scale(.9)" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="100" y="60" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="'+b.color+'">'+b.name.replace('&','&amp;')+'</text></svg>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="320" height="96" viewBox="0 0 320 96" role="img" aria-label="'+b.name.replace(/&/g,'&amp;')+'"><rect x="4" y="8" width="80" height="80" rx="18" fill="'+b.color+'"/><path d="'+b.sigD+'" transform="translate(4 8) scale(.9)" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><text x="100" y="60" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="'+b.color+'">'+b.name.replace(/&/g,'&amp;')+'</text></svg>';
  }
 
  // What the Part B questions ask about. The expected answers are NOT here: they live in the admin file only.
